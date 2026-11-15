@@ -1448,22 +1448,22 @@
             <div class="kpi-grid">
               <div class="kpi-box" style="cursor:pointer;" onclick="openBioModal()" title="Toque para editar Peso Atual e Meta">
                 <span class="lbl">Peso Atual → Meta</span>
-                <span class="val num" id="weightDisplay">80 → 74 kg ✎</span>
+                <span class="val num" id="weightDisplay">74 → 68 kg ✎</span>
               </div>
               <div class="kpi-box" style="cursor:pointer;" onclick="openBioModal()" title="Toque para editar Altura e Idade">
                 <span class="lbl">Altura · Idade</span>
-                <span class="val cyan num" id="heightAgeDisplay">178cm · 32a ✎</span>
+                <span class="val cyan num" id="heightAgeDisplay">169cm · 46a ✎</span>
               </div>
               <div class="kpi-box" style="cursor:pointer;" onclick="openBioModal()" title="Meta diária calculada para secar barriga">
                 <span class="lbl">Meta Calórica</span>
-                <span class="val orange num" id="kcalTargetDisplay">1.980 kcal</span>
+                <span class="val orange num" id="kcalTargetDisplay">1.905 kcal</span>
               </div>
             </div>
 
             <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:6px; margin-top:8px; padding:7px 10px; background:rgba(20,24,27,0.72); border:1px solid rgba(255,255,255,0.08); border-radius:var(--r-sm); font-size:11px; color:var(--dim);">
-              <span>🥩 Prot: <b style="color:var(--green-l);" id="bioProtTarget">168g/dia</b></span>
-              <span>💧 Água: <b style="color:var(--cyan-dark);" id="bioWaterTarget">3,0 L/dia</b></span>
-              <span>📊 IMC: <b style="color:var(--txt);" id="bioImcTarget">25.2</b></span>
+              <span>🥩 Prot: <b style="color:var(--green-l);" id="bioProtTarget">155g/dia</b></span>
+              <span>💧 Água: <b style="color:var(--cyan-dark);" id="bioWaterTarget">2,8 L/dia</b></span>
+              <span>📊 IMC: <b style="color:var(--txt);" id="bioImcTarget">25.9 → 23.8</b></span>
             </div>
 
             <div class="progress-bar-wrap">
@@ -3829,31 +3829,28 @@
     // 7.1 PERFIL BIOMÉTRICO PERSISTENTE (PESO, META, ALTURA, IDADE, KCAL, PROT, ÁGUA, IMC)
     // ==========================================================================
     let bioProfile = {
-      weight: 80,
-      goalWeight: 74,
-      height: 178,
-      age: 32
+      weight: 74,
+      goalWeight: 68,
+      height: 169,
+      age: 46
     };
 
     function loadBioProfile() {
       try {
-        const saved = localStorage.getItem('max_bio_v5');
-        const legacyWeight = localStorage.getItem('max_weight');
+        const saved = localStorage.getItem('max_bio_v6');
         if (saved) {
           const parsed = JSON.parse(saved);
           bioProfile = { ...bioProfile, ...parsed };
-        } else if (legacyWeight && !isNaN(parseFloat(legacyWeight))) {
-          bioProfile.weight = parseFloat(legacyWeight);
         }
       } catch (e) {}
       syncBioUI();
     }
 
     function syncBioUI() {
-      const w = parseFloat(bioProfile.weight) || 80;
-      const gw = parseFloat(bioProfile.goalWeight) || 74;
-      const h = parseFloat(bioProfile.height) || 178;
-      const a = parseFloat(bioProfile.age) || 32;
+      const w = parseFloat(bioProfile.weight) || 74;
+      const gw = parseFloat(bioProfile.goalWeight) || 68;
+      const h = parseFloat(bioProfile.height) || 169;
+      const a = parseFloat(bioProfile.age) || 46;
 
       // Equação Mifflin-St Jeor (Masculino) + Fator 1.50 (Academia 3x + Calistenia Matinal)
       const tmb = (10 * w) + (6.25 * h) - (5 * a) + 5;
@@ -3862,6 +3859,7 @@
       const targetProt = Math.round(w * 2.1);
       const targetWater = (w * 0.038).toFixed(1).replace('.', ',');
       const imc = (w / Math.pow(h / 100, 2)).toFixed(1);
+      const goalImc = (gw / Math.pow(h / 100, 2)).toFixed(1);
 
       const wEl = document.getElementById('weightDisplay');
       const haEl = document.getElementById('heightAgeDisplay');
@@ -3875,7 +3873,7 @@
       if (kEl) kEl.textContent = `${targetKcal.toLocaleString('pt-BR')} kcal`;
       if (pEl) pEl.textContent = `${targetProt}g/dia`;
       if (waEl) waEl.textContent = `${targetWater} L/dia`;
-      if (iEl) iEl.textContent = `${imc}`;
+      if (iEl) iEl.textContent = `${imc} → ${goalImc}`;
     }
 
     function openBioModal() {
@@ -3902,7 +3900,7 @@
       if (!isNaN(a) && a >= 14 && a <= 99) bioProfile.age = a;
 
       try {
-        localStorage.setItem('max_bio_v5', JSON.stringify(bioProfile));
+        localStorage.setItem('max_bio_v6', JSON.stringify(bioProfile));
         localStorage.setItem('max_weight', String(bioProfile.weight));
       } catch (e) {}
 

@@ -2,6 +2,15 @@
 
 ## 1. Quem é o Usuário (Max Reis)
 - **Nome:** Max Reis
+- **Perfil Biométrico Oficial:**
+  - **Peso Atual:** `74 kg` · **Meta de Peso:** `68 kg` (-6 kg de gordura localizada/abdominal)
+  - **Altura:** `1,69 m` (`169 cm`) · **Idade:** `46 anos`
+  - **Métricas Calculadas (Mifflin-St Jeor + Fator 1,50):**
+    - **IMC Atual:** `25,9` → **IMC na Meta (68 kg):** `23,8`
+    - **TMB:** `1.571 kcal/dia` · **Gasto Total (TDEE):** `2.357 kcal/dia`
+    - **Meta Calórica Diária (Déficit -450 kcal):** `1.905 kcal/dia`
+    - **Meta de Proteína Diária (2,1 g/kg):** `155 g/dia`
+    - **Meta de Água Diária (38 ml/kg):** `2,8 L/dia`
 - **Assinatura de Marca (`maX`):**
   - Logotipo composto por `"ma"` em tipografia **Outfit** (branco `#FFFFFF` no fundo escuro, grafite `#14181B` no fundo claro) + símbolo **`X` sólido geométrico** sempre em **Verde `#12B886`**.
   - Símbolo isolado (Avatar/Selo): Círculo escuro com borda luminosa azul/ciano e o **`X` sólido em `#12B886`** centralizado.
