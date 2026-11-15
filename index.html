@@ -1435,27 +1435,35 @@
         <div class="stats-stack">
           <div class="glass-card glass-panel tilt-3d">
             <div class="panel-kicker">
-              <span>DESAFIO DE CALISTENIA & ACADEMIA</span>
-              <span class="badge-pill">META VERÃO</span>
+              <span>PERFIL BIOMÉTRICO PERSONALIZADO</span>
+              <button class="btn" style="padding:3px 9px; font-size:10.5px; border-color:rgba(53,208,232,0.45); color:var(--cyan-dark);" onclick="openBioModal()">
+                ✎ Editar Medidas
+              </button>
             </div>
             <h2 style="font-size: 19px; margin-bottom: 4px;">Painel Biométrico · Max Reis</h2>
-            <p style="font-size: 12px; color: var(--dim);">
-              Secar gordura abdominal + construir estrutura atlética em V.
+            <p style="font-size: 11.5px; color: var(--dim);" id="bioSummarySub">
+              Toque nas medidas abaixo para configurar seu peso, altura e idade reais (salvo automaticamente):
             </p>
 
             <div class="kpi-grid">
-              <div class="kpi-box">
-                <span class="lbl">Objetivo</span>
-                <span class="val cyan">Secar + V</span>
+              <div class="kpi-box" style="cursor:pointer;" onclick="openBioModal()" title="Toque para editar Peso Atual e Meta">
+                <span class="lbl">Peso Atual → Meta</span>
+                <span class="val num" id="weightDisplay">80 → 74 kg ✎</span>
               </div>
-              <div class="kpi-box">
-                <span class="lbl">Peso Atual</span>
-                <span class="val num" id="weightDisplay" style="cursor:pointer;" onclick="promptWeight()">80 kg ✎</span>
+              <div class="kpi-box" style="cursor:pointer;" onclick="openBioModal()" title="Toque para editar Altura e Idade">
+                <span class="lbl">Altura · Idade</span>
+                <span class="val cyan num" id="heightAgeDisplay">178cm · 32a ✎</span>
               </div>
-              <div class="kpi-box">
-                <span class="lbl">Déficit Alvo</span>
-                <span class="val orange num">-450 kcal</span>
+              <div class="kpi-box" style="cursor:pointer;" onclick="openBioModal()" title="Meta diária calculada para secar barriga">
+                <span class="lbl">Meta Calórica</span>
+                <span class="val orange num" id="kcalTargetDisplay">1.980 kcal</span>
               </div>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:6px; margin-top:8px; padding:7px 10px; background:rgba(20,24,27,0.72); border:1px solid rgba(255,255,255,0.08); border-radius:var(--r-sm); font-size:11px; color:var(--dim);">
+              <span>🥩 Prot: <b style="color:var(--green-l);" id="bioProtTarget">168g/dia</b></span>
+              <span>💧 Água: <b style="color:var(--cyan-dark);" id="bioWaterTarget">3,0 L/dia</b></span>
+              <span>📊 IMC: <b style="color:var(--txt);" id="bioImcTarget">25.2</b></span>
             </div>
 
             <div class="progress-bar-wrap">
@@ -1826,6 +1834,48 @@
       <button class="btn" style="margin-top: 12px; width: 100%; justify-content: center;" onclick="toggleQrModal(false)">
         Fechar Janela
       </button>
+    </div>
+  </div>
+
+  <!-- MODAL DE CONFIGURAÇÃO BIOMÉTRICA (PESO, ALTURA, IDADE E META) -->
+  <div class="modal-backdrop" id="bioModal" onclick="if(event.target===this) closeBioModal()">
+    <div class="glass-card modal-box">
+      <div class="panel-kicker">
+        <span style="color:var(--cyan-dark);">📊 MEDIDAS CORPORAIS · MAX REIS</span>
+        <span class="badge-pill green">SALVO NO APARELHO</span>
+      </div>
+      <h3 style="font-size: 19px; margin-bottom: 4px;">Personalizar Peso, Altura e Idade</h3>
+      <p style="font-size: 12px; color: var(--dim); margin-bottom: 14px;">
+        Seus dados ficam gravados permanentemente no seu celular e recalculam sua meta diária de calorias, proteínas, água e IMC:
+      </p>
+
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:14px;">
+        <div class="kpi-box" style="text-align:left;">
+          <label class="lbl" for="inpWeight" style="display:block; margin-bottom:4px;">Peso Atual (kg)</label>
+          <input id="inpWeight" type="number" step="0.1" min="40" max="200" style="width:100%; background:#14181B; border:1px solid rgba(53,208,232,0.4); border-radius:6px; padding:8px; color:var(--txt); font-weight:700; font-size:15px;" />
+        </div>
+        <div class="kpi-box" style="text-align:left;">
+          <label class="lbl" for="inpGoalWeight" style="display:block; margin-bottom:4px;">Meta de Peso (kg)</label>
+          <input id="inpGoalWeight" type="number" step="0.1" min="40" max="200" style="width:100%; background:#14181B; border:1px solid rgba(18,184,134,0.45); border-radius:6px; padding:8px; color:var(--green-l); font-weight:700; font-size:15px;" />
+        </div>
+        <div class="kpi-box" style="text-align:left;">
+          <label class="lbl" for="inpHeight" style="display:block; margin-bottom:4px;">Altura (cm)</label>
+          <input id="inpHeight" type="number" step="1" min="130" max="230" style="width:100%; background:#14181B; border:1px solid rgba(255,255,255,0.2); border-radius:6px; padding:8px; color:var(--txt); font-weight:700; font-size:15px;" />
+        </div>
+        <div class="kpi-box" style="text-align:left;">
+          <label class="lbl" for="inpAge" style="display:block; margin-bottom:4px;">Idade (anos)</label>
+          <input id="inpAge" type="number" step="1" min="14" max="95" style="width:100%; background:#14181B; border:1px solid rgba(255,255,255,0.2); border-radius:6px; padding:8px; color:var(--txt); font-weight:700; font-size:15px;" />
+        </div>
+      </div>
+
+      <div style="display:flex; gap:8px;">
+        <button class="btn btn-primary" style="flex:1; justify-content:center; padding:10px;" onclick="saveBioModal()">
+          ✅ Salvar Minhas Medidas
+        </button>
+        <button class="btn" style="padding:10px 14px;" onclick="closeBioModal()">
+          Cancelar
+        </button>
+      </div>
     </div>
   </div>
 
@@ -2935,6 +2985,7 @@
     }
 
     function render3DStage() {
+      resizeCanvas3D();
       animTick += 0.024;
       if (autoSpin && !isDragging3d) targetYaw += 0.008;
       camYaw += (targetYaw - camYaw) * 0.14;
@@ -3774,14 +3825,89 @@
       openDailyTipModal(d);
     }
 
-    function promptWeight() {
-      const current = localStorage.getItem('max_weight') || '80';
-      const w = prompt('Atualizar peso atual (kg):', current);
-      if (w && !isNaN(parseFloat(w))) {
-        const val = parseFloat(w);
-        try { localStorage.setItem('max_weight', String(val)); } catch (e) {}
-        document.getElementById('weightDisplay').textContent = `${val} kg ✎`;
-      }
+    // ==========================================================================
+    // 7.1 PERFIL BIOMÉTRICO PERSISTENTE (PESO, META, ALTURA, IDADE, KCAL, PROT, ÁGUA, IMC)
+    // ==========================================================================
+    let bioProfile = {
+      weight: 80,
+      goalWeight: 74,
+      height: 178,
+      age: 32
+    };
+
+    function loadBioProfile() {
+      try {
+        const saved = localStorage.getItem('max_bio_v5');
+        const legacyWeight = localStorage.getItem('max_weight');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          bioProfile = { ...bioProfile, ...parsed };
+        } else if (legacyWeight && !isNaN(parseFloat(legacyWeight))) {
+          bioProfile.weight = parseFloat(legacyWeight);
+        }
+      } catch (e) {}
+      syncBioUI();
+    }
+
+    function syncBioUI() {
+      const w = parseFloat(bioProfile.weight) || 80;
+      const gw = parseFloat(bioProfile.goalWeight) || 74;
+      const h = parseFloat(bioProfile.height) || 178;
+      const a = parseFloat(bioProfile.age) || 32;
+
+      // Equação Mifflin-St Jeor (Masculino) + Fator 1.50 (Academia 3x + Calistenia Matinal)
+      const tmb = (10 * w) + (6.25 * h) - (5 * a) + 5;
+      const tdee = Math.round(tmb * 1.50);
+      const targetKcal = Math.max(1500, tdee - 450);
+      const targetProt = Math.round(w * 2.1);
+      const targetWater = (w * 0.038).toFixed(1).replace('.', ',');
+      const imc = (w / Math.pow(h / 100, 2)).toFixed(1);
+
+      const wEl = document.getElementById('weightDisplay');
+      const haEl = document.getElementById('heightAgeDisplay');
+      const kEl = document.getElementById('kcalTargetDisplay');
+      const pEl = document.getElementById('bioProtTarget');
+      const waEl = document.getElementById('bioWaterTarget');
+      const iEl = document.getElementById('bioImcTarget');
+
+      if (wEl) wEl.textContent = `${w} → ${gw} kg ✎`;
+      if (haEl) haEl.textContent = `${h}cm · ${a}a ✎`;
+      if (kEl) kEl.textContent = `${targetKcal.toLocaleString('pt-BR')} kcal`;
+      if (pEl) pEl.textContent = `${targetProt}g/dia`;
+      if (waEl) waEl.textContent = `${targetWater} L/dia`;
+      if (iEl) iEl.textContent = `${imc}`;
+    }
+
+    function openBioModal() {
+      document.getElementById('inpWeight').value = bioProfile.weight;
+      document.getElementById('inpGoalWeight').value = bioProfile.goalWeight;
+      document.getElementById('inpHeight').value = bioProfile.height;
+      document.getElementById('inpAge').value = bioProfile.age;
+      document.getElementById('bioModal').classList.add('open');
+    }
+
+    function closeBioModal() {
+      document.getElementById('bioModal').classList.remove('open');
+    }
+
+    function saveBioModal() {
+      const w = parseFloat(document.getElementById('inpWeight').value);
+      const gw = parseFloat(document.getElementById('inpGoalWeight').value);
+      const h = parseFloat(document.getElementById('inpHeight').value);
+      const a = parseFloat(document.getElementById('inpAge').value);
+
+      if (!isNaN(w) && w >= 40 && w <= 220) bioProfile.weight = w;
+      if (!isNaN(gw) && gw >= 40 && gw <= 220) bioProfile.goalWeight = gw;
+      if (!isNaN(h) && h >= 130 && h <= 230) bioProfile.height = h;
+      if (!isNaN(a) && a >= 14 && a <= 99) bioProfile.age = a;
+
+      try {
+        localStorage.setItem('max_bio_v5', JSON.stringify(bioProfile));
+        localStorage.setItem('max_weight', String(bioProfile.weight));
+      } catch (e) {}
+
+      syncBioUI();
+      closeBioModal();
     }
 
     // ==========================================================================
@@ -3900,6 +4026,7 @@
     }
 
     // Inicialização Geral
+    loadBioProfile();
     resizeCanvas3D();
     renderDailyWorkout();
     renderFunctionalGrid();
