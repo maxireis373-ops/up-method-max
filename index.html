@@ -1,0 +1,3350 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#14181B" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="maX Fit" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
+  <link rel="icon" type="image/png" sizes="64x64" href="favicon.png" />
+  <title>maX · Método Verão 3D (Calistenia, Academia & Nutrição Diária)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..700&family=Montserrat:wght@400;500;600;700;800&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    /* ==========================================================================
+       BRANDSYSTEM MAX v0.6 — TOKENS OFICIAIS + GLASSMORPHISM & 3D ENGINE v3.5
+       Fonte: https://brandsystem-max.vercel.app/
+       ========================================================================== */
+    :root {
+      --bg: #14181B;
+      --bg2: #181D1E;
+      --bg3: #1d2326;
+      --line: #23292A;
+      --txt: #F1F5F4;
+      --dim: #8A94A2;
+
+      /* Escala Dominante (60%) — No escuro, #35D0E8 assina (9.64:1 AA sobre #14181B) */
+      --blue: #0E5FA4;
+      --blue-l: #6BA6DA;
+      --cyan-dark: #35D0E8;
+
+      /* Escala Secundária (30%) — Verde #12B886 (6.99:1 AA sobre #14181B) */
+      --green: #12B886;
+      --green-l: #4FD6B0;
+
+      /* Escala Accent (10% pontual) — Laranja #FF6B35 (6.30:1 AA sobre #14181B) */
+      --orange: #FF6B35;
+      --orange-l: #FF9468;
+
+      /* Variante Orgânica (Pergaminho Vitruviano / Papel Quente) */
+      --warm-bg: #FAF7F0;
+      --warm-txt: #3A2E22;
+      --warm-dim: #6B5A48;
+
+      /* Glassmorphism Tokens */
+      --glass-bg: linear-gradient(135deg, rgba(29, 35, 38, 0.74) 0%, rgba(20, 24, 27, 0.56) 100%);
+      --glass-border: rgba(255, 255, 255, 0.11);
+      --glass-border-top: rgba(255, 255, 255, 0.22);
+      --glass-blur: blur(22px) saturate(175%);
+
+      /* Espaçamento Base 4/8px */
+      --s4: 4px; --s8: 8px; --s12: 12px; --s16: 16px;
+      --s24: 24px; --s32: 32px; --s48: 48px;
+
+      /* Raios & Sombras */
+      --r-sm: 6px; --r-md: 10px; --r-lg: 14px; --r-xl: 20px; --r-full: 999px;
+      --sh-sm: 0 2px 6px rgba(0,0,0,0.4);
+      --sh-md: 0 10px 28px rgba(0,0,0,0.55);
+      --sh-lg: 0 20px 50px rgba(0,0,0,0.72);
+
+      /* Tipografia Oficial */
+      --display: "Fraunces", Georgia, serif;
+      --body: "Montserrat", system-ui, -apple-system, sans-serif;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: clip;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: clip;
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(1100px 600px at 85% -5%, rgba(14, 95, 164, 0.28), transparent 70%),
+        radial-gradient(900px 550px at -10% 35%, rgba(18, 184, 134, 0.18), transparent 70%),
+        radial-gradient(800px 500px at 90% 95%, rgba(53, 208, 232, 0.14), transparent 70%);
+      background-attachment: fixed;
+      color: var(--txt);
+      font-family: var(--body);
+      line-height: 1.5;
+      min-height: 100vh;
+      padding-bottom: 108px;
+      position: relative;
+    }
+
+    /* Cinto de segurança mobile: nenhum filho de grid/flex pode forçar largura > 100% */
+    .hero-grid > *,
+    .stats-stack > *,
+    .ex-grid > *,
+    .week-pills > *,
+    .kpi-grid > *,
+    .cal-grid > *,
+    .bottom-nav-inner > *,
+    .meal-cards-grid > *,
+    .recipes-grid > *,
+    .fruits-grid > * {
+      min-width: 0;
+      max-width: 100%;
+    }
+
+    /* Orbes Volumétricos de Fundo */
+    .ambient-orbs {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(75px);
+      opacity: 0.4;
+      animation: floatOrb 18s ease-in-out infinite alternate;
+    }
+    .orb-1 { width: 320px; height: 320px; background: #0E5FA4; top: -80px; right: -60px; }
+    .orb-2 { width: 280px; height: 280px; background: #12B886; bottom: 12%; left: -90px; animation-delay: -6s; }
+    .orb-3 { width: 220px; height: 220px; background: #35D0E8; top: 42%; right: 8%; opacity: 0.2; animation-delay: -11s; }
+    @keyframes floatOrb {
+      0% { transform: translate3d(0, 0, 0) scale(1); }
+      100% { transform: translate3d(20px, -28px, 0) scale(1.08); }
+    }
+
+    h1, h2, h3, h4, .serif {
+      font-family: var(--display);
+      text-wrap: balance;
+      letter-spacing: -0.4px;
+    }
+    p, li, .pretty { text-wrap: pretty; }
+    .num { white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+    /* ==========================================================================
+       SISTEMA DE CARDS DE VIDRO (GLASSMORPHISM) + TILT 3D INTERATIVO
+       ========================================================================== */
+    .glass-card {
+      position: relative;
+      width: 100%;
+      max-width: 100%;
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
+      border-top-color: var(--glass-border-top);
+      border-left-color: rgba(255, 255, 255, 0.16);
+      border-radius: var(--r-lg);
+      box-shadow: var(--sh-md), inset 0 1px 0 0 rgba(255, 255, 255, 0.14);
+      overflow: hidden;
+      transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+    .glass-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        400px circle at var(--mx, 50%) var(--my, 0%),
+        rgba(53, 208, 232, 0.13),
+        rgba(18, 184, 134, 0.05) 40%,
+        transparent 70%
+      );
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .glass-card:hover::before { opacity: 1; }
+    .glass-card > * { position: relative; z-index: 2; }
+
+    .tilt-3d {
+      transform-style: preserve-3d;
+      will-change: transform;
+      transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* ==========================================================================
+       3D FLIP CARDS (GRID OVERLAY RESPONSIVO: NUNCA CORTA NO MOBILE!)
+       ========================================================================== */
+    .flip-scene {
+      perspective: 1200px;
+      width: 100%;
+    }
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      display: grid;
+      grid-template-areas: "flipface";
+      transform-style: preserve-3d;
+      transition: transform 0.7s cubic-bezier(0.34, 1.45, 0.64, 1);
+    }
+    .flip-scene.is-flipped .flip-card-inner {
+      transform: rotateY(180deg);
+    }
+    .flip-face {
+      grid-area: flipface;
+      width: 100%;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 18px;
+      border-radius: var(--r-lg);
+      background: linear-gradient(145deg, rgba(29, 35, 38, 0.84) 0%, rgba(20, 24, 27, 0.7) 100%);
+      backdrop-filter: blur(22px) saturate(180%);
+      -webkit-backdrop-filter: blur(22px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-top-color: rgba(255, 255, 255, 0.24);
+      box-shadow: var(--sh-md), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    }
+    .flip-face-back {
+      transform: rotateY(180deg);
+      background: linear-gradient(145deg, rgba(18, 184, 134, 0.18) 0%, rgba(20, 24, 27, 0.88) 100%);
+      border-color: rgba(18, 184, 134, 0.45);
+      border-top-color: rgba(79, 214, 176, 0.58);
+    }
+
+    /* ==========================================================================
+       APP SHELL & HEADER COM LOGO OFICIAL maX (X SÓLIDO EM #12B886)
+       ========================================================================== */
+    .app-shell {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 1020px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(20, 24, 27, 0.86);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+      padding: max(10px, env(safe-area-inset-top, 10px)) 0 10px;
+      margin-bottom: 18px;
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .brand-id {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .avatar-seal {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #14181B;
+      border: 2px solid var(--blue-l);
+      box-shadow: 0 0 20px rgba(44, 130, 163, 0.48), inset 0 0 12px rgba(53, 208, 232, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: none;
+      padding: 8px;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .avatar-seal:hover {
+      transform: rotate(90deg) scale(1.06);
+    }
+
+    .brand-title-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+    .brand-logo-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .max-wordmark-svg {
+      height: 24px;
+      width: auto;
+      display: block;
+      filter: drop-shadow(0 2px 8px rgba(18, 184, 134, 0.22));
+    }
+
+    .badge-pill {
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 0.7px;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: var(--r-full);
+      background: rgba(53, 208, 232, 0.12);
+      color: var(--cyan-dark);
+      border: 1px solid rgba(53, 208, 232, 0.35);
+      white-space: nowrap;
+    }
+    .badge-pill.green {
+      background: rgba(18, 184, 134, 0.15);
+      color: var(--green-l);
+      border-color: rgba(18, 184, 134, 0.4);
+    }
+    .badge-pill.orange {
+      background: rgba(255, 107, 53, 0.16);
+      color: var(--orange-l);
+      border-color: rgba(255, 107, 53, 0.4);
+    }
+
+    .brand-sub {
+      font-size: 11px;
+      color: var(--dim);
+      font-weight: 500;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .action-pill-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 7px 11px;
+      border-radius: var(--r-full);
+      border: 1px solid rgba(53, 208, 232, 0.4);
+      background: rgba(53, 208, 232, 0.12);
+      color: var(--cyan-dark);
+      font-family: var(--body);
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .action-pill-btn:hover {
+      background: rgba(53, 208, 232, 0.22);
+      transform: translateY(-1px);
+    }
+    .action-pill-btn.tip-btn {
+      border-color: rgba(255, 107, 53, 0.5);
+      background: rgba(255, 107, 53, 0.15);
+      color: var(--orange-l);
+    }
+    .action-pill-btn.tip-btn:hover {
+      background: rgba(255, 107, 53, 0.26);
+    }
+
+    .mode-switch {
+      display: flex;
+      background: rgba(24, 29, 30, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--r-full);
+      padding: 3px;
+      gap: 3px;
+    }
+    .mode-btn {
+      border: none;
+      background: transparent;
+      color: var(--dim);
+      font-family: var(--body);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 6px 11px;
+      border-radius: var(--r-full);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      white-space: nowrap;
+    }
+    .mode-btn.active-gym {
+      background: linear-gradient(135deg, var(--blue), #176BB2);
+      color: #FFFFFF;
+      box-shadow: 0 3px 12px rgba(14, 95, 164, 0.5);
+    }
+    .mode-btn.active-home {
+      background: linear-gradient(135deg, var(--green), #0E9C72);
+      color: #04221A;
+      box-shadow: 0 3px 12px rgba(18, 184, 134, 0.45);
+    }
+
+    /* Banner de Compensação em Casa */
+    .compensation-banner {
+      display: none;
+      background: linear-gradient(90deg, rgba(255, 107, 53, 0.18), rgba(18, 184, 134, 0.14));
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 107, 53, 0.45);
+      border-left: 4px solid var(--orange);
+      border-radius: var(--r-md);
+      padding: 12px 14px;
+      margin-bottom: 18px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .compensation-banner.show { display: flex; }
+    .compensation-banner p { font-size: 12px; color: var(--txt); }
+    .compensation-banner b { color: var(--orange-l); }
+
+    /* ==========================================================================
+       PALCO 3D INTERATIVO (WEBGL / CANVAS 360° + SCANNER BIOMECÂNICO)
+       ========================================================================== */
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    @media (max-width: 820px) {
+      .hero-grid { grid-template-columns: minmax(0, 1fr); }
+    }
+
+    .stage-3d-card {
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: background 0.35s ease, color 0.35s ease, border-color 0.35s ease;
+    }
+    .stage-3d-card.theme-parchment {
+      background: radial-gradient(circle at 50% 35%, #FAF7F0 0%, #EFE8D8 100%);
+      color: var(--warm-txt);
+      border-color: #D8CBB8;
+    }
+    .stage-3d-card.theme-parchment .stage-sub { color: var(--warm-dim); }
+    .stage-3d-card.theme-parchment .stage-title { color: var(--warm-txt); }
+
+    .stage-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 6px;
+    }
+    .stage-pill {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      padding: 4px 9px;
+      border-radius: var(--r-sm);
+      background: rgba(18, 184, 134, 0.16);
+      color: var(--green-l);
+      border: 1px solid rgba(18, 184, 134, 0.4);
+    }
+    .stage-3d-card.theme-parchment .stage-pill {
+      background: rgba(14, 95, 164, 0.12);
+      color: var(--blue);
+      border-color: rgba(14, 95, 164, 0.3);
+    }
+
+    .theme-toggle-btn {
+      font-size: 10.5px;
+      font-weight: 700;
+      padding: 5px 9px;
+      border-radius: var(--r-sm);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(20, 24, 27, 0.55);
+      color: var(--txt);
+      cursor: pointer;
+      font-family: var(--body);
+    }
+    .stage-3d-card.theme-parchment .theme-toggle-btn {
+      background: #3A2E22;
+      color: #FAF7F0;
+    }
+
+    .stage-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--txt);
+      margin-bottom: 2px;
+    }
+    .stage-sub {
+      font-size: 11.5px;
+      color: var(--dim);
+    }
+
+    .canvas-3d-wrap {
+      position: relative;
+      width: 100%;
+      max-width: 100%;
+      height: 250px;
+      margin: 6px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: grab;
+      user-select: none;
+      touch-action: pan-y;
+      overflow: hidden;
+    }
+    .canvas-3d-wrap:active { cursor: grabbing; }
+    #avatar3dCanvas {
+      width: 100%;
+      max-width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .stage-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: 100%;
+    }
+    .angle-presets {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .angle-btn {
+      font-family: var(--body);
+      font-size: 10.5px;
+      font-weight: 700;
+      padding: 5px 9px;
+      border-radius: var(--r-sm);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(20, 24, 27, 0.65);
+      color: var(--txt);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .angle-btn.active, .angle-btn:hover {
+      border-color: var(--cyan-dark);
+      color: var(--cyan-dark);
+      background: rgba(53, 208, 232, 0.15);
+    }
+    .stage-3d-card.theme-parchment .angle-btn {
+      background: rgba(58, 46, 34, 0.08);
+      color: var(--warm-txt);
+      border-color: rgba(58, 46, 34, 0.2);
+    }
+    .stage-3d-card.theme-parchment .angle-btn.active {
+      background: var(--blue);
+      color: #FFFFFF;
+      border-color: var(--blue);
+    }
+
+    .ex-selector-row {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 6px;
+    }
+    @media (max-width: 540px) {
+      .ex-selector-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    .pose-btn {
+      font-family: var(--body);
+      font-size: 10.5px;
+      font-weight: 700;
+      padding: 7px 6px;
+      border-radius: var(--r-sm);
+      border: 1px solid rgba(18, 184, 134, 0.35);
+      background: rgba(20, 24, 27, 0.72);
+      color: var(--txt);
+      cursor: pointer;
+      transition: all 0.18s ease;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .pose-btn.active {
+      background: var(--green);
+      color: #04221A;
+      border-color: var(--green);
+      box-shadow: 0 0 14px rgba(18, 184, 134, 0.45);
+    }
+
+    /* ==========================================================================
+       COLUNA DIREITA DO HERO: PROGRESSO 28 DIAS, CARD DICA DO DIA & TIMER
+       ========================================================================== */
+    .stats-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      min-width: 0;
+    }
+    .glass-panel {
+      padding: 18px;
+    }
+    .panel-kicker {
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--cyan-dark);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin: 12px 0;
+    }
+    .kpi-box {
+      background: rgba(20, 24, 27, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--r-md);
+      padding: 9px 8px;
+      min-width: 0;
+    }
+    .kpi-box .lbl {
+      font-size: 10px;
+      color: var(--dim);
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .kpi-box .val {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--txt);
+      margin-top: 2px;
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .kpi-box .val.cyan { color: var(--cyan-dark); }
+    .kpi-box .val.green { color: var(--green-l); }
+    .kpi-box .val.orange { color: var(--orange-l); }
+
+    .progress-bar-wrap { margin-top: 8px; }
+    .progress-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 6px;
+      flex-wrap: wrap;
+      font-size: 11.5px;
+      color: var(--dim);
+      margin-bottom: 6px;
+    }
+    .progress-meta b { color: var(--txt); }
+    .progress-track {
+      height: 10px;
+      background: rgba(20, 24, 27, 0.8);
+      border-radius: var(--r-full);
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--green), var(--cyan-dark));
+      border-radius: var(--r-full);
+      width: 14%;
+      transition: width 0.35s ease;
+    }
+
+    /* Timer Card */
+    .timer-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .timer-digits {
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--cyan-dark);
+      letter-spacing: 1px;
+      text-shadow: 0 0 18px rgba(53, 208, 232, 0.35);
+    }
+    .timer-btns { display: flex; gap: 6px; flex-wrap: wrap; }
+    .btn {
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(29, 35, 38, 0.82);
+      color: var(--txt);
+      font-family: var(--body);
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 7px 12px;
+      border-radius: var(--r-md);
+      cursor: pointer;
+      transition: all 0.18s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      white-space: nowrap;
+    }
+    .btn:hover { border-color: var(--blue-l); transform: translateY(-1px); }
+    .btn-primary {
+      background: var(--green);
+      color: #04221A;
+      border-color: var(--green);
+    }
+    .btn-primary:hover { background: var(--green-l); }
+    .btn-accent {
+      background: var(--orange);
+      color: #14181B;
+      border-color: var(--orange);
+    }
+
+    /* ==========================================================================
+       SECTIONS & MODULE TABS
+       ========================================================================== */
+    .view-section { display: none; animation: fadeIn 0.25s ease; }
+    .view-section.active { display: block; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .sec-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--display);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      color: var(--blue-l);
+      margin: 22px 0 14px;
+    }
+    .sec-head::after {
+      content: "";
+      height: 1px;
+      flex: 1;
+      background: linear-gradient(90deg, rgba(107, 166, 218, 0.35), transparent);
+    }
+
+    /* ==========================================================================
+       ROTINA SEMANAL SEG / TER / QUA + MANHÃS
+       ========================================================================== */
+    .week-pills {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    @media (max-width: 680px) {
+      .week-pills { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    .day-tab {
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--r-md);
+      padding: 11px;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s ease;
+      color: var(--txt);
+      font-family: var(--body);
+    }
+    .day-tab:hover { border-color: var(--blue-l); transform: translateY(-2px); }
+    .day-tab.active {
+      background: linear-gradient(135deg, rgba(53, 208, 232, 0.16), rgba(18, 184, 134, 0.12));
+      border-color: var(--cyan-dark);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
+    }
+    .day-tab .d-tag {
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--cyan-dark);
+      display: block;
+    }
+    .day-tab .d-name {
+      font-family: var(--display);
+      font-size: 14.5px;
+      font-weight: 600;
+      margin-top: 2px;
+      display: block;
+    }
+    .day-tab .d-sub {
+      font-size: 10.5px;
+      color: var(--dim);
+      margin-top: 2px;
+      display: block;
+    }
+
+    /* ==========================================================================
+       GRID DE EXERCÍCIOS E CARDS 3D FLIP
+       ========================================================================== */
+    .ex-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+    @media (max-width: 720px) {
+      .ex-grid { grid-template-columns: minmax(0, 1fr); }
+    }
+
+    .ex-card {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .ex-card.done {
+      border-color: rgba(18, 184, 134, 0.55);
+      background: linear-gradient(135deg, rgba(18, 184, 134, 0.14), rgba(24, 29, 30, 0.75));
+    }
+    .ex-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .ex-badge {
+      font-size: 9.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      padding: 3px 8px;
+      border-radius: var(--r-sm);
+      background: rgba(53, 208, 232, 0.12);
+      color: var(--cyan-dark);
+      border: 1px solid rgba(53, 208, 232, 0.3);
+    }
+    .ex-badge.home {
+      background: rgba(18, 184, 134, 0.16);
+      color: var(--green-l);
+      border-color: rgba(18, 184, 134, 0.38);
+    }
+    .ex-badge.burn {
+      background: rgba(255, 107, 53, 0.16);
+      color: var(--orange-l);
+      border-color: rgba(255, 107, 53, 0.38);
+    }
+
+    .ex-title {
+      font-family: var(--display);
+      font-size: 16.5px;
+      font-weight: 600;
+      color: var(--txt);
+    }
+    .ex-desc {
+      font-size: 12px;
+      color: var(--dim);
+    }
+    .ex-metrics {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: auto;
+      padding-top: 8px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      align-items: center;
+      justify-content: space-between;
+    }
+    .metric-chip {
+      font-family: ui-monospace, monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--txt);
+      background: rgba(20, 24, 27, 0.75);
+      padding: 4px 8px;
+      border-radius: var(--r-sm);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .flip-trigger-btn {
+      font-family: var(--body);
+      font-size: 10.5px;
+      font-weight: 700;
+      padding: 6px 10px;
+      border-radius: var(--r-sm);
+      border: 1px solid rgba(53, 208, 232, 0.38);
+      background: rgba(53, 208, 232, 0.12);
+      color: var(--cyan-dark);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .flip-trigger-btn:hover { background: rgba(53, 208, 232, 0.24); }
+
+    .check-btn {
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(20, 24, 27, 0.8);
+      color: var(--dim);
+      font-family: var(--body);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 6px 11px;
+      border-radius: var(--r-sm);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .ex-card.done .check-btn {
+      background: var(--green);
+      color: #04221A;
+      border-color: var(--green);
+    }
+
+    /* Grade 28 Dias (Com gatilho para Dica Nutricional do Dia!) */
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 7px;
+      margin-top: 12px;
+    }
+    @media (max-width: 540px) {
+      .cal-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    }
+    .cal-day {
+      background: rgba(20, 24, 27, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--r-md);
+      padding: 8px 4px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .cal-day:hover { border-color: var(--blue-l); transform: translateY(-2px); }
+    .cal-day.completed {
+      background: rgba(18, 184, 134, 0.18);
+      border-color: var(--green);
+    }
+    .cal-day .c-num {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: var(--dim);
+      display: block;
+    }
+    .cal-day.completed .c-num { color: var(--green-l); }
+    .cal-day .c-ico { font-size: 14px; margin-top: 2px; display: block; }
+    .cal-day .c-tip {
+      font-size: 9px;
+      color: var(--cyan-dark);
+      margin-top: 2px;
+      display: block;
+    }
+
+    /* ==========================================================================
+       PÁGINA 04: NUTRIÇÃO DIVERSIFICADA DIA A DIA (SEG A DOM) + RECEITAS
+       ========================================================================== */
+    .nutri-day-bar {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+    @media (max-width: 680px) {
+      .nutri-day-bar {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+    }
+    .nday-btn {
+      background: rgba(24, 29, 30, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--r-md);
+      padding: 9px 6px;
+      color: var(--dim);
+      font-family: var(--body);
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      text-align: center;
+    }
+    .nday-btn:hover { color: var(--txt); border-color: var(--blue-l); }
+    .nday-btn.active {
+      background: linear-gradient(135deg, rgba(18, 184, 134, 0.22), rgba(53, 208, 232, 0.16));
+      color: var(--txt);
+      border-color: var(--green);
+      box-shadow: 0 4px 16px rgba(18, 184, 134, 0.28);
+    }
+    .nday-btn small {
+      display: block;
+      font-size: 9.5px;
+      font-weight: 500;
+      color: var(--cyan-dark);
+      margin-top: 2px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .meal-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    @media (max-width: 720px) {
+      .meal-cards-grid { grid-template-columns: minmax(0, 1fr); }
+    }
+
+    .meal-opt-tabs {
+      display: flex;
+      gap: 5px;
+      margin: 8px 0;
+    }
+    .mopt-btn {
+      flex: 1;
+      font-family: var(--body);
+      font-size: 10.5px;
+      font-weight: 700;
+      padding: 5px 8px;
+      border-radius: var(--r-sm);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(20, 24, 27, 0.7);
+      color: var(--dim);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .mopt-btn.active {
+      background: rgba(53, 208, 232, 0.16);
+      color: var(--cyan-dark);
+      border-color: var(--cyan-dark);
+    }
+
+    .recipes-grid, .fruits-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    @media (max-width: 860px) {
+      .recipes-grid, .fruits-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 560px) {
+      .recipes-grid, .fruits-grid { grid-template-columns: minmax(0, 1fr); }
+    }
+
+    .plate-card {
+      padding: 18px;
+      margin-bottom: 20px;
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.4fr);
+      gap: 18px;
+      align-items: center;
+    }
+    @media (max-width: 720px) {
+      .plate-card { grid-template-columns: minmax(0, 1fr); }
+    }
+    .plate-visual {
+      width: 165px;
+      height: 165px;
+      margin: 0 auto;
+      border-radius: 50%;
+      background: conic-gradient(
+        var(--green) 0deg 180deg,
+        var(--cyan-dark) 180deg 288deg,
+        var(--orange) 288deg 360deg
+      );
+      padding: 14px;
+      box-shadow: var(--sh-md), 0 0 30px rgba(18, 184, 134, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .plate-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 10px;
+    }
+
+    .vit-table-wrap {
+      overflow-x: auto;
+      border-radius: var(--r-lg);
+      max-width: 100%;
+    }
+    table.vit-tbl {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      min-width: 480px;
+    }
+    table.vit-tbl th {
+      text-align: left;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--blue-l);
+      font-weight: 700;
+      padding: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      white-space: nowrap;
+    }
+    table.vit-tbl td {
+      padding: 11px 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      color: var(--dim);
+      vertical-align: middle;
+    }
+    table.vit-tbl tr:last-child td { border-bottom: none; }
+    table.vit-tbl td b { color: var(--txt); font-weight: 600; }
+
+    /* ==========================================================================
+       MODAIS: POP-UP DIÁRIO DE NUTRIÇÃO (28 DIAS) & MODAL QR CODE
+       ========================================================================== */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 12, 14, 0.8);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      z-index: 250;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 14px;
+      overflow-y: auto;
+    }
+    .modal-backdrop.open { display: flex; }
+    .modal-box {
+      max-width: 480px;
+      width: 100%;
+      padding: 20px;
+      text-align: left;
+      animation: popScale 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    @keyframes popScale {
+      from { opacity: 0; transform: scale(0.92) translateY(10px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .tip-day-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      background: rgba(20, 24, 27, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--r-md);
+      padding: 8px 10px;
+      margin-bottom: 14px;
+    }
+    .tip-highlight-box {
+      background: linear-gradient(135deg, rgba(18, 184, 134, 0.15), rgba(53, 208, 232, 0.08));
+      border-left: 3px solid var(--green);
+      border-radius: 0 var(--r-md) var(--r-md) 0;
+      padding: 11px 13px;
+      margin: 12px 0;
+      font-size: 12.5px;
+      color: var(--txt);
+    }
+    .tip-howto-box {
+      background: rgba(20, 24, 27, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-radius: var(--r-md);
+      padding: 12px;
+      margin-bottom: 12px;
+      font-size: 12px;
+      color: var(--dim);
+    }
+
+    .qr-box {
+      background: #FFFFFF;
+      padding: 14px;
+      border-radius: var(--r-lg);
+      display: inline-flex;
+      margin: 14px auto;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .url-copy-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      background: rgba(20, 24, 27, 0.9);
+      border: 1px solid rgba(53, 208, 232, 0.35);
+      border-radius: var(--r-md);
+      padding: 10px 12px;
+      margin-top: 10px;
+      font-family: ui-monospace, monospace;
+      font-size: 12px;
+      color: var(--cyan-dark);
+      overflow: hidden;
+    }
+
+    /* ==========================================================================
+       BOTTOM NAVIGATION BAR (100% SIMÉTRICA E ALINHADA NO MOBILE)
+       ========================================================================== */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      z-index: 100;
+      background: rgba(20, 24, 27, 0.88);
+      backdrop-filter: blur(22px) saturate(180%);
+      -webkit-backdrop-filter: blur(22px) saturate(180%);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 6px 8px calc(6px + env(safe-area-inset-bottom, 0px));
+    }
+    .bottom-nav-inner {
+      max-width: 680px;
+      width: 100%;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 4px;
+    }
+    .bnav-btn {
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--dim);
+      font-family: var(--body);
+      padding: 7px 4px;
+      border-radius: var(--r-md);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      transition: all 0.18s ease;
+      min-width: 0;
+    }
+    .bnav-btn .ico { font-size: 16px; line-height: 1; }
+    .bnav-btn .lbl {
+      font-size: 10px;
+      font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+    }
+    .bnav-btn:hover { color: var(--txt); background: rgba(255, 255, 255, 0.04); }
+    .bnav-btn.active {
+      color: var(--cyan-dark);
+      background: rgba(53, 208, 232, 0.12);
+      border-color: rgba(53, 208, 232, 0.35);
+    }
+
+    /* Ajustes finos para telas de celular (iPhone 375px–430px) */
+    @media (max-width: 560px) {
+      .app-shell { padding: 0 12px; }
+      .topbar { padding: 8px 0; margin-bottom: 14px; }
+      .topbar-inner { flex-direction: column; align-items: stretch; gap: 8px; }
+      .top-actions { justify-content: space-between; width: 100%; }
+      .mode-switch { width: 100%; }
+      .mode-btn { flex: 1; justify-content: center; }
+      .stage-3d-card, .glass-panel, .ex-card, .flip-face { padding: 14px; }
+      .canvas-3d-wrap { height: 220px; }
+      .kpi-box .val { font-size: 13px; }
+      .stage-title { font-size: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Orbes Volumétricos de Fundo -->
+  <div class="ambient-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- TOPBAR: IDENTIDADE OFICIAL BRANDSYSTEM MAX v0.6 -->
+  <header class="topbar">
+    <div class="app-shell topbar-inner">
+      <div class="brand-id">
+        <div class="avatar-seal" title="Max Reis · Símbolo Oficial X Sólido (#12B886)">
+          <svg viewBox="0 0 100 100" width="100%" height="100%" aria-hidden="true">
+            <g transform="rotate(45 50 50)">
+              <rect x="4" y="34.5" width="92" height="31" fill="#12B886" />
+              <rect x="34.5" y="4" width="31" height="92" fill="#12B886" />
+            </g>
+          </svg>
+        </div>
+
+        <div class="brand-title-wrap">
+          <div class="brand-logo-row">
+            <svg class="max-wordmark-svg" viewBox="0 0 252 76" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="maX">
+              <path d="M4 18H21.5V25.2C24.6 20.1 30.2 16.8 37.4 16.8C44.8 16.8 50.5 20.3 53.4 26.3C56.9 20.3 63.1 16.8 70.8 16.8C82.4 16.8 90 24.5 90 37.6V72H72V40.8C72 34.4 68.4 30.8 63.1 30.8C57.6 30.8 54 34.6 54 41.2V72H36V40.8C36 34.4 32.4 30.8 27.1 30.8C21.6 30.8 18 34.6 18 41.2V72H4V18Z" fill="#FFFFFF"/>
+              <path d="M126.5 16.8C134.3 16.8 140.4 20.1 143.5 25.4V18H161V72H143.5V64.6C140.4 69.9 134.3 73.2 126.5 73.2C112.4 73.2 101.8 61.6 101.8 45C101.8 28.4 112.4 16.8 126.5 16.8ZM131.6 31.2C123.8 31.2 118.4 36.8 118.4 45C118.4 53.2 123.8 58.8 131.6 58.8C139.4 58.8 144.8 53.2 144.8 45C144.8 36.8 139.4 31.2 131.6 31.2Z" fill="#FFFFFF"/>
+              <g transform="translate(206, 45) rotate(45)">
+                <rect x="-33" y="-11.2" width="66" height="22.4" fill="#12B886"/>
+                <rect x="-11.2" y="-33" width="22.4" height="66" fill="#12B886"/>
+              </g>
+            </svg>
+            <span class="badge-pill">PROJETO VERÃO 3D</span>
+          </div>
+          <span class="brand-sub" id="modeSubtitle">🏋️ Seg: Cardio+Core · Ter: Superiores · Qua: Inferiores</span>
+        </div>
+      </div>
+
+      <div class="top-actions">
+        <button class="action-pill-btn tip-btn" onclick="openDailyTipModal()" title="Abrir Dica de Alimentação do Dia">
+          🍏 Dica do Dia
+        </button>
+        <button class="action-pill-btn" onclick="toggleQrModal(true)" title="Link Fixo & Instalar Ícone na Tela do Celular">
+          📲 Instalar App
+        </button>
+
+        <div class="mode-switch" role="group" aria-label="Alternar local de treino">
+          <button class="mode-btn active-gym" id="btnModeGym" onclick="setGlobalMode('gym')">
+            🏋️ Academia (3x)
+          </button>
+          <button class="mode-btn" id="btnModeHome" onclick="setGlobalMode('home')">
+            🏠 Faltei! Casa
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="app-shell">
+    <!-- BANNER DE COMPENSAÇÃO IMEDIATA -->
+    <div class="compensation-banner" id="compBanner">
+      <p>
+        ⚡ <b>Modo Compensação Calistênica Ativo:</b> Todos os cards 3D giraram para o verso com equivalentes de <b>peso corporal em casa</b>!
+      </p>
+      <button class="btn" onclick="setGlobalMode('gym')">Voltar p/ Aparelhos</button>
+    </div>
+
+    <!-- ======================================================================
+         ABA 1: DESAFIO 28 DIAS, SCANNER 3D INTERATIVO & ROTINA SEG/TER/QUA
+         ====================================================================== -->
+    <section class="view-section active" id="view-hoje">
+      <div class="hero-grid">
+        <!-- PALCO 3D INTERATIVO -->
+        <div class="glass-card stage-3d-card tilt-3d" id="stage3dCard">
+          <div>
+            <div class="stage-header">
+              <span class="stage-pill" id="stageMusclePill">ATIVAÇÃO 3D · GLÚTEOS & POSTERIOR</span>
+              <button class="theme-toggle-btn" onclick="toggleStageTheme()" id="themeBtn">
+                📜 Tema Vitruviano
+              </button>
+            </div>
+            <h2 class="stage-title" id="stageExTitle">1. Terra Unilateral (Toe Touch)</h2>
+            <p class="stage-sub" id="stageExSub">
+              Arraste o modelo 3D em 360° · Ativação matinal "Todas as Manhãs" (BetterMe Men)
+            </p>
+          </div>
+
+          <div class="canvas-3d-wrap" id="canvas3dContainer">
+            <canvas id="avatar3dCanvas" width="460" height="260"></canvas>
+          </div>
+
+          <div class="stage-controls">
+            <div class="angle-presets">
+              <button class="angle-btn active" onclick="setCameraAngle(0, this)">0° Frente</button>
+              <button class="angle-btn" onclick="setCameraAngle(0.65, this)">45° Pose 3/4</button>
+              <button class="angle-btn" onclick="setCameraAngle(1.57, this)">90° Perfil</button>
+              <button class="angle-btn" onclick="setCameraAngle(3.14, this)">180° Costas</button>
+              <button class="angle-btn" onclick="toggleAutoSpin(this)" id="btnAutoSpin">🔄 Giro: ON</button>
+            </div>
+
+            <div class="ex-selector-row">
+              <button class="pose-btn active" onclick="selectMorningPose(0, this)">1. Terra Unilat.</button>
+              <button class="pose-btn" onclick="selectMorningPose(1, this)">2. Pike Push-up</button>
+              <button class="pose-btn" onclick="selectMorningPose(2, this)">3. Agach. Guarda</button>
+              <button class="pose-btn" onclick="selectMorningPose(3, this)">4. Flexão+Vacuum</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- COLUNA DIREITA: PAINEL BIOMÉTRICO, DICA NUTRICIONAL DO DIA & TIMER -->
+        <div class="stats-stack">
+          <div class="glass-card glass-panel tilt-3d">
+            <div class="panel-kicker">
+              <span>DESAFIO DE CALISTENIA & ACADEMIA</span>
+              <span class="badge-pill">META VERÃO</span>
+            </div>
+            <h2 style="font-size: 19px; margin-bottom: 4px;">Painel Biométrico · Max Reis</h2>
+            <p style="font-size: 12px; color: var(--dim);">
+              Secar gordura abdominal + construir estrutura atlética em V.
+            </p>
+
+            <div class="kpi-grid">
+              <div class="kpi-box">
+                <span class="lbl">Objetivo</span>
+                <span class="val cyan">Secar + V</span>
+              </div>
+              <div class="kpi-box">
+                <span class="lbl">Peso Atual</span>
+                <span class="val num" id="weightDisplay" style="cursor:pointer;" onclick="promptWeight()">80 kg ✎</span>
+              </div>
+              <div class="kpi-box">
+                <span class="lbl">Déficit Alvo</span>
+                <span class="val orange num">-450 kcal</span>
+              </div>
+            </div>
+
+            <div class="progress-bar-wrap">
+              <div class="progress-meta">
+                <span>Progresso 28 Dias:</span>
+                <b class="num" id="progressText">4 de 28 dias (14%)</b>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill" id="progressBar"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CARD RESUMO DA DICA NUTRICIONAL DO DIA (ABRE POP-UP) -->
+          <div class="glass-card glass-panel tilt-3d" style="border-color: rgba(18, 184, 134, 0.38);">
+            <div class="panel-kicker">
+              <span style="color: var(--green-l);" id="miniTipCat">🍎 DICA NUTRICIONAL DO DIA</span>
+              <span class="badge-pill green" id="miniTipDayBadge">DIA 4 / 28</span>
+            </div>
+            <h3 style="font-size: 16px; margin-bottom: 4px;" id="miniTipTitle">Bowl Seca-Barriga: Frango, Abacate e Folhas</h3>
+            <p style="font-size: 11.5px; color: var(--dim); margin-bottom: 10px;" id="miniTipDesc">
+              Reduz o cortisol abdominal e mantém saciedade máxima com gorduras boas e proteína.
+            </p>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <button class="btn btn-primary" onclick="openDailyTipModal()">📖 Ver Receita / Dica Completa</button>
+              <button class="btn" onclick="nextDailyTip(1)">🎲 Próxima Dica (1–28)</button>
+            </div>
+          </div>
+
+          <!-- CRONÔMETRO DE EXECUÇÃO HIIT / VACUUM -->
+          <div class="glass-card glass-panel tilt-3d">
+            <div class="panel-kicker">
+              <span>TIMER DE SÉRIE · HIIT / VACUUM</span>
+              <span style="color:var(--green-l)">⚡ PRONTO</span>
+            </div>
+            <div class="timer-row">
+              <div>
+                <div class="timer-digits num" id="timerDisplay">00:45</div>
+                <span style="font-size: 11px; color: var(--dim);" id="timerLabel">Tempo sob tensão / prancha</span>
+              </div>
+              <div class="timer-btns">
+                <button class="btn btn-primary" onclick="toggleTimer()" id="timerStartBtn">▶ Iniciar</button>
+                <button class="btn" onclick="setTimerPreset(45, 'Série Calistênica (45s)')">45s</button>
+                <button class="btn" onclick="setTimerPreset(20, 'Vacuum Abdominal (20s)')">20s</button>
+                <button class="btn" onclick="setTimerPreset(60, 'Tiros Esteira / Escada (60s)')">60s</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CRONOGRAMA SEMANAL DO MAX -->
+      <div class="sec-head">Rotina Semanal Híbrida · Academia (Seg/Ter/Qua) + Manhãs</div>
+      <div class="week-pills">
+        <button class="day-tab active" onclick="selectDayTab('seg', this)">
+          <span class="d-tag">SEGUNDA · ACADEMIA</span>
+          <span class="d-name">Cardio + Core</span>
+          <span class="d-sub">Esteira + Escada + Abdômen</span>
+        </button>
+        <button class="day-tab" onclick="selectDayTab('ter', this)">
+          <span class="d-tag">TERÇA · ACADEMIA</span>
+          <span class="d-name">Membros Superiores</span>
+          <span class="d-sub">Peito, Costas, Ombros & Braços</span>
+        </button>
+        <button class="day-tab" onclick="selectDayTab('qua', this)">
+          <span class="d-tag">QUARTA · ACADEMIA</span>
+          <span class="d-name">Membros Inferiores</span>
+          <span class="d-sub">Quadríceps, Posterior & Glúteo</span>
+        </button>
+        <button class="day-tab" onclick="selectDayTab('manhas', this)">
+          <span class="d-tag">TODAS AS MANHÃS · 15 MIN</span>
+          <span class="d-name">Despertar Calistênico</span>
+          <span class="d-sub">Os 4 exercícios do vídeo em casa</span>
+        </button>
+      </div>
+
+      <div class="ex-grid" id="dailyWorkoutContainer"></div>
+
+      <!-- MAPA 28 DIAS (CADA DIA ABRE SUA DICA NUTRICIONAL EXCLUSIVA!) -->
+      <div class="sec-head">Mapa 28 Dias · Toque no Dia p/ Marcar e Ver a Dica Alimentar do Dia</div>
+      <div class="glass-card glass-panel">
+        <p style="font-size: 12px; color: var(--dim);">
+          Cada dia do Desafio 28 Dias possui uma <b>Dica Nutricional exclusiva</b> (fruta, receita de 5 min ou booster). Toque em qualquer dia abaixo para marcar concluído e abrir a sugestão daquele dia:
+        </p>
+        <div class="cal-grid" id="calendarGrid"></div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         ABA 2: EXERCÍCIOS FUNCIONAIS (CARDS 3D FLIP: QUEIMA & BARRIGA)
+         ====================================================================== -->
+    <section class="view-section" id="view-funcionais">
+      <div class="sec-head">Página 02 · Exercícios Funcionais (Cards 3D Flip: Academia ↔ Casa)</div>
+      <div class="glass-card glass-panel" style="margin-bottom: 16px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+          <div>
+            <span class="panel-kicker">PROPÓSITO: DERRETER GORDURA VISCERAL & FLANCOS</span>
+            <h2 style="font-size: 20px; margin-bottom: 4px;">Circuito Metabólico & Core Vacuum 3D</h2>
+            <p style="font-size: 12px; color: var(--dim); max-width: 68ch;">
+              Toque em <b style="color:var(--cyan-dark);">🔄 Virar 3D</b> em qualquer exercício abaixo para girar o card em 180° e ver a compensação calistênica em casa.
+            </p>
+          </div>
+          <button class="btn btn-accent" onclick="flipAllCardsInSection('functionalGrid')">
+            🔄 Girar Todos em 3D
+          </button>
+        </div>
+      </div>
+
+      <div class="ex-grid" id="functionalGrid"></div>
+    </section>
+
+    <!-- ======================================================================
+         ABA 3: RESISTÊNCIA & FORÇA (CARDS 3D FLIP: ESTRUTURA & APARÊNCIA)
+         ====================================================================== -->
+    <section class="view-section" id="view-forca">
+      <div class="sec-head">Página 03 · Resistência & Força (Cards 3D Flip: Terça & Quarta)</div>
+      <div class="glass-card glass-panel" style="margin-bottom: 16px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+          <div>
+            <span class="panel-kicker">PROPÓSITO: BOA APARÊNCIA, POSTURA & HIPERTROFIA</span>
+            <h2 style="font-size: 20px; margin-bottom: 4px;">Força Híbrida: Máquinas + Calistenia Avançada</h2>
+            <p style="font-size: 12px; color: var(--dim); max-width: 68ch;">
+              Terça (Superiores) e Quarta (Inferiores) com conversão biomecânica 3D instantânea para calistenia em casa.
+            </p>
+          </div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="btn btn-primary" id="btnFilterUpper" onclick="renderStrengthGrid('upper')">💪 Terça: Superiores</button>
+            <button class="btn" id="btnFilterLower" onclick="renderStrengthGrid('lower')">🦵 Quarta: Inferiores</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="ex-grid" id="strengthGrid"></div>
+    </section>
+
+    <!-- ======================================================================
+         ABA 4: ALIMENTAÇÃO DIVERSIFICADA DIA A DIA, RECEITAS & VITAMINAS
+         ====================================================================== -->
+    <section class="view-section" id="view-dieta">
+      <div class="sec-head">Página 04 · Cardápio Diversificado Dia a Dia (Segunda a Domingo)</div>
+
+      <!-- SELETOR DOS 7 DIAS DA SEMANA -->
+      <div class="glass-card glass-panel" style="margin-bottom: 16px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom: 12px;">
+          <div>
+            <span class="panel-kicker">ROTAÇÃO NUTRICIONAL DIÁRIA · 3 OPÇÕES POR REFEIÇÃO</span>
+            <h2 style="font-size: 20px;" id="nutriDayHeaderTitle">Segunda-feira · Cardio & Lipólise Visceral</h2>
+            <p style="font-size: 12px; color: var(--dim);" id="nutriDayHeaderSub">
+              Estratégia: Baixo Índice Glicêmico + Ativação Termogênica · Meta: 1.850 kcal (165g Proteína)
+            </p>
+          </div>
+          <button class="btn btn-accent" onclick="openDailyTipModal()">
+            🍏 Abrir Pop-up Dica do Dia (1–28)
+          </button>
+        </div>
+
+        <div class="nutri-day-bar" id="nutriWeekBar">
+          <button class="nday-btn active" onclick="selectNutriDay('seg', this)">Seg<small>Cardio+Core</small></button>
+          <button class="nday-btn" onclick="selectNutriDay('ter', this)">Ter<small>Superiores</small></button>
+          <button class="nday-btn" onclick="selectNutriDay('qua', this)">Qua<small>Inferiores</small></button>
+          <button class="nday-btn" onclick="selectNutriDay('qui', this)">Qui<small>Low-Carb</small></button>
+          <button class="nday-btn" onclick="selectNutriDay('sex', this)">Sex<small>Detox/Funcional</small></button>
+          <button class="nday-btn" onclick="selectNutriDay('sab', this)">Sáb<small>Flexível Limpo</small></button>
+          <button class="nday-btn" onclick="selectNutriDay('dom', this)">Dom<small>Ômega 3 & Sono</small></button>
+        </div>
+
+        <!-- DESTAQUES DO DIA SELECIONADO: FRUTA DO DIA + RECEITA EXPRESS -->
+        <div class="ex-grid" id="nutriDayHighlights" style="margin-top: 10px;"></div>
+      </div>
+
+      <!-- AS 4 REFEIÇÕES DO DIA COM OPÇÕES A / B / C -->
+      <div class="meal-cards-grid" id="nutriMealsContainer"></div>
+
+      <!-- CATÁLOGO DE 6 RECEITAS RÁPIDAS FITNESS (ATÉ 6 MIN) -->
+      <div class="sec-head">Receitas Simples & Rápidas (3 a 6 Minutos)</div>
+      <div class="recipes-grid" id="recipesCatalogGrid"></div>
+
+      <!-- GUIA DE FRUTAS FUNCIONAIS ALIADAS DA DEFINIÇÃO -->
+      <div class="sec-head">Frutas Estratégicas Aliadas da Forma Física & Saúde</div>
+      <div class="fruits-grid" id="fruitsCatalogGrid"></div>
+
+      <!-- REGRA DO PRATO 50/30/20 -->
+      <div class="sec-head">Proporção Visual do Prato & Vitaminas Essenciais</div>
+      <div class="glass-card plate-card tilt-3d">
+        <div class="plate-visual">
+          <div class="plate-inner">
+            <strong class="serif" style="font-size: 19px; color: var(--txt);">50/30/20</strong>
+            <span style="font-size: 10.5px; color: var(--dim);">Regra do Prato Seca-Barriga</span>
+          </div>
+        </div>
+        <div>
+          <span class="panel-kicker">FUNDAMENTAL, DIRETO E SEM COMPLICAÇÃO</span>
+          <h2 style="font-size: 20px; margin-bottom: 8px;">A Proporção Visual de Cada Refeição</h2>
+          <div style="display: grid; gap: 8px;">
+            <div style="display:flex; align-items:center; gap:10px; font-size:12.5px;">
+              <span style="width:12px; height:12px; border-radius:3px; background:var(--green); flex:none;"></span>
+              <span><b style="color:var(--txt);">50% Vegetais & Fibras (Saciedade + Micronutrientes):</b> Brócolis, espinafre, rúcula, tomate, abobrinha.</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:10px; font-size:12.5px;">
+              <span style="width:12px; height:12px; border-radius:3px; background:var(--cyan-dark); flex:none;"></span>
+              <span><b style="color:var(--txt);">30% Proteína Magra (Força & Estrutura Corporal):</b> Frango grelhado, ovos, tilápia, patinho, whey. Meta: <span class="num" style="color:var(--cyan-dark); font-weight:700;">165g/dia</span>.</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:10px; font-size:12.5px;">
+              <span style="width:12px; height:12px; border-radius:3px; background:var(--orange); flex:none;"></span>
+              <span><b style="color:var(--txt);">20% Carboidrato Inteligente & Gordura Boa:</b> Arroz integral, batata-doce, aveia, azeite, abacate.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TABELA DE VITAMINAS -->
+      <div class="glass-card vit-table-wrap">
+        <table class="vit-tbl">
+          <thead>
+            <tr>
+              <th>Vitamina / Mineral</th>
+              <th>Função no Projeto Verão (Força & Queima)</th>
+              <th>Fontes Naturais Principais</th>
+              <th>Horário Ideal</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>Vitamina D3 + K2</b></td>
+              <td>Testosterona endógena, força contrátil muscular, imunidade e densidade óssea.</td>
+              <td>Sol matinal (15 min), gema de ovo, peixes gordos (salmão/sardinha).</td>
+              <td class="num"><span class="badge-pill">Almoço (c/ azeite)</span></td>
+            </tr>
+            <tr>
+              <td><b>Complexo B (B1, B6, B12)</b></td>
+              <td>Conversão direta de carboidratos e gorduras em ATP (energia limpa p/ treino).</td>
+              <td>Ovos inteiros, carnes magras, aveia, folhas verdes escuras.</td>
+              <td class="num"><span class="badge-pill">Café da Manhã</span></td>
+            </tr>
+            <tr>
+              <td><b>Magnésio (Inositol/Dimalato)</b></td>
+              <td>Relaxamento muscular, síntese proteica, evita cãibras na escada e sono profundo.</td>
+              <td>Sementes de abóbora, espinafre, cacau 85%, abacate, castanhas.</td>
+              <td class="num"><span class="badge-pill">30 min antes dormir</span></td>
+            </tr>
+            <tr>
+              <td><b>Vitamina C + Zinco</b></td>
+              <td>Reduz o cortisol (hormônio que acumula gordura abdominal) pós-cardio intenso.</td>
+              <td>Kiwi, acerola, limão espremido, goiaba vermelha, carne bovina magra.</td>
+              <td class="num"><span class="badge-pill">Manhã / Pós-Treino</span></td>
+            </tr>
+            <tr>
+              <td><b>Ômega 3 (EPA/DHA) + Creatina</b></td>
+              <td>Anti-inflamatório articular + explosão de força nas séries de Terça e Quarta.</td>
+              <td>Sardinha, salmão, chia + 5g de Creatina Monohidratada todo dia.</td>
+              <td class="num"><span class="badge-pill">Pós-Treino (5g)</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========================================================================
+       POP-UP AUTOMÁTICO: DICA NUTRICIONAL DO DIA (28 DICAS ROTATIVAS!)
+       ======================================================================== -->
+  <div class="modal-backdrop" id="dailyTipModal" onclick="if(event.target===this) closeDailyTipModal()">
+    <div class="glass-card modal-box">
+      <div class="panel-kicker">
+        <span id="popTipCategory" style="color: var(--orange-l);">🍎 FRUTA FUNCIONAL DO DIA</span>
+        <span class="badge-pill green" id="popTipDayTag">DIA 1 DE 28</span>
+      </div>
+
+      <h3 style="font-size: 20px; margin-bottom: 6px; color: var(--txt);" id="popTipTitle">
+        Shot Matinal de Limão, Gengibre e Cúrcuma
+      </h3>
+
+      <!-- Barra de Navegação entre os 28 Dias de Dicas -->
+      <div class="tip-day-nav">
+        <button class="btn" style="padding:5px 10px; font-size:11px;" onclick="nextDailyTip(-1)">◀ Anterior</button>
+        <span style="font-size: 11.5px; font-weight: 700; color: var(--cyan-dark);" id="popTipCounter">Dica 1 / 28</span>
+        <button class="btn" style="padding:5px 10px; font-size:11px;" onclick="nextDailyTip(1)">Próxima ▶</button>
+      </div>
+
+      <div class="tip-highlight-box">
+        <strong style="color: var(--green-l); display:block; font-size:11px; text-transform:uppercase; margin-bottom:3px;">
+          🎯 Por que incluir hoje na sua rotina:
+        </strong>
+        <span id="popTipHighlight"></span>
+      </div>
+
+      <div class="tip-howto-box">
+        <strong style="color: var(--txt); display:block; font-size:11.5px; margin-bottom:4px;">
+          👨‍🍳 Como preparar / acrescentar hoje (Passo a Passo):
+        </strong>
+        <span id="popTipHowTo"></span>
+      </div>
+
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px; margin-bottom: 14px;">
+        <div class="kpi-box">
+          <span class="lbl">Vitaminas & Ativos</span>
+          <span style="font-size:11.5px; font-weight:600; color:var(--cyan-dark); display:block; margin-top:2px;" id="popTipNutrients"></span>
+        </div>
+        <div class="kpi-box">
+          <span class="lbl">Melhor Horário</span>
+          <span style="font-size:11.5px; font-weight:600; color:var(--green-l); display:block; margin-top:2px;" id="popTipBestTime"></span>
+        </div>
+      </div>
+
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        <button class="btn btn-primary" style="flex:1; justify-content:center;" onclick="closeDailyTipModal()">
+          ✅ Entendido! Aplicar Hoje
+        </button>
+        <button class="btn" onclick="goToNutritionTabFromModal()">
+          🥗 Ver Cardápio Completo
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL LINK FIXO NA NUVEM + INSTALAÇÃO DO ÍCONE NA TELA DO CELULAR -->
+  <div class="modal-backdrop" id="qrModal" onclick="if(event.target===this) toggleQrModal(false)">
+    <div class="glass-card modal-box" style="text-align:center;">
+      <div class="panel-kicker" style="justify-content:center; gap:8px;">
+        <span style="color:var(--green-l);">☁️ NUVEM 24/7 (SEM PC)</span>
+        <span class="badge-pill green">PWA OFFLINE</span>
+      </div>
+      <h3 style="font-size: 19px; margin-bottom: 6px;">Link Fixo & Ícone na Tela do Celular</h3>
+      <p style="font-size: 12px; color: var(--dim); margin-bottom: 12px;">
+        Acesse de qualquer lugar (4G/5G ou Wi-Fi na academia) mesmo com o PC desligado e salve o ícone oficial <b style="color:var(--txt);">maX Fit</b> na tela de início do seu celular:
+      </p>
+
+      <!-- Prévia Visual do Ícone na Área de Trabalho do Celular -->
+      <div style="display:inline-flex; align-items:center; gap:12px; background:rgba(20,24,27,0.88); border:1px solid rgba(107,166,218,0.35); border-radius:14px; padding:10px 16px; margin-bottom:10px;">
+        <div style="width:52px; height:52px; border-radius:13px; background:#14181B; border:2px solid #6BA6DA; box-shadow:0 0 16px rgba(53,208,232,0.35); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <svg viewBox="0 0 100 100" width="32" height="32" aria-hidden="true">
+            <g transform="rotate(45 50 50)">
+              <rect x="4" y="34.5" width="92" height="31" fill="#12B886" />
+              <rect x="34.5" y="4" width="31" height="92" fill="#12B886" />
+            </g>
+          </svg>
+        </div>
+        <div style="text-align:left;">
+          <div style="font-weight:800; font-size:13.5px; color:var(--txt);">maX Fit · Método Verão 3D</div>
+          <div style="font-size:11px; color:var(--green-l); font-weight:600;">✓ Abre em Tela Cheia · ✓ Funciona Offline</div>
+        </div>
+      </div>
+
+      <!-- Botão nativo de instalação (Android/Chrome/Desktop) -->
+      <div id="nativeInstallRow" style="display:none; margin-bottom:10px;">
+        <button class="btn btn-primary" style="width:100%; justify-content:center; padding:11px; font-size:13px;" onclick="triggerNativePwaInstall()">
+          📲 Instalar Ícone na Tela Inicial Agora
+        </button>
+      </div>
+
+      <!-- Passo a Passo iPhone (Safari) & Android -->
+      <div style="text-align:left; background:rgba(20,24,27,0.78); border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:11px 13px; font-size:11.5px; color:var(--dim); line-height:1.55; margin-bottom:10px;">
+        <div style="color:var(--cyan-dark); font-weight:700; margin-bottom:4px;">🍏 No iPhone (Safari) — Como fixar o ícone na tela:</div>
+        1️⃣ Abra o link fixo abaixo no <b>Safari</b> do iPhone.<br/>
+        2️⃣ Toque no botão <b>Compartilhar</b> <span style="color:var(--txt); font-weight:700;">[⬆️]</span> na barra inferior.<br/>
+        3️⃣ Role para baixo e toque em <b style="color:var(--green-l);">"Adicionar à Tela de Início" (➕)</b> e depois em <b>"Adicionar"</b>.<br/>
+        <div style="color:var(--blue-l); font-weight:700; margin-top:6px;">🤖 No Android (Chrome):</div>
+        Toque nos 3 pontinhos <b>(⋮)</b> no canto superior e selecione <b style="color:var(--green-l);">"Instalar aplicativo / Adicionar à tela inicial"</b>.
+      </div>
+
+      <div class="qr-box" id="qrCodeContainer" style="margin:6px auto;"></div>
+
+      <div class="url-copy-bar">
+        <span id="lanUrlText" style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">https://maxireis373-ops.github.io/up-method-max/</span>
+        <button class="btn btn-primary" style="padding:5px 10px; font-size:11px;" onclick="copyLanUrl()">Copiar Link</button>
+      </div>
+
+      <button class="btn" style="margin-top: 12px; width: 100%; justify-content: center;" onclick="toggleQrModal(false)">
+        Fechar Janela
+      </button>
+    </div>
+  </div>
+
+  <!-- NAVEGAÇÃO INFERIOR DE APP NATIVO (100% ALINHADA NO MOBILE) -->
+  <nav class="bottom-nav" aria-label="Navegação Principal do App">
+    <div class="bottom-nav-inner">
+      <button class="bnav-btn active" id="navBtn-hoje" onclick="switchMainTab('hoje', this)">
+        <span class="ico">🌐</span>
+        <span class="lbl">1. Palco 3D</span>
+      </button>
+      <button class="bnav-btn" id="navBtn-funcionais" onclick="switchMainTab('funcionais', this)">
+        <span class="ico">🔥</span>
+        <span class="lbl">2. Funcionais</span>
+      </button>
+      <button class="bnav-btn" id="navBtn-forca" onclick="switchMainTab('forca', this)">
+        <span class="ico">💪</span>
+        <span class="lbl">3. Força 3D</span>
+      </button>
+      <button class="bnav-btn" id="navBtn-dieta" onclick="switchMainTab('dieta', this)">
+        <span class="ico">🥗</span>
+        <span class="lbl">4. Nutrição</span>
+      </button>
+    </div>
+  </nav>
+
+  <script>
+    // ==========================================================================
+    // 1. BANCO DE DADOS DE 28 DICAS DIÁRIAS DE NUTRIÇÃO (POP-UP DIÁRIO)
+    // ==========================================================================
+    const DAILY_NUTRITION_TIPS_28 = [
+      {
+        day: 1,
+        category: "⚡ Booster Termogênico & Vitaminas",
+        title: "Shot Matinal de Limão, Gengibre e Cúrcuma",
+        highlight: "Ativa a termogênese logo cedo, reduz a inflamação visceral e prepara o abdômen para o Vacuum Matinal e o Cardio de Segunda.",
+        howTo: "Esprema 1 limão em 50ml de água, adicione 1 colher (chá) de gengibre, ½ colher (chá) de cúrcuma e 1 pitada de pimenta-do-reino (ativa a curcumina em 2000%). Beba em jejum.",
+        nutrients: "Vitamina C, Curcumina, Gingerol",
+        bestTime: "Em jejum (antes dos 15 min matinais)"
+      },
+      {
+        day: 2,
+        category: "🍳 Receita Rápida (5 min)",
+        title: "Omelete Proteico de Espinafre com Cúrcuma e Queijo Minas",
+        highlight: "Entrega 28g de proteína de alto valor biológico para reconstruir Peito, Costas e Ombros no treino de Terça sem estufar o abdômen.",
+        howTo: "Bata 3 ovos inteiros com sal, cúrcuma e orégano. Na frigideira antiaderente com 1 fio de azeite, junte 1 punhado de espinafre picado e 30g de queijo minas ou cottage. Dobre em 3 min.",
+        nutrients: "28g Proteína, Colina, Complexo B, Magnésio",
+        bestTime: "Café da Manhã ou Pós-Treino de Terça"
+      },
+      {
+        day: 3,
+        category: "🍎 Fruta Funcional",
+        title: "Abacaxi com Canela (Enzima Bromelina Seca-Barriga)",
+        highlight: "Rico em bromelina, enzima natural que digere proteínas rapidamente, combate a retenção hídrica e seca o inchaço abdominal.",
+        howTo: "Corte 2 fatias médias de abacaxi pérola e polvilhe 1 colher (chá) de canela em pó. Consuma gelado após o almoço ou grelhe 1 min na frigideira.",
+        nutrients: "Bromelina Digestiva, Vitamina C, Manganês",
+        bestTime: "Sobremesa do Almoço de Quarta-feira"
+      },
+      {
+        day: 4,
+        category: "🥗 Refeição Estratégica",
+        title: "Bowl Seca-Barriga: Frango Grelhado, Abacate e Folhas Escuras",
+        highlight: "Controla a insulina na Quinta-feira e usa a gordura monoinsaturada do abacate para reduzir o cortisol (hormônio que estoca gordura na barriga).",
+        howTo: "Base de rúcula e agrião, 150g de peito de frango em tiras douradas na mostarda, ½ abacate pequeno fatiado, tomate-cereja e 1 colher (sopa) de sementes de abóbora.",
+        nutrients: "38g Proteína, Ômega 9, Zinco, Magnésio",
+        bestTime: "Jantar de Quinta-feira"
+      },
+      {
+        day: 5,
+        category: "💧 Hidratação & Desinchaço",
+        title: "Chá Gelado de Hibisco com Cavalinha e Hortelã",
+        highlight: "Efeito diurético natural potente que elimina o excesso de sódio retido sob a pele, destacando a definição abdominal para o fim de semana.",
+        howTo: "Infusione 1 colher (sopa) de hibisco + 1 colher (sopa) de cavalinha em 500ml de água quente por 8 min. Coe, adicione hortelã fresca e gelo.",
+        nutrients: "Antocianinas, Potássio, Silício Diurético",
+        bestTime: "Tarde de Sexta-feira (entre 14h e 17h)"
+      },
+      {
+        day: 6,
+        category: "🍳 Receita Rápida (5 min)",
+        title: "Panqueca Fitness de Banana, Aveia e Canela",
+        highlight: "Energia limpa de liberação gradual para o sábado, saciando a vontade de doce sem açúcar refinado e preservando massa magra.",
+        howTo: "Amasse 1 banana prata, misture com 2 ovos inteiros, 2 colheres (sopa) de aveia em flocos finos e ½ colher (chá) de canela. Doure 2 min de cada lado.",
+        nutrients: "Beta-glucana, Potássio, Triptofano, 16g Prot.",
+        bestTime: "Café da Manhã de Sábado"
+      },
+      {
+        day: 7,
+        category: "🍎 Fruta Funcional",
+        title: "Kiwi Duplo Noturno (Protocolo Sono & GH)",
+        highlight: "Aumenta a serotonina e aprofunda o sono REM, fase onde ocorre o pico de GH (hormônio do crescimento) e queima de gordura noturna.",
+        howTo: "Descasque e pique 2 kiwis verdes ou gold. Polvilhe 1 colher (chá) de sementes de chia por cima.",
+        nutrients: "Actinidina, Altíssima Vitamina C, Serotonina",
+        bestTime: "Ceia de Domingo (45 min antes de dormir)"
+      },
+      {
+        day: 8,
+        category: "⚡ Booster Termogênico & Vitaminas",
+        title: "Café Preto Termogênico com Canela do Ceilão",
+        highlight: "Mobiliza ácidos graxos livres do tecido adiposo abdominal para serem queimados como combustível na Esteira e na Escada de Segunda.",
+        howTo: "Prepare 1 xícara de café expresso ou coado sem açúcar e misture ½ colher (chá) de canela em pó enquanto ainda estiver quente.",
+        nutrients: "Cafeína Natural, Polifenóis, Cinamaldeído",
+        bestTime: "30 min antes do Cardio de Segunda"
+      },
+      {
+        day: 9,
+        category: "🥗 Refeição Estratégica",
+        title: "Prato Força em V: Patinho Moído + Purê de Abóbora Cabotiá",
+        highlight: "Rico em creatina natural, ferro heme e zinco para explosão muscular nos aparelhos de Superiores de Terça, com metade das calorias do arroz.",
+        howTo: "Refogue 160g de patinho moído magro com alho e páprica defumada. Sirva com 120g de abóbora cabotiá cozida e amassada com 1 fio de azeite e brócolis.",
+        nutrients: "40g Proteína, Creatina Natural, Zinco, Ferro",
+        bestTime: "Almoço ou Pós-Treino de Terça"
+      },
+      {
+        day: 10,
+        category: "🍎 Fruta Funcional",
+        title: "Melancia com Pitada de Sal Integral (Pré-Treino Pernas)",
+        highlight: "Rica em L-Citrulina, aminoácido que promove vasodilatação, aumenta o fluxo sanguíneo nas pernas e reduz a fadiga no Leg Press.",
+        howTo: "Corte 1 fatia generosa (250g) de melancia gelada e adicione 1 pitada mínima de sal integral para otimizar a hidratação intracelular.",
+        nutrients: "L-Citrulina, Licopeno, Eletrólitos",
+        bestTime: "40 min antes do treino de Quarta (Inferiores)"
+      },
+      {
+        day: 11,
+        category: "🍳 Receita Rápida (5 min)",
+        title: "Patê Proteico de Atum com Cottage/Ricota e Limão",
+        highlight: "Altíssima densidade proteica (34g) e Ômega 3 com quase zero carboidrato para manter o déficit calórico na Quinta-feira.",
+        howTo: "Misture 1 lata de atum sólido em água (escorrido) com 2 colheres (sopa) de creme de ricota light ou cottage, suco de ½ limão, cebolinha e pimenta.",
+        nutrients: "34g Proteína, Ômega 3, Selênio, Vitamina B12",
+        bestTime: "Lanche da Tarde ou Jantar de Quinta"
+      },
+      {
+        day: 12,
+        category: "💧 Hidratação & Desinchaço",
+        title: "Água Eletrolítica de Pepino, Limão e Gengibre",
+        highlight: "Repõe minerais, limpa o paladar e reduz a retenção subcutânea na região dos flancos e abdômen inferior.",
+        howTo: "Em 1 litro de água filtrada, adicione ½ pepino japonês em rodelas, 1 limão fatiado e 4 rodelas de gengibre fresco. Deixe gelar.",
+        nutrients: "Potássio, Sílica, Vitamina C",
+        bestTime: "Ao longo de toda a Sexta-feira"
+      },
+      {
+        day: 13,
+        category: "🥗 Refeição Estratégica",
+        title: "Tilápia Grelhada na Crosta de Ervas com Vagem/Aspargos",
+        highlight: "Digestão ultraleve, proteína magra pura e ação diurética natural para acordar no Domingo com o abdômen marcado.",
+        howTo: "Tempere 180g de filé de tilápia com limão, alho e alecrim. Grelhe 3 min de cada lado no azeite junto com 100g de vagem ou aspargos.",
+        nutrients: "36g Proteína Magra, Asparagina, Selênio",
+        bestTime: "Jantar de Sábado"
+      },
+      {
+        day: 14,
+        category: "🍎 Fruta Funcional",
+        title: "Mix de Morangos e Mirtilos com Iogurte Natural",
+        highlight: "Menor índice glicêmico entre as frutas; as antocianinas bloqueiam a formação de novas células de gordura abdominal.",
+        howTo: "Misture 1 pote (170g) de iogurte natural desnatado com 8 morangos picados, mirtilos e 1 colher (chá) de chia.",
+        nutrients: "Antocianinas, Probióticos, Cálcio, Vitamina C",
+        bestTime: "Lanche da Tarde de Domingo"
+      },
+      {
+        day: 15,
+        category: "⚡ Booster Termogênico & Vitaminas",
+        title: "Chá Verde com Limão Espremido (Tripla Absorção)",
+        highlight: "As catequinas (EGCG) do chá verde combinadas à vitamina C do limão aumentam em até 17% a oxidação de gordura no Cardio.",
+        howTo: "Prepare 200ml de chá verde por 4 min e esprema ½ limão na hora de beber.",
+        nutrients: "EGCG, L-Teanina, Vitamina C",
+        bestTime: "Manhã de Segunda-feira"
+      },
+      {
+        day: 16,
+        category: "🍳 Receita Rápida (5 min)",
+        title: "Crepioca Maromba de Frango Desfiado com Chia",
+        highlight: "Combinação equilibrada de energia e proteína alta para abastecer o glicogênio antes ou após o treino de Superiores.",
+        howTo: "Bata 2 ovos com 1 colher (sopa) de tapioca e 1 colher (chá) de chia. Doure na frigideira, recheie com 100g de frango desfiado e dobre.",
+        nutrients: "35g Proteína, Ômega 3 Vegetal, Colina",
+        bestTime: "Pré ou Pós-Treino de Terça-feira"
+      },
+      {
+        day: 17,
+        category: "🥗 Refeição Estratégica",
+        title: "Recarga Limpa: Frango + Batata-Doce + Brócolis no Vapor",
+        highlight: "Carboidrato de baixo índice glicêmico que sustenta as séries pesadas de Pernas na Quarta sem gerar pico de insulina.",
+        howTo: "Grelhe 160g de frango em cubos com páprica. Sirva com 130g de batata-doce assada e 1 xícara de brócolis regado no azeite.",
+        nutrients: "42g Proteína, Sulforafano, Carbo Complexo",
+        bestTime: "Almoço de Quarta-feira (Leg Day)"
+      },
+      {
+        day: 18,
+        category: "🍎 Fruta Funcional",
+        title: "Maçã com Casca + Canela + 5 Amêndoas",
+        highlight: "A casca da maçã contém ácido ursólico (estimula a queima de gordura marrom) e pectina, que forma um gel saciante no estômago.",
+        howTo: "Corte 1 maçã média em fatias mantendo a casca, polvilhe canela e consuma junto com 5 amêndoas.",
+        nutrients: "Pectina, Ácido Ursólico, Vitamina E",
+        bestTime: "Lanche da Tarde de Quinta-feira"
+      },
+      {
+        day: 19,
+        category: "💧 Hidratação & Desinchaço",
+        title: "Drink Fit de Água com Gás, Limão Espremido e Hortelã",
+        highlight: "Zero calorias, aumenta a saciedade gástrica e substitui perfeitamente refrigerantes ou bebidas alcoólicas na Sexta.",
+        howTo: "Em um copo com gelo, esprema ½ limão, complete com 300ml de água com gás e decore com hortelã amassada.",
+        nutrients: "Citratos Alcalinizantes, Vitamina C, 0 kcal",
+        bestTime: "Jantar de Sexta-feira"
+      },
+      {
+        day: 20,
+        category: "🍳 Receita Rápida (5 min)",
+        title: "Bowl de Abacate Salgado com Ovos Mexidos Cremosos",
+        highlight: "Estratégia Low-Carb de Sábado pela manhã: mantém a insulina mínima para o corpo usar a gordura da barriga como combustível.",
+        howTo: "Faça 3 ovos mexidos em fogo baixo e sirva ao lado de ½ abacate temperado com limão, sal, pimenta e gergelim.",
+        nutrients: "21g Proteína, Gorduras Boas, Vitamina D, Luteína",
+        bestTime: "Café da Manhã de Sábado"
+      },
+      {
+        day: 21,
+        category: "🥗 Refeição Estratégica",
+        title: "Salmão ou Sardinha Assada com Salada Mediterrânea",
+        highlight: "Superdose de Ômega 3 e Vitamina D3 para desinflamar articulações e preparar o corpo para a última semana do Desafio.",
+        howTo: "Grelhe 160g de salmão (ou 2 latas de sardinha no azeite) com limão e ervas. Sirva com alface, pepino, tomate e cebola roxa.",
+        nutrients: "Ômega 3 (EPA/DHA), Vitamina D3, 34g Proteína",
+        bestTime: "Almoço de Domingo"
+      },
+      {
+        day: 22,
+        category: "⚡ Booster Termogênico & Vitaminas",
+        title: "Café Pré-Treino com Cacau 100% e Pimenta Caiena",
+        highlight: "A teobromina do cacau dilata os vasos sanguíneos enquanto a capsaicina eleva o gasto calórico na Segunda de Cardio.",
+        howTo: "Misture 150ml de café quente com 1 colher (chá) de cacau 100%, ½ colher (chá) de canela e 1 pitada mínima de pimenta caiena.",
+        nutrients: "Teobromina, Capsaicina, Magnésio",
+        bestTime: "30 min antes do treino de Segunda"
+      },
+      {
+        day: 23,
+        category: "🍎 Fruta Funcional",
+        title: "Mamão Papaia com Sementes de Chia e Gotas de Limão",
+        highlight: "A papaína acelera o trânsito intestinal, eliminando o volume abdominal e deixando a linha de cintura mais fina.",
+        howTo: "Corte ½ mamão papaia, esprema gotas de limão por cima e polvilhe 1 colher (sopa) de chia.",
+        nutrients: "Papaína, Fibras Solúveis, Licopeno, Vitamina A",
+        bestTime: "Café da Manhã de Terça-feira"
+      },
+      {
+        day: 24,
+        category: "🍳 Receita Rápida (5 min)",
+        title: "Smoothie Pós-Treino Seca-Barriga de Morango e Gengibre",
+        highlight: "Absorção rápida de aminoácidos e creatina após o treino de Pernas de Quarta-feira sem pesar no estômago.",
+        howTo: "Bata 200ml de água gelada, 1 scoop de Whey Protein, 6 morangos congelados, 1 rodela de gengibre e 5g de Creatina.",
+        nutrients: "25g Proteína, Creatina, Antocianinas",
+        bestTime: "Pós-Treino Imediato de Quarta-feira"
+      },
+      {
+        day: 25,
+        category: "🥗 Refeição Estratégica",
+        title: "Espaguete de Abobrinha à Bolonhesa de Patinho Magro",
+        highlight: "Corta mais de 300 kcal comparado à massa tradicional, garantindo saciedade máxima e abdômen liso na reta final.",
+        howTo: "Salteie 1 abobrinha fatiada em tiras por 2 min no alho e azeite. Cubra com 160g de patinho moído ao molho de tomate natural.",
+        nutrients: "38g Proteína, Licopeno, Potássio, Baixo Carbo",
+        bestTime: "Jantar de Quinta-feira"
+      },
+      {
+        day: 26,
+        category: "💧 Hidratação & Desinchaço",
+        title: "Infusão Noturna de Camomila, Erva-Doce e Limão",
+        highlight: "Derruba o cortisol noturno, combate gases abdominais e aprofunda o sono reparador.",
+        howTo: "Infusione camomila + erva-doce em 200ml de água quente por 5 min. Beba morno 40 min antes de dormir.",
+        nutrients: "Apigenina (Relaxante GABA), Anetol Antigases",
+        bestTime: "Ceia de Sexta-feira"
+      },
+      {
+        day: 27,
+        category: "🍎 Fruta Funcional",
+        title: "Goiaba Vermelha ou Pera com Casca (Campeãs de Fibra)",
+        highlight: "A goiaba possui 4x mais vitamina C que a laranja e altíssimo teor de fibras que blindam contra beliscos no Sábado.",
+        howTo: "Consuma 1 goiaba vermelha inteira com casca cortada em 4 partes no lanche da tarde com 1 copo grande de água.",
+        nutrients: "Vitamina C (228mg), Licopeno, Pectina",
+        bestTime: "Lanche da Tarde de Sábado"
+      },
+      {
+        day: 28,
+        category: "🥗 Refeição Estratégica",
+        title: "Prato Celebração 28 Dias: Filé Mignon Magro + Legumes Tostados",
+        highlight: "Coroa os 28 dias com alta densidade proteica, vitaminas do complexo B e zero retenção hídrica!",
+        howTo: "Grelhe 180g de filé mignon magro com alecrim. Acompanhe com abobrinha, berinjela e pimentão amarelo tostados no azeite.",
+        nutrients: "44g Proteína, Complexo B, Zinco, Antioxidantes",
+        bestTime: "Almoço do Dia 28"
+      }
+    ];
+
+    // ==========================================================================
+    // 2. CARDÁPIO DIVERSIFICADO DIA A DIA (SEG A DOM — 3 OPÇÕES POR REFEIÇÃO)
+    // ==========================================================================
+    const WEEKLY_MEAL_PLAN = {
+      seg: {
+        dayName: "Segunda-feira",
+        trainingFocus: "🏋️ Cardio Intenso (Esteira + Escada) + Core",
+        strategy: "Baixo Índice Glicêmico + Ativação Termogênica · Meta: 1.850 kcal (165g Prot)",
+        fruit: { name: "🍎 Maçã Verde ou 8 Morangos", desc: "Baixíssima carga glicêmica; mantém a oxidação de gordura ativa após o HIIT." },
+        express: { name: "⚡ Shot Limão + Gengibre + Cúrcuma (2 min)", desc: "50ml água + 1 limão + gengibre + cúrcuma + pitada de pimenta-preta em jejum." },
+        meals: [
+          {
+            title: "☀️ Café da Manhã (Pós-15 min Matinais)",
+            A: "3 ovos mexidos com espinafre e cúrcuma + 1 xícara de café preto com canela.",
+            B: "Omelete de 2 ovos + 2 claras com queijo cottage (2 col. sopa) e tomate + chá verde.",
+            C: "1 pote de iogurte natural desnatado + 1 scoop Whey + 1 col. sopa chia + 6 morangos."
+          },
+          {
+            title: "🍽️ Almoço (Regra 50/30/20)",
+            A: "160g peito de frango grelhado na mostarda + 3 col. sopa arroz integral + brócolis, rúcula e tomate com azeite.",
+            B: "160g patinho bovino em tiras + 100g abóbora cabotiá assada + salada farta de folhas escuras e pepino.",
+            C: "180g filé de tilápia na Airfryer + 3 col. sopa feijão + couve refogada e salada de tomate."
+          },
+          {
+            title: "⚡ Lanche / Pré-Treino Cardio",
+            A: "1 maçã média com casca e canela + 2 ovos cozidos + 1 café expresso 30 min antes.",
+            B: "1 lata de atum em água com 1 col. sopa creme de ricota light + 4 castanhas-do-Pará.",
+            C: "Shake rápido: 1 scoop Whey Protein em água gelada + 15g chocolate 85% cacau."
+          },
+          {
+            title: "🌙 Jantar Seca-Barriga (Baixo Carbo)",
+            A: "160g frango grelhado + salada de alface, rúcula, ½ abacate em cubos e sementes de abóbora.",
+            B: "Omelete de 3 ovos com abobrinha ralada, tomate e orégano + salada de folhas.",
+            C: "160g patinho moído refogado com vagem e cenoura + salada verde com limão."
+          }
+        ]
+      },
+      ter: {
+        dayName: "Terça-feira",
+        trainingFocus: "💪 Membros Superiores (Peito, Costas em V, Ombros & Braços)",
+        strategy: "Hiperproteica para Construção Muscular & Estrutura em V · Meta: 2.050 kcal (175g Prot)",
+        fruit: { name: "🍌 Banana Prata c/ Canela", desc: "Repõe potássio e evita fadiga muscular nas séries de supino e puxada alta." },
+        express: { name: "🥞 Crepioca Maromba de Frango (5 min)", desc: "2 ovos + 1 col. sopa tapioca na frigideira, recheada com 100g de frango desfiado e ricota." },
+        meals: [
+          {
+            title: "☀️ Café da Manhã Construtor",
+            A: "Crepioca (2 ovos + 1 col. sopa tapioca) recheada com 2 fatias de queijo minas + café preto.",
+            B: "3 ovos mexidos + 1 fatia pão 100% integral tostado no azeite + ½ mamão papaia com chia.",
+            C: "Mingau proteico: 3 col. sopa aveia + água/leite desnatado + 1 scoop Whey + canela."
+          },
+          {
+            title: "🍽️ Almoço Anabólico Limpo",
+            A: "170g alcatra/patinho grelhado + 4 col. sopa arroz integral + 1 concha feijão + brócolis e salada.",
+            B: "170g peito de frango + 130g batata-doce cozida/Airfryer + abobrinha, cenoura e vagem.",
+            C: "2 sobrecoxas sem pele assadas com limão e páprica + 4 col. sopa arroz + salada de agrião."
+          },
+          {
+            title: "⚡ Lanche / Pré-Treino Superiores",
+            A: "Panqueca rápida: 1 banana amassada + 2 ovos + 2 col. sopa aveia na frigideira.",
+            B: "1 pote iogurte natural + 1 banana picada + 2 col. sopa aveia em flocos.",
+            C: "2 fatias pão integral com 100g patê de frango ou atum + café preto."
+          },
+          {
+            title: "🌙 Jantar Pós-Treino (Recuperação)",
+            A: "170g filé de frango ou tilápia + 100g mandioca/aipim cozido + salada verde.",
+            B: "Wrap proteico (Rap10 integral) + 150g carne moída magra + queijo minas + alface e tomate.",
+            C: "Omelete completo de 3 ovos com 100g frango desfiado, espinafre e tomate-cereja."
+          }
+        ]
+      },
+      qua: {
+        dayName: "Quarta-feira",
+        trainingFocus: "🦵 Membros Inferiores (Quadríceps, Posterior & Glúteos)",
+        strategy: "Carboidrato Estratégico Complexo (Maior Gasto da Semana) · Meta: 2.150 kcal (170g Prot)",
+        fruit: { name: "🍉 Melancia (Pré) ou 🍍 Abacaxi (Pós)", desc: "Melancia entrega L-Citrulina vasodilatadora para as pernas; Abacaxi digere proteínas." },
+        express: { name: "🍓 Smoothie Pós-Pernas c/ Creatina (3 min)", desc: "200ml água gelada + 1 scoop Whey + 6 morangos congelados + 5g Creatina." },
+        meals: [
+          {
+            title: "☀️ Café da Manhã Energia Sustentada",
+            A: "3 ovos mexidos + 2 col. sopa cuscuz de milho hidratado no vapor + café preto.",
+            B: "2 fatias pão integral + 3 ovos mexidos cremosos + 1 fatia média de melão ou abacaxi.",
+            C: "Vitamina energética: 200ml leite desnatado + 1 banana + 2 col. sopa aveia + 1 scoop Whey."
+          },
+          {
+            title: "🍽️ Almoço Base Forte (Leg Day)",
+            A: "170g frango grelhado + 150g batata-doce + brócolis + salada com beterraba ralada (óxido nítrico!).",
+            B: "170g patinho moído + 4 col. sopa arroz integral + 1 concha feijão + salada de rúcula e pepino.",
+            C: "170g lombo suíno magro ou frango + 140g macarrão integral al dente com molho natural."
+          },
+          {
+            title: "⚡ Lanche / Pré-Treino Inferiores",
+            A: "1 fatia grande de melancia com pitada mínima de sal + 2 ovos cozidos (ou Whey) 45 min antes.",
+            B: "1 banana amassada com 2 col. sopa aveia e 1 col. chá mel + café expresso.",
+            C: "1 tapioca pequena (2 col. sopa goma) recheada com 80g frango desfiado ou 2 ovos."
+          },
+          {
+            title: "🌙 Jantar Regenerador Pós-Pernas",
+            A: "180g tilápia ou frango grelhado + 120g purê de abóbora cabotiá + espinafre refogado.",
+            B: "160g patinho bovino em cubos + 3 col. sopa arroz integral + salada completa com azeite.",
+            C: "Shake Pós-Treino (Whey + Creatina + Morangos) + 3 ovos cozidos com salada 1h depois."
+          }
+        ]
+      },
+      qui: {
+        dayName: "Quinta-feira",
+        trainingFocus: "🏠 Despertar Calistênico (15 min) + Recuperação Ativa / Vacuum",
+        strategy: "Low-Carb Moderado & Anti-inflamatório · Meta: 1.800 kcal (165g Prot)",
+        fruit: { name: "🥑 Abacate (½ unid.) ou 🥝 Kiwi", desc: "Gordura boa que sacia por horas sem elevar a insulina, acelerando a queima abdominal." },
+        express: { name: "🐟 Patê Express de Atum e Cottage (4 min)", desc: "1 lata de atum em água + 2 col. sopa cottage/ricota + limão + cebolinha." },
+        meals: [
+          {
+            title: "☀️ Café da Manhã Low-Carb",
+            A: "Omelete de 3 ovos com espinafre, tomate e sementes de abóbora + chá verde ou café.",
+            B: "3 ovos cozidos + ½ abacate pequeno amassado com limão, sal e pimenta + café preto.",
+            C: "Iogurte natural desnatado + 1 scoop Whey + 1 col. sopa chia + 4 nozes."
+          },
+          {
+            title: "🍽️ Almoço Desinflamatório",
+            A: "170g frango grelhado com cúrcuma + couve-flor no vapor + salada farta de folhas, pepino e azeite.",
+            B: "170g peixe grelhado + 100g abóbora assada + brócolis e tomate-cereja.",
+            C: "170g carne bovina magra + 2 col. sopa arroz integral + vagem, cenoura e alface."
+          },
+          {
+            title: "🍏 Lanche da Tarde Sacietógeno",
+            A: "Patê de atum (1 lata em água + ricota light) em folhas de alface crocante + 1 maçã.",
+            B: "2 ovos cozidos temperados com páprica e azeite + 1 kiwi ou 1 pera com casca.",
+            C: "30g mix de castanhas (amêndoas + castanha-do-pará) + 1 dose Whey Protein em água."
+          },
+          {
+            title: "🌙 Jantar Zero Estufamento",
+            A: "Espaguete de abobrinha salteado no alho + 160g patinho moído ao molho de tomate caseiro.",
+            B: "Salada Caesar Fit: alface americana, 160g frango em tiras, 1 ovo cozido, molho de iogurte e limão.",
+            C: "3 ovos mexidos com abobrinha + salada de rúcula e tomate temperada com azeite."
+          }
+        ]
+      },
+      sex: {
+        dayName: "Sexta-feira",
+        trainingFocus: "🔥 Circuito Funcional / Calistenia (Queima & Definição)",
+        strategy: "Detox Diurético & Controle de Sódio · Meta: 1.850 kcal (165g Prot)",
+        fruit: { name: "🍓 Morangos ou 🍍 Abacaxi c/ Hortelã", desc: "Efeito diurético potente e baixíssima caloria para eliminar retenção líquida da semana." },
+        express: { name: "🍳 Omelete Termogênico de Cúrcuma (5 min)", desc: "3 ovos batidos com cúrcuma, pimenta-preta, salsinha e 30g queijo minas em cubos." },
+        meals: [
+          {
+            title: "☀️ Café da Manhã Desinchaço",
+            A: "Omelete termogênico (3 ovos + cúrcuma + queijo minas) + 1 fatia abacaxi com canela + café.",
+            B: "2 ovos mexidos + ½ mamão papaia com 1 col. sopa aveia e chia + chá de hibisco.",
+            C: "Panqueca proteica rápida (2 ovos + 1 col. sopa aveia + ½ banana) + café sem açúcar."
+          },
+          {
+            title: "🍽️ Almoço Leve & Proteico",
+            A: "170g filé de tilápia ou frango + 3 col. sopa arroz integral + aspargos/vagem + salada de agrião.",
+            B: "170g patinho grelhado + 120g batata-doce + brócolis no vapor + salada de pepino e tomate.",
+            C: "Strogonoff Fit: 170g frango em cubos com molho de tomate e iogurte natural + arroz integral."
+          },
+          {
+            title: "⚡ Lanche da Tarde + Chá Diurético",
+            A: "1 pote iogurte natural + 8 morangos + 1 col. sopa chia + 500ml chá gelado de hibisco.",
+            B: "1 lata de atum ou 80g frango desfiado + 1 maçã média.",
+            C: "1 scoop Whey Protein batido com 200ml de água de coco natural e gelo."
+          },
+          {
+            title: "🌙 Jantar Social Inteligente de Sexta",
+            A: "Hambúrguer caseiro (180g patinho grelhado) com queijo minas + salada + água com gás e limão.",
+            B: "200g peixe assado ou salmão grelhado + legumes grelhados no limão.",
+            C: "Pizza de Frigideira Fit: base de 2 ovos + 1 col. sopa aveia, coberta com frango, tomate e queijo minas."
+          }
+        ]
+      },
+      sab: {
+        dayName: "Sábado",
+        trainingFocus: "⚡ Manhã: 4 Exercícios Calistênicos (15 min) + Lazer Ativo",
+        strategy: "Flexibilidade Inteligente & Alta Fibra · Meta: 1.950 kcal (160g Prot)",
+        fruit: { name: "🍐 Goiaba Vermelha ou 🫐 Mirtilos", desc: "Fibras que reduzem a absorção de gorduras e mantêm a glicemia estável no fim de semana." },
+        express: { name: "🥞 Panqueca Brunch de Banana e Aveia (5 min)", desc: "1 banana amassada + 2 ovos + 2 col. sopa aveia + canela, coberta com morangos." },
+        meals: [
+          {
+            title: "☀️ Café da Manhã de Sábado",
+            A: "Panqueca de banana, aveia e 2 ovos + 1 ovo mexido extra ao lado + café passado na hora.",
+            B: "Bowl de abacate salgado com 3 ovos mexidos cremosos, limão e gergelim.",
+            C: "Crepioca recheada com queijo minas e frango desfiado + 1 fatia de melão."
+          },
+          {
+            title: "🍽️ Almoço de Fim de Semana Limpo",
+            A: "200g carnes magras na brasa (fraldinha limpa/frango) + vinagrete + mandioca cozida + salada.",
+            B: "180g salmão ou tilápia grelhada + arroz com brócolis (3 col. sopa) + salada mediterrânea.",
+            C: "Feijão preto magro (1 concha) + 160g filé de frango/lombo + couve refogada + 1 laranja com bagaço."
+          },
+          {
+            title: "🍏 Lanche Blindagem da Tarde",
+            A: "1 goiaba vermelha com casca + 1 scoop Whey Protein em água gelada (sacia antes da noite).",
+            B: "1 pote iogurte natural + 1 col. sopa pasta de amendoim 100% integral + canela.",
+            C: "2 ovos cozidos + 6 tomates-cereja com orégano e azeite."
+          },
+          {
+            title: "🌙 Jantar Leve de Sábado",
+            A: "160g filé de tilápia ou frango com ervas + legumes tostados + água com gás e limão.",
+            B: "Carpaccio bovino ou tartar de salmão + salada verde com palmito.",
+            C: "Omelete caprese (3 ovos, queijo minas, tomate e manjericão fresco)."
+          }
+        ]
+      },
+      dom: {
+        dayName: "Domingo",
+        trainingFocus: "🧘 Manhã: 4 Exercícios Calistênicos + Preparo da Semana",
+        strategy: "Recarga de Ômega 3, Vitaminas & Sono Profundo · Meta: 1.900 kcal (165g Prot)",
+        fruit: { name: "🥝 2 Kiwis na Ceia + 🥭 Mamão de Manhã", desc: "Regula o intestino e induz o sono REM para acordar na Segunda 100% recuperado." },
+        express: { name: "🥝 Pudim Rápido de Chia, Iogurte e Kiwi (5 min)", desc: "170g iogurte natural + ½ scoop Whey + 1,5 col. sopa chia + 1 kiwi picado no topo." },
+        meals: [
+          {
+            title: "☀️ Café da Manhã de Domingo",
+            A: "3 ovos mexidos no azeite com tomate e orégano + ½ mamão papaia com chia e limão.",
+            B: "1 fatia pão integral + 2 ovos pochê + ¼ abacate amassado com limão.",
+            C: "Panqueca proteica de cacau: 2 ovos + 2 col. sopa aveia + 1 col. chá cacau 100% + 1 banana."
+          },
+          {
+            title: "🍽️ Almoço Rico em Ômega 3 & Vitaminas",
+            A: "180g salmão assado (ou 2 latas sardinha) + batatas rústicas com alecrim (120g) + salada completa.",
+            B: "180g filé mignon magro grelhado + legumes tostados (abobrinha, berinjela, pimentão) + arroz integral.",
+            C: "Frango assado sem pele + purê de abóbora cabotiá + salada de agrião, tomate e palmito."
+          },
+          {
+            title: "🍨 Lanche da Tarde Funcional",
+            A: "Pudim de chia com iogurte natural e frutas vermelhas ou kiwi picado.",
+            B: "Shake cremoso: 200ml leite de amêndoas/desnatado + ½ abacate pequeno + 1 scoop Whey + gelo.",
+            C: "1 maçã assada no micro-ondas (2 min) com canela + 2 ovos cozidos."
+          },
+          {
+            title: "🌙 Jantar Detox + Ceia do Sono",
+            A: "Caldo funcional: 160g frango desfiado cozido com abóbora, espinafre, gengibre e cúrcuma + 2 kiwis na ceia.",
+            B: "150g frango grelhado + salada morna de brócolis e ovos cozidos + chá de camomila antes de dormir.",
+            C: "Omelete leve de 3 ovos com ricota e ervas finas + salada de alface."
+          }
+        ]
+      }
+    };
+
+    const FITNESS_RECIPES_CATALOG = [
+      {
+        title: "🥞 Panqueca Proteica de Banana e Aveia",
+        tag: "PRÉ-TREINO · 5 MIN",
+        macros: "310 kcal · 18g Prot",
+        desc: "Amasse 1 banana prata, misture com 2 ovos, 2 col. sopa de aveia e canela. Doure 2 min de cada lado em fogo baixo."
+      },
+      {
+        title: "🍳 Omelete Termogênico de Espinafre e Cúrcuma",
+        tag: "SECA-BARRIGA · 5 MIN",
+        macros: "265 kcal · 26g Prot",
+        desc: "Bata 3 ovos com cúrcuma e pimenta-preta. Refogue 1 punhado de espinafre, despeje os ovos e 2 col. sopa de cottage."
+      },
+      {
+        title: "🍓 Smoothie Seca-Barriga Frutas Vermelhas",
+        tag: "PÓS-TREINO · 3 MIN",
+        macros: "195 kcal · 25g Prot",
+        desc: "Bata 200ml água gelada, 1 scoop Whey, 8 morangos congelados, 1 rodela de gengibre e seus 5g de Creatina."
+      },
+      {
+        title: "🥑 Bowl Low-Carb de Abacate e Ovos Cremosos",
+        tag: "CONTROLE CORTISOL · 5 MIN",
+        macros: "340 kcal · 21g Prot",
+        desc: "3 ovos mexidos cremosos em fogo baixo servidos com ½ abacate pequeno fatiado, limão espremido e sementes."
+      },
+      {
+        title: "🐟 Wrap/Tartar de Atum com Ricota e Limão",
+        tag: "ZERO FOGÃO · 4 MIN",
+        macros: "240 kcal · 34g Prot",
+        desc: "Misture 1 lata de atum em água com 2 col. sopa de ricota light, limão e cebolinha. Sirva em folhas de alface ou Rap10."
+      },
+      {
+        title: "🥝 Pudim Noturno de Chia com Iogurte e Kiwi",
+        tag: "CEIA & SONO GH · 5 MIN",
+        macros: "215 kcal · 15g Prot",
+        desc: "Misture 170g de iogurte natural, 1,5 col. sopa de chia e ½ scoop Whey. Geladeira por 15 min e cubra com kiwi."
+      }
+    ];
+
+    const FUNCTIONAL_FRUITS_GUIDE = [
+      { name: "🍍 Abacaxi", active: "Bromelina Digestiva", benefit: "Desincha o abdômen rapidamente, combate retenção líquida e acelera a digestão proteica.", portion: "2 fatias médias c/ canela após almoço" },
+      { name: "🍓 Morango & Mirtilo", active: "Antocianinas", benefit: "Menor índice glicêmico (30 kcal/100g); inibem a formação de novas células de gordura visceral.", portion: "8 a 10 unidades no lanche ou shake" },
+      { name: "🥝 Kiwi", active: "Serotonina & Vitamina C", benefit: "Reduz o cortisol e aprofunda o sono REM (onde ocorre 70% da queima de gordura noturna).", portion: "2 unidades 45 min antes de dormir" },
+      { name: "🥑 Abacate", active: "Ácido Oleico (Ômega 9)", benefit: "Controla picos de insulina e reduz diretamente o acúmulo de gordura na linha de cintura.", portion: "½ unidade pequena (80g) c/ limão" },
+      { name: "🍉 Melancia", active: "L-Citrulina & Licopeno", benefit: "Aumenta o óxido nítrico e a vasodilatação muscular para os treinos de Quarta (Pernas) e Segunda.", portion: "1 fatia grande 40 min pré-treino" },
+      { name: "🍎 Maçã com Casca", active: "Pectina & Ácido Ursólico", benefit: "Forma um gel saciante que corta a fome por horas e estimula a gordura marrom termogênica.", portion: "1 unidade média c/ casca e canela" }
+    ];
+
+    // ==========================================================================
+    // 3. DADOS DE TREINO: ACADEMIA (SEG/TER/QUA) + COMPENSAÇÃO CALISTÊNICA
+    // ==========================================================================
+    let globalMode = 'gym';
+    let currentDayKey = 'seg';
+    let currentStrengthFilter = 'upper';
+    let currentNutriDayKey = 'seg';
+    let currentTipIndex = 0;
+    let completedExercises = new Set(JSON.parse(localStorage.getItem('max_done_ex') || '["seg-1","manhas-1"]'));
+    let completedDays = new Set(JSON.parse(localStorage.getItem('max_done_days') || '[1,2,3,4]'));
+
+    function saveProgressStorage() {
+      try {
+        localStorage.setItem('max_done_ex', JSON.stringify([...completedExercises]));
+        localStorage.setItem('max_done_days', JSON.stringify([...completedDays]));
+      } catch (e) {}
+    }
+
+    const MORNING_POSES = [
+      {
+        title: '1. Terra Unilateral (Single-Leg Toe Touch)',
+        muscle: 'ATIVAÇÃO 3D · GLÚTEOS, POSTERIOR & CORE',
+        sub: 'Equilíbrio unilateral em uma perna + cadeia posterior acesa em verde #12B886',
+        activeGroups: ['glutes', 'hamstrings', 'lowerback', 'abs']
+      },
+      {
+        title: '2. Flexão Pike (Pike Push-up em V)',
+        muscle: 'ATIVAÇÃO 3D · DELTOIDES, DORSAL & TRAPÉZIO',
+        sub: 'Quadril elevado em V invertido para construir ombros largos em casa',
+        activeGroups: ['shoulders', 'lats', 'triceps', 'chest']
+      },
+      {
+        title: '3. Agachamento Lutador em Guarda',
+        muscle: 'ATIVAÇÃO 3D · QUADRÍCEPS, PEITORAL & CORE',
+        sub: 'Base atlética profunda com guarda alta isométrica e queima calórica',
+        activeGroups: ['quads', 'glutes', 'chest', 'shoulders', 'abs']
+      },
+      {
+        title: '4. Flexão Explosiva + Vacuum Abdominal',
+        muscle: 'ATIVAÇÃO 3D · RETO ABDOMINAL (6-PACK) & PEITO',
+        sub: 'Contração profunda do transverso abdominal para afinar a linha de cintura',
+        activeGroups: ['abs', 'obliques', 'chest', 'shoulders', 'triceps']
+      }
+    ];
+
+    const WEEKLY_DATA = {
+      seg: [
+        {
+          id: 'seg-1',
+          gymTitle: 'Escada Ergométrica (StairMaster)',
+          gymBadge: 'SEGUNDA · ACADEMIA',
+          gymDesc: 'Subida contínua sem apoiar o peso nos braços. Queima intensa de gordura visceral e glúteos.',
+          gymMetric: '20 min · Nível 7–10 (240 kcal)',
+          homeTitle: 'Step-Up Dinâmico em Banco + High Knees',
+          homeBadge: '🏠 COMPENSAÇÃO EM CASA',
+          homeDesc: 'Subida alternada em cadeira firme/degrau (12 min) + corrida estacionária joelho alto (8 min).',
+          homeMetric: '20 min · Sem pausa longa'
+        },
+        {
+          id: 'seg-2',
+          gymTitle: 'Esteira Inclinada (HIIT 1:1)',
+          gymBadge: 'SEGUNDA · ACADEMIA',
+          gymDesc: 'Inclinação 6% a 10%: alterne 1 min de tiro forte (11–13 km/h) com 1 min de caminhada ativa.',
+          gymMetric: '15 min · 7 Tiros HIIT',
+          homeTitle: 'Circuito Burpee Squat + Mountain Climbers',
+          homeBadge: '🏠 COMPENSAÇÃO EM CASA',
+          homeDesc: '40s de escalador rápido no solo + 20s de sprawl/burpee para manter o efeito afterburn (EPOC).',
+          homeMetric: '15 min · Protocolo Tabata'
+        },
+        {
+          id: 'seg-3',
+          gymTitle: 'Abdominal Infra Paralelas + Polia Alta',
+          gymBadge: 'SEGUNDA · CORE',
+          gymDesc: 'Elevação de pernas na paralela (foco pochete inferior) combinada com crunch na corda.',
+          gymMetric: '4x 15 + 15 reps',
+          homeTitle: 'V-Up Canivete + Leg Raises no Solo',
+          homeBadge: '🏠 COMPENSAÇÃO EM CASA',
+          homeDesc: 'Elevação de pernas estendidas deitado sem tocar o calcanhar no chão + canivete.',
+          homeMetric: '4x 18 reps (2s pico)'
+        },
+        {
+          id: 'seg-4',
+          gymTitle: 'Prancha Roda Abdominal + Vacuum',
+          gymBadge: 'SEGUNDA · CINTURA FINA',
+          gymDesc: 'Extensão com ab-wheel + 5 séries de Vacuum Abdominal puxando o umbigo para as costas.',
+          gymMetric: '4x 12 + 5x 20s Vacuum',
+          homeTitle: 'Prancha Walkout + Vacuum Abdominal',
+          homeBadge: '🏠 COMPENSAÇÃO EM CASA',
+          homeDesc: 'Caminhada com as mãos até prancha estendida máxima + 5 séries de Vacuum matinal.',
+          homeMetric: '4x 12 + 5x 20s Vacuum'
+        }
+      ],
+      ter: [
+        {
+          id: 'ter-1',
+          gymTitle: 'Supino Inclinado Halteres + Máquina',
+          gymBadge: 'TERÇA · SUPERIORES',
+          gymDesc: 'Desenha o peitoral superior e clavicular, dando aspecto atlético imediato na camiseta.',
+          gymMetric: '4x 10–12 reps',
+          homeTitle: 'Flexão Declinada (Pés no Sofá) + Diamante',
+          homeBadge: '🏠 COMPENSAÇÃO EM CASA',
+          homeDesc: 'Pés elevados ativam exatamente o feixe clavicular do peito + diamante foca miolo e tríceps.',
+          homeMetric: '4x 12–15 reps (3s descida)'
+        },
+        {
+          id: 'ter-2',
+          gymTitle: 'Puxada Alta Aberta + Remada Baixa',
+          gymBadge: 'TERÇA · COSTAS EM V',
+          gymDesc: 'Expande a dorsal (shape em V que afina visualmente a cintura) e corrige a postura.',
+          gymMetric: '4x 12 reps (Pico 2s)',
+          homeTitle: 'Remada Australiana na Mesa + Superman Pull',
+          homeBadge: '🏠 COMPENSAÇÃO EM CASA',
+          homeDesc: 'Puxada sob mesa firme ou toalha presa na porta + retração escapular isométrica no solo.',
+          homeMetric: '4x 15 reps controladas'
+        },
+        {
+          id: 'ter-3',
+          gymTitle: 'Desenvolvimento Halteres + Elevação Lateral',
+          gymBadge: 'TERÇA · OMBROS 3D',
+          gymDesc: 'Foco no deltoide lateral para alargar a estrutura de ombros.',
+          gymMetric: '4x 12 + Drop-set',
+          homeTitle: 'Pike Push-up (Vídeo) + Prancha Toque Ombro',
+          homeBadge: '🏠 COMPENSAÇÃO EM CASA',
+          homeDesc: 'O exercício #2 do vídeo: quadril no alto formando um V invertido, descendo o topo da cabeça.',
+          homeMetric: '4x 10–12 reps'
+        },
+        {
+          id: 'ter-4',
+          gymTitle: 'Tríceps Corda + Rosca Direta Barra W',
+          gymBadge: 'TERÇA · BRAÇOS',
+          gymDesc: 'Super-série agonista/antagonista para densidade de braço e gasto calórico elevado.',
+          gymMetric: '3x 12 + 12 reps',
+          homeTitle: 'Mergulho no Banco + Flexão Pegada Supinada',
+          homeBadge: '🏠 COMPENSAÇÃO EM CASA',
+          homeDesc: 'Tríceps mergulho em cadeira com pernas estendidas + isometria de bíceps com toalha.',
+          homeMetric: '4x 15 reps até falha'
+        }
+      ],
+      qua: [
+        {
+          id: 'qua-1',
+          gymTitle: 'Leg Press 45° + Agachamento Hack',
+          gymBadge: 'QUARTA · INFERIORES',
+          gymDesc: 'Amplitude máxima preservando a lombar. Maior liberação hormonal e queima energética da semana.',
+          gymMetric: '4x 12 reps pesadas',
+          homeTitle: 'Agachamento Búlgaro + Fighter Squat (Vídeo)',
+          homeBadge: '🏠 COMPENSAÇÃO EM CASA',
+          homeDesc: 'Pé traseiro elevado no sofá (Búlgaro) + Agachamento em guarda do vídeo com pausa de 2s embaixo.',
+          homeMetric: '4x 12 cada perna'
+        },
+        {
+          id: 'qua-2',
+          gymTitle: 'Mesa Flexora + Stiff com Barra/Halter',
+          gymBadge: 'QUARTA · POSTERIOR & GLÚTEO',
+          gymDesc: 'Alonga e hipertrofia isquiotibiais e glúteos, protegendo os joelhos.',
+          gymMetric: '4x 12 reps',
+          homeTitle: 'Terra Unilateral (Vídeo #1) + Elevação Pélvica',
+          homeBadge: '🏠 COMPENSAÇÃO EM CASA',
+          homeDesc: 'Single-Leg Deadlift tocando o pé oposto (exercício #1 do vídeo) + ponte unilateral no chão.',
+          homeMetric: '4x 15 cada perna'
+        },
+        {
+          id: 'qua-3',
+          gymTitle: 'Cadeira Extensora (Pico de Contração 2s)',
+          gymBadge: 'QUARTA · DEFINIÇÃO COXA',
+          gymDesc: 'Segure 2 segundos no topo de cada repetição para desenhar o vasto medial e reto femoral.',
+          gymMetric: '4x 15 reps',
+          homeTitle: 'Sissy Squat Assistido + Wall Sit (Cadeira Invisível)',
+          homeBadge: '🏠 COMPENSAÇÃO EM CASA',
+          homeDesc: 'Agachamento projetando joelhos à frente segurando no batente + 60s de isometria na parede.',
+          homeMetric: '4x 12 + 60s Wall Sit'
+        },
+        {
+          id: 'qua-4',
+          gymTitle: 'Panturrilha Sentado/Em Pé + Prancha Lateral',
+          gymBadge: 'QUARTA · BASE & OBLÍQUOS',
+          gymDesc: 'Estabilidade de tornozelo e fechamento com oblíquos para blindar o core.',
+          gymMetric: '4x 20 + 40s cada lado',
+          homeTitle: 'Panturrilha Unilateral no Degrau + Prancha Lateral',
+          homeBadge: '🏠 COMPENSAÇÃO EM CASA',
+          homeDesc: 'Amplitude máxima no degrau (2s no topo) + prancha lateral dinâmica.',
+          homeMetric: '4x 20 cada perna'
+        }
+      ],
+      manhas: [
+        {
+          id: 'manhas-1',
+          gymTitle: '1. Terra Unilateral / Toe Touch (Vídeo)',
+          gymBadge: 'MANHÃS · EXERCÍCIO 01',
+          gymDesc: 'Equilíbrio em uma perna inclinando o tronco até tocar o pé. Ativa glúteos, posterior e core.',
+          gymMetric: '3x 12 cada perna',
+          homeTitle: '1. Terra Unilateral / Toe Touch (Vídeo)',
+          homeBadge: 'MANHÃS · EXERCÍCIO 01',
+          homeDesc: 'Equilíbrio em uma perna inclinando o tronco até tocar o pé. Ativa glúteos, posterior e core.',
+          homeMetric: '3x 12 cada perna'
+        },
+        {
+          id: 'manhas-2',
+          gymTitle: '2. Flexão Pike em V Invertido (Vídeo)',
+          gymBadge: 'MANHÃS · EXERCÍCIO 02',
+          gymDesc: 'Quadril elevado ativando deltoides, trapézio e dorsal logo ao acordar.',
+          gymMetric: '3x 10–12 reps',
+          homeTitle: '2. Flexão Pike em V Invertido (Vídeo)',
+          homeBadge: 'MANHÃS · EXERCÍCIO 02',
+          homeDesc: 'Quadril elevado ativando deltoides, trapézio e dorsal logo ao acordar.',
+          homeMetric: '3x 10–12 reps'
+        },
+        {
+          id: 'manhas-3',
+          gymTitle: '3. Agachamento Lutador em Guarda (Vídeo)',
+          gymBadge: 'MANHÃS · EXERCÍCIO 03',
+          gymDesc: 'Agachamento explosivo mantendo os punhos em guarda alta, contraindo peito, ombros e coxas.',
+          gymMetric: '3x 20 reps',
+          homeTitle: '3. Agachamento Lutador em Guarda (Vídeo)',
+          homeBadge: 'MANHÃS · EXERCÍCIO 03',
+          homeDesc: 'Agachamento explosivo mantendo os punhos em guarda alta, contraindo peito, ombros e coxas.',
+          homeMetric: '3x 20 reps'
+        },
+        {
+          id: 'manhas-4',
+          gymTitle: '4. Flexão + Vacuum Abdominal (Vídeo)',
+          gymBadge: 'MANHÃS · EXERCÍCIO 04',
+          gymDesc: 'Série de flexões seguida de 20s sugando o abdômen em jejum para reduzir circunferência abdominal.',
+          gymMetric: '3x 15 + 20s Vacuum',
+          homeTitle: '4. Flexão + Vacuum Abdominal (Vídeo)',
+          homeBadge: 'MANHÃS · EXERCÍCIO 04',
+          homeDesc: 'Série de flexões seguida de 20s sugando o abdômen em jejum para reduzir circunferência abdominal.',
+          homeMetric: '3x 15 + 20s Vacuum'
+        }
+      ]
+    };
+
+    const FUNCTIONAL_DATA = [
+      {
+        id: 'func-1',
+        gymTitle: 'Corda Naval (Battle Rope) + Slam Ball',
+        gymDesc: 'Ondas alternadas em máxima velocidade + arremesso de medicine ball no solo. Derrete gordura abdominal.',
+        gymMetric: '4x 30s ON / 15s OFF',
+        homeTitle: 'Sprawl Explosivo + Shadow Boxing Rápido',
+        homeDesc: 'Queda rápida em prancha voltando em guarda com 30 socos retos em velocidade máxima.',
+        homeMetric: '4x 40s ON / 15s OFF',
+        kcal: '160 kcal'
+      },
+      {
+        id: 'func-2',
+        gymTitle: 'Kettlebell Swing Russo + Prancha Serra',
+        gymDesc: 'Impulso de quadril com kettlebell + deslizamento na prancha acionando todo o cinturão abdominal.',
+        gymMetric: '4x 20 swings + 40s',
+        homeTitle: 'Broad Jump (Salto Horizontal) + Mountain Climber',
+        homeDesc: 'Salto horizontal amortecido + 30 segundos de escalador cruzado levando o joelho ao cotovelo oposto.',
+        homeMetric: '4x 10 saltos + 30s',
+        kcal: '150 kcal'
+      },
+      {
+        id: 'func-3',
+        gymTitle: 'Sprint na Escada + Abdominal Bicicleta',
+        gymDesc: 'Bloco híbrido cardio-core: 3 minutos fortes na escada seguidos imediatamente de oblíquos no solo.',
+        gymMetric: '3 Rounds sem descanso',
+        homeTitle: 'High Knees (Corrida Alta) + Russian Twist',
+        homeDesc: '1 minuto de joelhos altos no ritmo máximo + 30 rotações de tronco sentado com pés fora do chão.',
+        homeMetric: '4 Rounds contínuos',
+        kcal: '175 kcal'
+      },
+      {
+        id: 'func-4',
+        gymTitle: 'Fazendeiro (Farmer Walk) + Vacuum Isométrico',
+        gymDesc: 'Caminhada segurando halteres pesados com postura blindada + técnica de vácuo abdominal.',
+        gymMetric: '4x 40m + 20s Vacuum',
+        homeTitle: 'Hollow Body Hold (Canoa) + Vacuum em Pé',
+        homeDesc: 'Posição de canoa ginástica lombar colada no chão (40s) + vácuo abdominal de 20s.',
+        homeMetric: '4x 40s + 20s Vacuum',
+        kcal: '115 kcal'
+      }
+    ];
+
+    const STRENGTH_DATA = {
+      upper: WEEKLY_DATA.ter,
+      lower: WEEKLY_DATA.qua
+    };
+
+    // ==========================================================================
+    // 4. MOTOR 3D INTERATIVO (RESPONSIVO PARA QUALQUER LARGURA DE CELULAR)
+    // ==========================================================================
+    const canvas3d = document.getElementById('avatar3dCanvas');
+    const ctx3d = canvas3d.getContext('2d');
+    let camYaw = 0.35;
+    let targetYaw = 0.35;
+    let autoSpin = true;
+    let isDragging3d = false;
+    let lastDragX = 0;
+    let currentPoseIdx = 0;
+    let isParchmentTheme = false;
+    let animTick = 0;
+
+    function resizeCanvas3D() {
+      const wrap = document.getElementById('canvas3dContainer');
+      if (!wrap) return;
+      const rect = wrap.getBoundingClientRect();
+      const w = Math.max(260, Math.floor(rect.width));
+      const h = Math.max(210, Math.floor(rect.height));
+      if (canvas3d.width !== w || canvas3d.height !== h) {
+        canvas3d.width = w;
+        canvas3d.height = h;
+      }
+    }
+    window.addEventListener('resize', resizeCanvas3D);
+
+    function getBodyParts3D(poseIdx, t) {
+      const pulse = Math.sin(t * 2.5);
+      const lift = Math.max(0, Math.sin(t * 2.2));
+      let torsoPitch = 0;
+      let armAngleL = 0.22;
+      let legBackR = 0;
+      let squatDrop = 0;
+
+      if (poseIdx === 0) {
+        torsoPitch = 0.35 * lift;
+        legBackR = 0.55 * lift;
+      } else if (poseIdx === 1) {
+        armAngleL = 2.4;
+        squatDrop = 6 * pulse;
+      } else if (poseIdx === 2) {
+        squatDrop = 16 * lift;
+        armAngleL = 0.85;
+      } else if (poseIdx === 3) {
+        squatDrop = 4 * pulse;
+      }
+
+      return [
+        { x: 0, y: -96 + squatDrop, z: torsoPitch * 22, rx: 13, ry: 16, rz: 14, group: 'head' },
+        { x: 0, y: -76 + squatDrop, z: torsoPitch * 16, rx: 8, ry: 8, rz: 8, group: 'neck' },
+        { x: -14, y: -71 + squatDrop, z: -2 + torsoPitch * 12, rx: 12, ry: 7, rz: 9, group: 'lats' },
+        { x: 14, y: -71 + squatDrop, z: -2 + torsoPitch * 12, rx: 12, ry: 7, rz: 9, group: 'lats' },
+        { x: -29, y: -63 + squatDrop, z: torsoPitch * 12, rx: 12, ry: 12, rz: 12, group: 'shoulders' },
+        { x: 29, y: -63 + squatDrop, z: torsoPitch * 12, rx: 12, ry: 12, rz: 12, group: 'shoulders' },
+        { x: -11, y: -57 + squatDrop, z: 9 + torsoPitch * 10, rx: 12, ry: 10, rz: 8, group: 'chest' },
+        { x: 11, y: -57 + squatDrop, z: 9 + torsoPitch * 10, rx: 12, ry: 10, rz: 8, group: 'chest' },
+        { x: -15, y: -50 + squatDrop, z: -8 + torsoPitch * 8, rx: 13, ry: 18, rz: 8, group: 'lats' },
+        { x: 15, y: -50 + squatDrop, z: -8 + torsoPitch * 8, rx: 13, ry: 18, rz: 8, group: 'lats' },
+        { x: 0, y: -26 + squatDrop, z: -9, rx: 12, ry: 14, rz: 7, group: 'lowerback' },
+        { x: -6, y: -41 + squatDrop, z: 10, rx: 5.5, ry: 5, rz: 5, group: 'abs' },
+        { x: 6, y: -41 + squatDrop, z: 10, rx: 5.5, ry: 5, rz: 5, group: 'abs' },
+        { x: -6, y: -30 + squatDrop, z: 10, rx: 5.5, ry: 5, rz: 5, group: 'abs' },
+        { x: 6, y: -30 + squatDrop, z: 10, rx: 5.5, ry: 5, rz: 5, group: 'abs' },
+        { x: -5.5, y: -19 + squatDrop, z: 9.5, rx: 5, ry: 5, rz: 4.5, group: 'abs' },
+        { x: 5.5, y: -19 + squatDrop, z: 9.5, rx: 5, ry: 5, rz: 4.5, group: 'abs' },
+        { x: -16, y: -31 + squatDrop, z: 3, rx: 6, ry: 14, rz: 8, group: 'obliques' },
+        { x: 16, y: -31 + squatDrop, z: 3, rx: 6, ry: 14, rz: 8, group: 'obliques' },
+        { x: -35 - Math.sin(armAngleL) * 8, y: -42 + squatDrop - Math.cos(armAngleL) * 6, z: 2, rx: 8.5, ry: 15, rz: 8.5, group: 'triceps' },
+        { x: 35 + Math.sin(armAngleL) * 8, y: -42 + squatDrop - Math.cos(armAngleL) * 6, z: 2, rx: 8.5, ry: 15, rz: 8.5, group: 'triceps' },
+        { x: -39 - Math.sin(armAngleL) * 14, y: -18 + squatDrop - Math.cos(armAngleL) * 14, z: 6, rx: 7, ry: 14, rz: 7, group: 'forearms' },
+        { x: 39 + Math.sin(armAngleL) * 14, y: -18 + squatDrop - Math.cos(armAngleL) * 14, z: 6, rx: 7, ry: 14, rz: 7, group: 'forearms' },
+        { x: -11, y: -4 + squatDrop, z: -10, rx: 11, ry: 12, rz: 10, group: 'glutes' },
+        { x: 11, y: -4 + squatDrop, z: -10 - legBackR * 12, rx: 11, ry: 12, rz: 10, group: 'glutes' },
+        { x: -13, y: 24 + squatDrop * 0.5, z: 6, rx: 12, ry: 24, rz: 11, group: 'quads' },
+        { x: 13, y: 24 + squatDrop * 0.5 - legBackR * 14, z: 6 - legBackR * 28, rx: 12, ry: 24, rz: 11, group: 'quads' },
+        { x: -13, y: 26 + squatDrop * 0.5, z: -6, rx: 10, ry: 22, rz: 9, group: 'hamstrings' },
+        { x: 13, y: 26 + squatDrop * 0.5 - legBackR * 14, z: -6 - legBackR * 30, rx: 10, ry: 22, rz: 9, group: 'hamstrings' },
+        { x: -13, y: 68, z: -2, rx: 8.5, ry: 22, rz: 8.5, group: 'calves' },
+        { x: 13, y: 68 - legBackR * 22, z: -2 - legBackR * 48, rx: 8.5, ry: 22, rz: 8.5, group: 'calves' }
+      ];
+    }
+
+    function render3DStage() {
+      animTick += 0.025;
+      if (autoSpin && !isDragging3d) targetYaw += 0.009;
+      camYaw += (targetYaw - camYaw) * 0.14;
+
+      const w = canvas3d.width;
+      const h = canvas3d.height;
+      ctx3d.clearRect(0, 0, w, h);
+
+      const cx = w / 2;
+      const cy = h / 2 + 4;
+      const unitScale = Math.min(w / 380, h / 250);
+      const cosY = Math.cos(camYaw);
+      const sinY = Math.sin(camYaw);
+
+      ctx3d.save();
+      ctx3d.strokeStyle = isParchmentTheme ? 'rgba(58, 46, 34, 0.22)' : 'rgba(53, 208, 232, 0.22)';
+      ctx3d.lineWidth = 1.2;
+      ctx3d.beginPath();
+      ctx3d.arc(cx, cy - 4, 102 * unitScale, 0, Math.PI * 2);
+      ctx3d.stroke();
+
+      ctx3d.beginPath();
+      ctx3d.ellipse(cx, cy + 86 * unitScale, 76 * unitScale, 17 * unitScale, 0, 0, Math.PI * 2);
+      ctx3d.strokeStyle = isParchmentTheme ? 'rgba(14, 95, 164, 0.35)' : 'rgba(18, 184, 134, 0.45)';
+      ctx3d.stroke();
+      ctx3d.restore();
+
+      const activeGroups = MORNING_POSES[currentPoseIdx].activeGroups;
+      const rawParts = getBodyParts3D(currentPoseIdx, animTick);
+
+      const projected = rawParts.map(p => {
+        const rx3d = p.x * cosY - p.z * sinY;
+        const rz3d = p.x * sinY + p.z * cosY;
+        const fov = 360;
+        const scale = (fov / (fov - rz3d)) * unitScale * 1.05;
+        return {
+          ...p,
+          sx: cx + rx3d * scale,
+          sy: cy + p.y * scale,
+          srx: Math.max(2.5, (Math.abs(p.rx * cosY) + Math.abs(p.rz * sinY)) * scale),
+          sry: Math.max(2.5, p.ry * scale),
+          depth: rz3d,
+          isActive: activeGroups.includes(p.group)
+        };
+      });
+
+      projected.sort((a, b) => a.depth - b.depth);
+
+      projected.forEach(p => {
+        ctx3d.save();
+        ctx3d.beginPath();
+        ctx3d.ellipse(p.sx, p.sy, p.srx, p.sry, 0, 0, Math.PI * 2);
+
+        const grad = ctx3d.createRadialGradient(
+          p.sx - p.srx * 0.3,
+          p.sy - p.sry * 0.3,
+          p.srx * 0.1,
+          p.sx,
+          p.sy,
+          Math.max(p.srx, p.sry)
+        );
+
+        if (p.isActive) {
+          const glowPulse = 0.78 + 0.22 * Math.sin(animTick * 4);
+          grad.addColorStop(0, '#4FD6B0');
+          grad.addColorStop(0.55, '#12B886');
+          grad.addColorStop(1, isParchmentTheme ? '#095E45' : '#06402F');
+          ctx3d.fillStyle = grad;
+          ctx3d.shadowColor = `rgba(18, 184, 134, ${0.65 * glowPulse})`;
+          ctx3d.shadowBlur = 14;
+          ctx3d.fill();
+          ctx3d.lineWidth = 1.3;
+          ctx3d.strokeStyle = '#8CE6CC';
+          ctx3d.stroke();
+        } else {
+          if (isParchmentTheme) {
+            grad.addColorStop(0, '#E5DAC3');
+            grad.addColorStop(0.65, '#C4B293');
+            grad.addColorStop(1, '#8C785B');
+            ctx3d.strokeStyle = 'rgba(58, 46, 34, 0.35)';
+          } else {
+            grad.addColorStop(0, '#343E46');
+            grad.addColorStop(0.65, '#1d2326');
+            grad.addColorStop(1, '#111517');
+            ctx3d.strokeStyle = 'rgba(107, 166, 218, 0.28)';
+          }
+          ctx3d.fillStyle = grad;
+          ctx3d.fill();
+          ctx3d.lineWidth = 1;
+          ctx3d.stroke();
+        }
+        ctx3d.restore();
+      });
+
+      ctx3d.save();
+      const deg = Math.round(((camYaw * 180 / Math.PI) % 360 + 360) % 360);
+      ctx3d.font = '700 10.5px ui-monospace, monospace';
+      ctx3d.fillStyle = isParchmentTheme ? '#0E5FA4' : '#35D0E8';
+      ctx3d.fillText(`3D ORBIT: ${deg}°`, 10, h - 10);
+      ctx3d.restore();
+
+      requestAnimationFrame(render3DStage);
+    }
+
+    const cWrap = document.getElementById('canvas3dContainer');
+    cWrap.addEventListener('pointerdown', e => {
+      isDragging3d = true;
+      autoSpin = false;
+      document.getElementById('btnAutoSpin').textContent = '🔄 Giro: OFF';
+      lastDragX = e.clientX;
+      cWrap.setPointerCapture(e.pointerId);
+    });
+    cWrap.addEventListener('pointermove', e => {
+      if (!isDragging3d) return;
+      const dx = e.clientX - lastDragX;
+      lastDragX = e.clientX;
+      targetYaw += dx * 0.012;
+    });
+    cWrap.addEventListener('pointerup', () => { isDragging3d = false; });
+
+    function setCameraAngle(rad, btn) {
+      autoSpin = false;
+      document.getElementById('btnAutoSpin').textContent = '🔄 Giro: OFF';
+      targetYaw = rad;
+      document.querySelectorAll('.angle-btn').forEach(b => {
+        if (b.id !== 'btnAutoSpin') b.classList.remove('active');
+      });
+      if (btn) btn.classList.add('active');
+    }
+
+    function toggleAutoSpin(btn) {
+      autoSpin = !autoSpin;
+      btn.textContent = autoSpin ? '🔄 Giro: ON' : '🔄 Giro: OFF';
+      btn.classList.toggle('active', autoSpin);
+    }
+
+    function selectMorningPose(idx, btn) {
+      currentPoseIdx = idx;
+      const pose = MORNING_POSES[idx];
+      document.getElementById('stageExTitle').textContent = pose.title;
+      document.getElementById('stageMusclePill').textContent = pose.muscle;
+      document.getElementById('stageExSub').textContent = pose.sub;
+      document.querySelectorAll('.pose-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+    }
+
+    function toggleStageTheme() {
+      isParchmentTheme = !isParchmentTheme;
+      const card = document.getElementById('stage3dCard');
+      const btn = document.getElementById('themeBtn');
+      card.classList.toggle('theme-parchment', isParchmentTheme);
+      btn.textContent = isParchmentTheme ? '🌑 Tema Cyber Glass' : '📜 Tema Vitruviano';
+    }
+
+    // ==========================================================================
+    // 5. EFEITO TILT 3D + RENDERIZAÇÃO DE TREINOS E CARDS 3D FLIP
+    // ==========================================================================
+    function initGlassTiltCards() {
+      document.querySelectorAll('.glass-card').forEach(card => {
+        card.addEventListener('pointermove', e => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          card.style.setProperty('--mx', `${x}px`);
+          card.style.setProperty('--my', `${y}px`);
+
+          if (card.classList.contains('tilt-3d') && window.innerWidth > 768) {
+            const rotY = ((x / rect.width) - 0.5) * 5;
+            const rotX = ((y / rect.height) - 0.5) * -5;
+            card.style.transform = `perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+          }
+        });
+        card.addEventListener('pointerleave', () => {
+          if (card.classList.contains('tilt-3d')) {
+            card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+          }
+        });
+      });
+    }
+
+    function renderDailyWorkout() {
+      const container = document.getElementById('dailyWorkoutContainer');
+      const list = WEEKLY_DATA[currentDayKey] || [];
+      const isHome = globalMode === 'home';
+
+      container.innerHTML = list.map(item => {
+        const isDone = completedExercises.has(item.id);
+        const title = isHome ? item.homeTitle : item.gymTitle;
+        const badge = isHome ? item.homeBadge : item.gymBadge;
+        const desc = isHome ? item.homeDesc : item.gymDesc;
+        const metric = isHome ? item.homeMetric : item.gymMetric;
+
+        return `
+          <article class="glass-card ex-card ${isDone ? 'done' : ''}">
+            <div class="ex-top">
+              <span class="ex-badge ${isHome ? 'home' : ''}">${badge}</span>
+              <span style="font-size:11px; color:var(--dim);">
+                ${isHome ? '🏠 Peso Corporal' : '🏋️ Aparelhos'}
+              </span>
+            </div>
+            <h3 class="ex-title">${title}</h3>
+            <p class="ex-desc">${desc}</p>
+            <div class="ex-metrics">
+              <span class="metric-chip num">${metric}</span>
+              <button class="check-btn" onclick="toggleExerciseDone('${item.id}')">
+                ${isDone ? '✓ Concluído' : 'Marcar Feito'}
+              </button>
+            </div>
+          </article>
+        `;
+      }).join('');
+      initGlassTiltCards();
+    }
+
+    function createFlipCardHTML(item, isStrength) {
+      const isFlipped = globalMode === 'home';
+      const gymBadge = isStrength ? item.gymBadge : '🏋️ ACADEMIA · UTILITÁRIOS';
+      const kcalOrTag = item.kcal ? `<span class="ex-badge burn num">🔥 ${item.kcal}</span>` : '';
+
+      return `
+        <div class="flip-scene ${isFlipped ? 'is-flipped' : ''}" id="flip-${item.id}">
+          <div class="flip-card-inner">
+            <div class="flip-face flip-face-front">
+              <div>
+                <div class="ex-top" style="margin-bottom:8px;">
+                  <span class="ex-badge">${gymBadge}</span>
+                  ${kcalOrTag}
+                </div>
+                <h3 class="ex-title" style="margin-bottom:6px;">${item.gymTitle}</h3>
+                <p class="ex-desc">${item.gymDesc}</p>
+              </div>
+              <div class="ex-metrics">
+                <span class="metric-chip num">${item.gymMetric}</span>
+                <button class="flip-trigger-btn" onclick="toggleSingleFlip('flip-${item.id}')">
+                  🔄 Virar 3D (Casa)
+                </button>
+              </div>
+            </div>
+
+            <div class="flip-face flip-face-back">
+              <div>
+                <div class="ex-top" style="margin-bottom:8px;">
+                  <span class="ex-badge home">🏠 COMPENSAÇÃO EM CASA</span>
+                  ${kcalOrTag}
+                </div>
+                <h3 class="ex-title" style="margin-bottom:6px;">${item.homeTitle}</h3>
+                <p class="ex-desc">${item.homeDesc}</p>
+              </div>
+              <div class="ex-metrics">
+                <span class="metric-chip num">${item.homeMetric}</span>
+                <button class="flip-trigger-btn" onclick="toggleSingleFlip('flip-${item.id}')">
+                  🔄 Virar 3D (Academia)
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderFunctionalGrid() {
+      const grid = document.getElementById('functionalGrid');
+      grid.innerHTML = FUNCTIONAL_DATA.map(item => createFlipCardHTML(item, false)).join('');
+    }
+
+    function renderStrengthGrid(filterKey) {
+      if (filterKey) currentStrengthFilter = filterKey;
+      document.getElementById('btnFilterUpper').className = currentStrengthFilter === 'upper' ? 'btn btn-primary' : 'btn';
+      document.getElementById('btnFilterLower').className = currentStrengthFilter === 'lower' ? 'btn btn-primary' : 'btn';
+
+      const list = STRENGTH_DATA[currentStrengthFilter] || [];
+      const grid = document.getElementById('strengthGrid');
+      grid.innerHTML = list.map(item => createFlipCardHTML(item, true)).join('');
+    }
+
+    function toggleSingleFlip(sceneId) {
+      const el = document.getElementById(sceneId);
+      if (el) el.classList.toggle('is-flipped');
+    }
+
+    function flipAllCardsInSection(containerId) {
+      const scenes = document.querySelectorAll(`#${containerId} .flip-scene`);
+      scenes.forEach(s => s.classList.toggle('is-flipped'));
+    }
+
+    function setGlobalMode(mode) {
+      globalMode = mode;
+      const btnGym = document.getElementById('btnModeGym');
+      const btnHome = document.getElementById('btnModeHome');
+      const banner = document.getElementById('compBanner');
+      const sub = document.getElementById('modeSubtitle');
+
+      if (mode === 'home') {
+        btnGym.className = 'mode-btn';
+        btnHome.className = 'mode-btn active-home';
+        banner.classList.add('show');
+        sub.textContent = '🏠 Modo Compensação em Casa Ativo (Cards 3D Virados)';
+      } else {
+        btnGym.className = 'mode-btn active-gym';
+        btnHome.className = 'mode-btn';
+        banner.classList.remove('show');
+        sub.textContent = '🏋️ Seg: Cardio+Core · Ter: Superiores · Qua: Inferiores';
+      }
+
+      renderDailyWorkout();
+      renderFunctionalGrid();
+      renderStrengthGrid();
+    }
+
+    function selectDayTab(dayKey, btn) {
+      currentDayKey = dayKey;
+      document.querySelectorAll('.day-tab').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      renderDailyWorkout();
+    }
+
+    function toggleExerciseDone(id) {
+      if (completedExercises.has(id)) completedExercises.delete(id);
+      else completedExercises.add(id);
+      saveProgressStorage();
+      renderDailyWorkout();
+    }
+
+    // ==========================================================================
+    // 6. POP-UP DIÁRIO DE NUTRIÇÃO (28 DIAS) & CARDÁPIO DIVERSIFICADO
+    // ==========================================================================
+    function syncDailyTipUI() {
+      const tip = DAILY_NUTRITION_TIPS_28[currentTipIndex];
+      if (!tip) return;
+
+      // Atualiza Card Resumo na Home
+      document.getElementById('miniTipCat').textContent = tip.category;
+      document.getElementById('miniTipDayBadge').textContent = `DIA ${tip.day} / 28`;
+      document.getElementById('miniTipTitle').textContent = tip.title;
+      document.getElementById('miniTipDesc').textContent = tip.highlight;
+
+      // Atualiza Modal Pop-up Completo
+      document.getElementById('popTipCategory').textContent = tip.category;
+      document.getElementById('popTipDayTag').textContent = `DIA ${tip.day} DE 28`;
+      document.getElementById('popTipCounter').textContent = `Sugestão do Dia ${tip.day} de 28`;
+      document.getElementById('popTipTitle').textContent = tip.title;
+      document.getElementById('popTipHighlight').textContent = tip.highlight;
+      document.getElementById('popTipHowTo').textContent = tip.howTo;
+      document.getElementById('popTipNutrients').textContent = tip.nutrients;
+      document.getElementById('popTipBestTime').textContent = tip.bestTime;
+    }
+
+    function nextDailyTip(delta) {
+      currentTipIndex = (currentTipIndex + delta + DAILY_NUTRITION_TIPS_28.length) % DAILY_NUTRITION_TIPS_28.length;
+      syncDailyTipUI();
+    }
+
+    function openDailyTipModal(specificDay) {
+      if (typeof specificDay === 'number' && specificDay >= 1 && specificDay <= 28) {
+        currentTipIndex = specificDay - 1;
+      }
+      syncDailyTipUI();
+      document.getElementById('dailyTipModal').classList.add('open');
+    }
+
+    function closeDailyTipModal() {
+      document.getElementById('dailyTipModal').classList.remove('open');
+    }
+
+    function goToNutritionTabFromModal() {
+      closeDailyTipModal();
+      const btn = document.getElementById('navBtn-dieta');
+      switchMainTab('dieta', btn);
+    }
+
+    function selectNutriDay(dayKey, btnEl) {
+      currentNutriDayKey = dayKey;
+      document.querySelectorAll('.nday-btn').forEach(b => b.classList.remove('active'));
+      if (btnEl) btnEl.classList.add('active');
+      renderNutritionDayPlan();
+    }
+
+    function renderNutritionDayPlan() {
+      const plan = WEEKLY_MEAL_PLAN[currentNutriDayKey];
+      if (!plan) return;
+
+      document.getElementById('nutriDayHeaderTitle').textContent = `${plan.dayName} · ${plan.trainingFocus}`;
+      document.getElementById('nutriDayHeaderSub').textContent = `Estratégia: ${plan.strategy}`;
+
+      // Destaques do dia: Fruta Funcional + Receita Express
+      document.getElementById('nutriDayHighlights').innerHTML = `
+        <div class="glass-card ex-card" style="border-color: rgba(18, 184, 134, 0.35);">
+          <div class="ex-top">
+            <span class="ex-badge home">FRUTA FUNCIONAL DE ${plan.dayName.toUpperCase()}</span>
+          </div>
+          <h3 class="ex-title" style="font-size:15.5px;">${plan.fruit.name}</h3>
+          <p class="ex-desc">${plan.fruit.desc}</p>
+        </div>
+        <div class="glass-card ex-card" style="border-color: rgba(53, 208, 232, 0.35);">
+          <div class="ex-top">
+            <span class="ex-badge">RECEITA / BOOSTER EXPRESS DO DIA</span>
+          </div>
+          <h3 class="ex-title" style="font-size:15.5px;">${plan.express.name}</h3>
+          <p class="ex-desc">${plan.express.desc}</p>
+        </div>
+      `;
+
+      // As 4 Refeições com Opções A, B e C
+      document.getElementById('nutriMealsContainer').innerHTML = plan.meals.map((meal, idx) => `
+        <article class="glass-card ex-card">
+          <div class="ex-top">
+            <h3 class="ex-title" style="font-size:16px;">${meal.title}</h3>
+            <span class="badge-pill">3 Variações</span>
+          </div>
+          <div class="meal-opt-tabs">
+            <button class="mopt-btn active" onclick="switchMealOption(${idx}, 'A', this)">Opção A (Prática)</button>
+            <button class="mopt-btn" onclick="switchMealOption(${idx}, 'B', this)">Opção B (Variada)</button>
+            <button class="mopt-btn" onclick="switchMealOption(${idx}, 'C', this)">Opção C (Troca)</button>
+          </div>
+          <p class="ex-desc" id="mealDesc-${idx}" style="color:var(--txt); font-size:12.5px; line-height:1.55;">
+            ${meal.A}
+          </p>
+        </article>
+      `).join('');
+    }
+
+    function switchMealOption(mealIdx, optKey, btnEl) {
+      const plan = WEEKLY_MEAL_PLAN[currentNutriDayKey];
+      if (!plan || !plan.meals[mealIdx]) return;
+      const parent = btnEl.parentElement;
+      parent.querySelectorAll('.mopt-btn').forEach(b => b.classList.remove('active'));
+      btnEl.classList.add('active');
+      document.getElementById(`mealDesc-${mealIdx}`).textContent = plan.meals[mealIdx][optKey];
+    }
+
+    function renderRecipesAndFruitsCatalog() {
+      document.getElementById('recipesCatalogGrid').innerHTML = FITNESS_RECIPES_CATALOG.map(r => `
+        <article class="glass-card ex-card">
+          <div class="ex-top">
+            <span class="ex-badge home">${r.tag}</span>
+            <span class="ex-badge burn num">${r.macros}</span>
+          </div>
+          <h3 class="ex-title" style="font-size:15.5px;">${r.title}</h3>
+          <p class="ex-desc">${r.desc}</p>
+        </article>
+      `).join('');
+
+      document.getElementById('fruitsCatalogGrid').innerHTML = FUNCTIONAL_FRUITS_GUIDE.map(f => `
+        <article class="glass-card ex-card">
+          <div class="ex-top">
+            <span class="ex-badge">${f.active}</span>
+          </div>
+          <h3 class="ex-title" style="font-size:16px;">${f.name}</h3>
+          <p class="ex-desc">${f.benefit}</p>
+          <div class="ex-metrics">
+            <span class="metric-chip">${f.portion}</span>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    // ==========================================================================
+    // 7. CALENDÁRIO 28 DIAS (MARCA CONCLUÍDO + ABRE DICA NUTRICIONAL DAQUELE DIA)
+    // ==========================================================================
+    function renderCalendar() {
+      const grid = document.getElementById('calendarGrid');
+      let html = '';
+      for (let d = 1; d <= 28; d++) {
+        const done = completedDays.has(d);
+        html += `
+          <div class="cal-day ${done ? 'completed' : ''}" onclick="handleCalendarDayClick(${d})">
+            <span class="c-num num">DIA ${d}</span>
+            <span class="c-ico">${done ? '✅' : '🔒'}</span>
+            <span class="c-tip">🍏 Dica</span>
+          </div>
+        `;
+      }
+      grid.innerHTML = html;
+      const count = completedDays.size;
+      const pct = Math.round((count / 28) * 100);
+      document.getElementById('progressText').textContent = `${count} de 28 dias (${pct}%)`;
+      document.getElementById('progressBar').style.width = `${Math.max(4, pct)}%`;
+    }
+
+    function handleCalendarDayClick(d) {
+      if (completedDays.has(d)) completedDays.delete(d);
+      else completedDays.add(d);
+      saveProgressStorage();
+      renderCalendar();
+      openDailyTipModal(d);
+    }
+
+    function promptWeight() {
+      const current = localStorage.getItem('max_weight') || '80';
+      const w = prompt('Atualizar peso atual (kg):', current);
+      if (w && !isNaN(parseFloat(w))) {
+        const val = parseFloat(w);
+        try { localStorage.setItem('max_weight', String(val)); } catch (e) {}
+        document.getElementById('weightDisplay').textContent = `${val} kg ✎`;
+      }
+    }
+
+    // ==========================================================================
+    // 8. TIMER DE TREINO & NAVEGAÇÃO
+    // ==========================================================================
+    let timerSec = 45;
+    let timerRunning = false;
+    let timerInterval = null;
+
+    function updateTimerUI() {
+      const m = String(Math.floor(timerSec / 60)).padStart(2, '0');
+      const s = String(timerSec % 60).padStart(2, '0');
+      document.getElementById('timerDisplay').textContent = `${m}:${s}`;
+    }
+
+    function toggleTimer() {
+      const btn = document.getElementById('timerStartBtn');
+      if (timerRunning) {
+        clearInterval(timerInterval);
+        timerRunning = false;
+        btn.textContent = '▶ Retomar';
+      } else {
+        timerRunning = true;
+        btn.textContent = '⏸ Pausar';
+        timerInterval = setInterval(() => {
+          if (timerSec > 0) {
+            timerSec--;
+            updateTimerUI();
+          } else {
+            clearInterval(timerInterval);
+            timerRunning = false;
+            btn.textContent = '▶ Iniciar';
+            document.getElementById('timerLabel').textContent = '✅ Série concluída! Descanse 30s.';
+          }
+        }, 1000);
+      }
+    }
+
+    function setTimerPreset(sec, label) {
+      clearInterval(timerInterval);
+      timerRunning = false;
+      timerSec = sec;
+      document.getElementById('timerStartBtn').textContent = '▶ Iniciar';
+      document.getElementById('timerLabel').textContent = label;
+      updateTimerUI();
+    }
+
+    function switchMainTab(tabId, btnEl) {
+      document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
+      document.getElementById('view-' + tabId).classList.add('active');
+      document.querySelectorAll('.bnav-btn').forEach(b => b.classList.remove('active'));
+      if (btnEl) btnEl.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (tabId === 'hoje') setTimeout(resizeCanvas3D, 50);
+    }
+
+    let deferredPwaPrompt = null;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPwaPrompt = e;
+      const row = document.getElementById('nativeInstallRow');
+      if (row) row.style.display = 'block';
+    });
+
+    async function triggerNativePwaInstall() {
+      if (!deferredPwaPrompt) return;
+      deferredPwaPrompt.prompt();
+      await deferredPwaPrompt.userChoice;
+      deferredPwaPrompt = null;
+      const row = document.getElementById('nativeInstallRow');
+      if (row) row.style.display = 'none';
+    }
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+      });
+    }
+
+    function toggleQrModal(show) {
+      document.getElementById('qrModal').classList.toggle('open', show);
+    }
+
+    function copyLanUrl() {
+      const url = document.getElementById('lanUrlText').textContent;
+      navigator.clipboard?.writeText(url);
+      alert('Link copiado: ' + url);
+    }
+
+    function initQrCode() {
+      const defaultCloudUrl = window.PERMANENT_APP_URL || 'https://maxireis373-ops.github.io/up-method-max/';
+      const urlEl = document.getElementById('lanUrlText');
+      if (urlEl) urlEl.textContent = defaultCloudUrl;
+      const qrBox = document.getElementById('qrCodeContainer');
+      const img = document.createElement('img');
+      img.width = 160;
+      img.height = 160;
+      img.alt = 'QR Code para abrir no celular';
+      img.src = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&color=14181B&bgcolor=FFFFFF&data=${encodeURIComponent(defaultCloudUrl)}`;
+      img.onerror = () => {
+        qrBox.innerHTML = `<div style="width:160px;height:160px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#14181B;font-weight:700;font-size:12px;padding:12px;">Link Fixo:<br><span style="color:#0E5FA4;font-family:monospace;margin-top:6px;">${defaultCloudUrl}</span></div>`;
+      };
+      qrBox.innerHTML = '';
+      qrBox.appendChild(img);
+    }
+
+    // Define a Dica do Dia inicial baseada no dia atual do calendário (1 a 28) e abre o Pop-up!
+    function initDailyNutritionPopup() {
+      const todayNum = ((new Date().getDate() - 1) % 28);
+      currentTipIndex = todayNum;
+      syncDailyTipUI();
+      // Abre automaticamente o Pop-up da Dica Nutricional do Dia após 600ms
+      setTimeout(() => {
+        openDailyTipModal(todayNum + 1);
+      }, 600);
+    }
+
+    // Inicialização Geral
+    resizeCanvas3D();
+    renderDailyWorkout();
+    renderFunctionalGrid();
+    renderStrengthGrid('upper');
+    renderNutritionDayPlan();
+    renderRecipesAndFruitsCatalog();
+    renderCalendar();
+    initGlassTiltCards();
+    initQrCode();
+    initDailyNutritionPopup();
+    requestAnimationFrame(render3DStage);
+  </script>
+</body>
+</html>
