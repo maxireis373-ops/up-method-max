@@ -513,7 +513,7 @@
       position: relative;
       width: 100%;
       max-width: 100%;
-      height: 250px;
+      height: 285px;
       margin: 6px 0;
       display: flex;
       align-items: center;
@@ -522,6 +522,13 @@
       user-select: none;
       touch-action: pan-y;
       overflow: hidden;
+      border-radius: var(--r-md);
+      background: radial-gradient(circle at 50% 45%, rgba(53, 208, 232, 0.08) 0%, rgba(20, 24, 27, 0.45) 75%);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+    }
+    .stage-3d-card.theme-parchment .canvas-3d-wrap {
+      background: radial-gradient(circle at 50% 45%, rgba(250, 247, 240, 0.9) 0%, rgba(226, 215, 195, 0.7) 100%);
+      border-color: rgba(58, 46, 34, 0.18);
     }
     .canvas-3d-wrap:active { cursor: grabbing; }
     #avatar3dCanvas {
@@ -573,7 +580,7 @@
 
     .ex-selector-row {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 6px;
     }
     @media (max-width: 540px) {
@@ -595,12 +602,37 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
+    .pose-btn.span-full-mobile {
+      grid-column: span 1;
+    }
+    @media (max-width: 540px) {
+      .pose-btn.span-full-mobile { grid-column: span 2; }
+    }
     .pose-btn.active {
       background: var(--green);
       color: #04221A;
       border-color: var(--green);
       box-shadow: 0 0 14px rgba(18, 184, 134, 0.45);
     }
+    .stage-coach-box {
+      margin-top: 8px;
+      background: rgba(20, 24, 27, 0.82);
+      border: 1px solid rgba(53, 208, 232, 0.28);
+      border-left: 3px solid var(--green);
+      border-radius: var(--r-md);
+      padding: 10px 12px;
+      font-size: 11.5px;
+      line-height: 1.48;
+      color: var(--dim);
+    }
+    .stage-3d-card.theme-parchment .stage-coach-box {
+      background: rgba(255, 252, 245, 0.88);
+      border-color: rgba(14, 95, 164, 0.3);
+      border-left-color: var(--blue);
+      color: var(--warm-dim);
+    }
+    .stage-coach-box b { color: var(--txt); }
+    .stage-3d-card.theme-parchment .stage-coach-box b { color: var(--warm-txt); }
 
     /* ==========================================================================
        COLUNA DIREITA DO HERO: PROGRESSO 28 DIAS, CARD DICA DO DIA & TIMER
@@ -1272,13 +1304,13 @@
     /* Ajustes finos para telas de celular (iPhone 375px–430px) */
     @media (max-width: 560px) {
       .app-shell { padding: 0 12px; }
-      .topbar { padding: 8px 0; margin-bottom: 14px; }
+      .topbar { padding: max(8px, env(safe-area-inset-top, 8px)) 0 8px; margin-bottom: 14px; }
       .topbar-inner { flex-direction: column; align-items: stretch; gap: 8px; }
       .top-actions { justify-content: space-between; width: 100%; }
       .mode-switch { width: 100%; }
       .mode-btn { flex: 1; justify-content: center; }
       .stage-3d-card, .glass-panel, .ex-card, .flip-face { padding: 14px; }
-      .canvas-3d-wrap { height: 220px; }
+      .canvas-3d-wrap { height: 268px; }
       .kpi-box .val { font-size: 13px; }
       .stage-title { font-size: 18px; }
     }
@@ -1356,39 +1388,45 @@
          ====================================================================== -->
     <section class="view-section active" id="view-hoje">
       <div class="hero-grid">
-        <!-- PALCO 3D INTERATIVO -->
+        <!-- PALCO 3D BIOMECÂNICO INTERATIVO v5.0 -->
         <div class="glass-card stage-3d-card tilt-3d" id="stage3dCard">
           <div>
             <div class="stage-header">
-              <span class="stage-pill" id="stageMusclePill">ATIVAÇÃO 3D · GLÚTEOS & POSTERIOR</span>
+              <span class="stage-pill" id="stageMusclePill">ATIVAÇÃO 3D · GLÚTEOS, POSTERIOR & CORE</span>
               <button class="theme-toggle-btn" onclick="toggleStageTheme()" id="themeBtn">
                 📜 Tema Vitruviano
               </button>
             </div>
-            <h2 class="stage-title" id="stageExTitle">1. Terra Unilateral (Toe Touch)</h2>
+            <h2 class="stage-title" id="stageExTitle">1. Terra Unilateral (Equilíbrio em T)</h2>
             <p class="stage-sub" id="stageExSub">
-              Arraste o modelo 3D em 360° · Ativação matinal "Todas as Manhãs" (BetterMe Men)
+              Equilíbrio em 1 perna inclinando o tronco à frente e estendendo a outra perna atrás
             </p>
           </div>
 
           <div class="canvas-3d-wrap" id="canvas3dContainer">
-            <canvas id="avatar3dCanvas" width="460" height="260"></canvas>
+            <canvas id="avatar3dCanvas" width="460" height="285"></canvas>
           </div>
 
           <div class="stage-controls">
             <div class="angle-presets">
-              <button class="angle-btn active" onclick="setCameraAngle(0, this)">0° Frente</button>
-              <button class="angle-btn" onclick="setCameraAngle(0.65, this)">45° Pose 3/4</button>
-              <button class="angle-btn" onclick="setCameraAngle(1.57, this)">90° Perfil</button>
+              <button class="angle-btn" onclick="setCameraAngle(0, this)">0° Frente</button>
+              <button class="angle-btn active" onclick="setCameraAngle(0.68, this)">45° Pose 3/4</button>
+              <button class="angle-btn" onclick="setCameraAngle(1.45, this)">90° Perfil</button>
               <button class="angle-btn" onclick="setCameraAngle(3.14, this)">180° Costas</button>
-              <button class="angle-btn" onclick="toggleAutoSpin(this)" id="btnAutoSpin">🔄 Giro: ON</button>
+              <button class="angle-btn" onclick="toggleAutoSpin(this)" id="btnAutoSpin">🔄 Giro: OFF</button>
             </div>
 
             <div class="ex-selector-row">
               <button class="pose-btn active" onclick="selectMorningPose(0, this)">1. Terra Unilat.</button>
-              <button class="pose-btn" onclick="selectMorningPose(1, this)">2. Pike Push-up</button>
+              <button class="pose-btn" onclick="selectMorningPose(1, this)">2. Flexão Pike (V)</button>
               <button class="pose-btn" onclick="selectMorningPose(2, this)">3. Agach. Guarda</button>
-              <button class="pose-btn" onclick="selectMorningPose(3, this)">4. Flexão+Vacuum</button>
+              <button class="pose-btn" onclick="selectMorningPose(3, this)">4. Flexão no Solo</button>
+              <button class="pose-btn span-full-mobile" onclick="selectMorningPose(4, this)">5. Vacuum Abdominal (Cintura)</button>
+            </div>
+
+            <!-- Guia Passo a Passo do Exercício Selecionado -->
+            <div class="stage-coach-box" id="stageCoachBox">
+              <b>📋 Como executar (3x 12 cada perna):</b> Fique em pé apoiado na perna esquerda, incline o tronco à frente mantendo a coluna reta enquanto a perna direita sobe esticada atrás (formando um "T"). Toque a mão direita no pé esquerdo e volte contraindo glúteo e posterior.
             </div>
           </div>
         </div>
@@ -1423,7 +1461,7 @@
             <div class="progress-bar-wrap">
               <div class="progress-meta">
                 <span>Progresso 28 Dias:</span>
-                <b class="num" id="progressText">4 de 28 dias (14%)</b>
+                <b class="num" id="progressText">Dia 1 de 28 (4%)</b>
               </div>
               <div class="progress-track">
                 <div class="progress-fill" id="progressBar"></div>
@@ -1431,19 +1469,19 @@
             </div>
           </div>
 
-          <!-- CARD RESUMO DA DICA NUTRICIONAL DO DIA (ABRE POP-UP) -->
+          <!-- CARD RESUMO DA DICA NUTRICIONAL DO DIA (SINCRONIZADO COM SEU DIA DO DESAFIO) -->
           <div class="glass-card glass-panel tilt-3d" style="border-color: rgba(18, 184, 134, 0.38);">
             <div class="panel-kicker">
-              <span style="color: var(--green-l);" id="miniTipCat">🍎 DICA NUTRICIONAL DO DIA</span>
-              <span class="badge-pill green" id="miniTipDayBadge">DIA 4 / 28</span>
+              <span style="color: var(--green-l);" id="miniTipCat">⚡ BOOSTER TERMOGÊNICO & VITAMINAS</span>
+              <span class="badge-pill green" id="miniTipDayBadge" title="Cada um dos 28 dias do desafio tem uma sugestão alimentar diferente">DIA 1 DE 28 (HOJE)</span>
             </div>
-            <h3 style="font-size: 16px; margin-bottom: 4px;" id="miniTipTitle">Bowl Seca-Barriga: Frango, Abacate e Folhas</h3>
+            <h3 style="font-size: 16px; margin-bottom: 4px;" id="miniTipTitle">Shot Matinal de Limão, Gengibre e Cúrcuma</h3>
             <p style="font-size: 11.5px; color: var(--dim); margin-bottom: 10px;" id="miniTipDesc">
-              Reduz o cortisol abdominal e mantém saciedade máxima com gorduras boas e proteína.
+              Ativa a termogênese logo cedo, reduz a inflamação visceral e prepara o abdômen para o Vacuum Matinal.
             </p>
             <div style="display:flex; gap:8px; flex-wrap:wrap;">
-              <button class="btn btn-primary" onclick="openDailyTipModal()">📖 Ver Receita / Dica Completa</button>
-              <button class="btn" onclick="nextDailyTip(1)">🎲 Próxima Dica (1–28)</button>
+              <button class="btn btn-primary" onclick="openDailyTipModal()">📖 Ver Receita Completa</button>
+              <button class="btn" onclick="nextDailyTip(1)">🎲 Ver Outra Dica (1–28)</button>
             </div>
           </div>
 
@@ -2365,40 +2403,51 @@
     let currentStrengthFilter = 'upper';
     let currentNutriDayKey = 'seg';
     let currentTipIndex = 0;
-    let completedExercises = new Set(JSON.parse(localStorage.getItem('max_done_ex') || '["seg-1","manhas-1"]'));
-    let completedDays = new Set(JSON.parse(localStorage.getItem('max_done_days') || '[1,2,3,4]'));
+    let completedExercises = new Set(JSON.parse(localStorage.getItem('max_done_ex') || '[]'));
+    let completedDays = new Set(JSON.parse(localStorage.getItem('max_done_days_v5') || '[1]'));
 
     function saveProgressStorage() {
       try {
         localStorage.setItem('max_done_ex', JSON.stringify([...completedExercises]));
-        localStorage.setItem('max_done_days', JSON.stringify([...completedDays]));
+        localStorage.setItem('max_done_days_v5', JSON.stringify([...completedDays]));
       } catch (e) {}
     }
 
     const MORNING_POSES = [
       {
-        title: '1. Terra Unilateral (Single-Leg Toe Touch)',
-        muscle: 'ATIVAÇÃO 3D · GLÚTEOS, POSTERIOR & CORE',
-        sub: 'Equilíbrio unilateral em uma perna + cadeia posterior acesa em verde #12B886',
-        activeGroups: ['glutes', 'hamstrings', 'lowerback', 'abs']
+        title: '1. Terra Unilateral (Equilíbrio em T)',
+        muscle: 'ATIVAÇÃO 3D · GLÚTEOS, POSTERIOR & LOMBAR',
+        sub: 'Equilíbrio em 1 perna inclinando o tronco à frente e subindo a perna de trás em "T"',
+        activeGroups: ['glutes', 'hamstrings', 'lowerback', 'abs', 'calves'],
+        coach: '<b>📋 Como executar (3x 12 cada perna):</b> Apoiado na perna esquerda (joelho levemente destravado), incline o tronco reto à frente enquanto a perna direita sobe esticada atrás formando um <b>"T" (Avião)</b>. Leve a mão direita em direção ao pé esquerdo e suba contraindo o glúteo.'
       },
       {
-        title: '2. Flexão Pike (Pike Push-up em V)',
-        muscle: 'ATIVAÇÃO 3D · DELTOIDES, DORSAL & TRAPÉZIO',
-        sub: 'Quadril elevado em V invertido para construir ombros largos em casa',
-        activeGroups: ['shoulders', 'lats', 'triceps', 'chest']
+        title: '2. Flexão Pike no Chão (Ombros em V)',
+        muscle: 'ATIVAÇÃO 3D · DELTOIDES (OMBROS), TRAPÉZIO & TRÍCEPS',
+        sub: 'Mãos e pés no chão com quadril elevado em V invertido descendo o topo da cabeça',
+        activeGroups: ['shoulders', 'triceps', 'lats', 'chest'],
+        coach: '<b>📋 Como executar (3x 10–12 reps):</b> Apoie mãos e pés no chão e levante o quadril bem alto formando um <b>"V invertido"</b>. Dobre os cotovelos levando o topo da cabeça em direção ao chão (entre as mãos) e empurre forte de volta. Constrói ombros largos em casa!'
       },
       {
         title: '3. Agachamento Lutador em Guarda',
-        muscle: 'ATIVAÇÃO 3D · QUADRÍCEPS, PEITORAL & CORE',
-        sub: 'Base atlética profunda com guarda alta isométrica e queima calórica',
-        activeGroups: ['quads', 'glutes', 'chest', 'shoulders', 'abs']
+        muscle: 'ATIVAÇÃO 3D · QUADRÍCEPS (COXAS), GLÚTEOS & CORE',
+        sub: 'Agachamento profundo até 90° mantendo punhos fechados em guarda alta',
+        activeGroups: ['quads', 'glutes', 'abs', 'calves'],
+        coach: '<b>📋 Como executar (3x 20 reps):</b> Pés na largura dos ombros e mãos em guarda alta no queixo. Jogue o quadril para trás e desça até as coxas ficarem paralelas ao chão (90°), mantendo o peito aberto e o abdômen travado. Suba empurrando o chão com o calcanhar.'
       },
       {
-        title: '4. Flexão Explosiva + Vacuum Abdominal',
-        muscle: 'ATIVAÇÃO 3D · RETO ABDOMINAL (6-PACK) & PEITO',
-        sub: 'Contração profunda do transverso abdominal para afinar a linha de cintura',
-        activeGroups: ['abs', 'obliques', 'chest', 'shoulders', 'triceps']
+        title: '4. Flexão Explosiva no Solo (Peitoral)',
+        muscle: 'ATIVAÇÃO 3D · PEITORAL MAIOR, TRÍCEPS & OMBRO ANTERIOR',
+        sub: 'Corpo em prancha reta no chão: desce controlado e sobe empurrando com explosão',
+        activeGroups: ['chest', 'triceps', 'shoulders', 'abs'],
+        coach: '<b>📋 O que é e como fazer (3x 12–15 reps):</b> Em prancha reta no chão, desça o peito em 2 segundos até quase tocar o piso e <b>empurre o chão com velocidade e força máxima</b> na subida. Recruta as fibras rápidas do peitoral, ombros e tríceps.'
+      },
+      {
+        title: '5. Vacuum Abdominal (Cintura Fina / Barriga Negativa)',
+        muscle: 'ATIVAÇÃO 3D · TRANSVERSO ABDOMINAL & LINHA DE CINTURA',
+        sub: 'Técnica para chapar barriga estufada: solte todo o ar e sugue o umbigo p/ as costas',
+        activeGroups: ['abs', 'obliques'],
+        coach: '<b>📋 O que é o Vacuum Abdominal (5x 20 segundos):</b> É a técnica clássica para <b>afinar a cintura e chapar o estômago dilatado</b>. Em pé com as mãos apoiadas no quadril: <b>1)</b> Solte 100% do ar dos pulmões pela boca; <b>2)</b> Sem respirar, <b>sugue o umbigo o máximo possível para dentro e para cima</b> (como se quisesse colar o umbigo nas costas); <b>3)</b> Segure contraído por 15 a 20 segundos.'
       }
     ];
 
@@ -2638,188 +2687,690 @@
     };
 
     // ==========================================================================
-    // 4. MOTOR 3D INTERATIVO (RESPONSIVO PARA QUALQUER LARGURA DE CELULAR)
+    // 4. MOTOR 3D BIOMECÂNICO & ANATÔMICO v5.0 (RETINA + ESQUELETO ARTICULADO)
     // ==========================================================================
     const canvas3d = document.getElementById('avatar3dCanvas');
     const ctx3d = canvas3d.getContext('2d');
-    let camYaw = 0.35;
-    let targetYaw = 0.35;
-    let autoSpin = true;
+    let camYaw = 0.68;
+    let targetYaw = 0.68;
+    let autoSpin = false;
     let isDragging3d = false;
     let lastDragX = 0;
     let currentPoseIdx = 0;
     let isParchmentTheme = false;
     let animTick = 0;
+    let logicalW = 460;
+    let logicalH = 285;
 
     function resizeCanvas3D() {
       const wrap = document.getElementById('canvas3dContainer');
       if (!wrap) return;
       const rect = wrap.getBoundingClientRect();
       const w = Math.max(260, Math.floor(rect.width));
-      const h = Math.max(210, Math.floor(rect.height));
-      if (canvas3d.width !== w || canvas3d.height !== h) {
-        canvas3d.width = w;
-        canvas3d.height = h;
+      const h = Math.max(240, Math.floor(rect.height));
+      const dpr = Math.min(window.devicePixelRatio || 1, 2.5);
+      logicalW = w;
+      logicalH = h;
+      const targetW = Math.floor(w * dpr);
+      const targetH = Math.floor(h * dpr);
+      if (canvas3d.width !== targetW || canvas3d.height !== targetH) {
+        canvas3d.width = targetW;
+        canvas3d.height = targetH;
       }
+      ctx3d.setTransform(dpr, 0, 0, dpr, 0, 0);
     }
     window.addEventListener('resize', resizeCanvas3D);
 
-    function getBodyParts3D(poseIdx, t) {
-      const pulse = Math.sin(t * 2.5);
-      const lift = Math.max(0, Math.sin(t * 2.2));
-      let torsoPitch = 0;
-      let armAngleL = 0.22;
-      let legBackR = 0;
-      let squatDrop = 0;
+    // Calcula toda a cinemática 3D real dos 5 exercícios matinais
+    function computeArticulatedPose3D(poseIdx, t) {
+      // Fase suave 0 -> 1 -> 0
+      const rawSin = Math.sin(t * 2.1);
+      const phase = 0.5 - 0.5 * Math.cos(t * 2.1); // 0 no início, 1 no pico do movimento
+      let phaseText = '';
+      let vacuumFactor = 0;
+      let shockwave = 0;
+
+      // Articulações principais em coordenadas 3D (x: esq-/dir+, y: cima-/chão+78, z: frente+/trás-)
+      let pelvis = { x: 0, y: 2, z: 0 };
+      let waist = { x: 0, y: -20, z: 0 };
+      let chest = { x: 0, y: -44, z: 1 };
+      let neck = { x: 0, y: -62, z: 1 };
+      let head = { x: 0, y: -79, z: 2 };
+
+      let shL = { x: -24, y: -54, z: 0 };
+      let shR = { x: 24, y: -54, z: 0 };
+      let elL = { x: -29, y: -26, z: 3 };
+      let elR = { x: 29, y: -26, z: 3 };
+      let wrL = { x: -31, y: 0, z: 8 };
+      let wrR = { x: 31, y: 0, z: 8 };
+
+      let hipL = { x: -11, y: 5, z: 0 };
+      let hipR = { x: 11, y: 5, z: 0 };
+      let knL = { x: -12, y: 42, z: 3 };
+      let knR = { x: 12, y: 42, z: 3 };
+      let anL = { x: -12, y: 76, z: 0 };
+      let anR = { x: 12, y: 76, z: 0 };
+      let ftL = { x: -13, y: 78, z: 12 };
+      let ftR = { x: 13, y: 78, z: 12 };
 
       if (poseIdx === 0) {
-        torsoPitch = 0.35 * lift;
-        legBackR = 0.55 * lift;
+        // 1. TERRA UNILATERAL (Single-Leg RDL / Avião em T)
+        const hinge = phase * 1.28; // Inclina até ~73 graus à frente
+        const sinH = Math.sin(hinge);
+        const cosH = Math.cos(hinge);
+        phaseText = phase > 0.55 ? '⬇ Equilíbrio em T (Alongando Posterior)' : '⬆ Subindo com Glúteo & Core';
+
+        // Perna esquerda plantada firme no chão
+        hipL = { x: -10, y: 6, z: 0 };
+        knL = { x: -10, y: 42, z: 4 * phase };
+        anL = { x: -10, y: 76, z: 0 };
+        ftL = { x: -10, y: 78, z: 13 };
+
+        pelvis = { x: 0, y: 6, z: 0 };
+        waist = { x: 0, y: 6 - 22 * cosH, z: 22 * sinH };
+        chest = { x: 0, y: 6 - 44 * cosH, z: 44 * sinH };
+        neck = { x: 0, y: 6 - 58 * cosH, z: 58 * sinH };
+        head = { x: 0, y: 6 - 73 * cosH, z: 73 * sinH };
+
+        shL = { x: -23, y: 6 - 50 * cosH, z: 50 * sinH };
+        shR = { x: 23, y: 6 - 50 * cosH, z: 50 * sinH };
+
+        // Mão direita desce até tocar perto do pé esquerdo; braço esquerdo abre p/ equilíbrio
+        elR = { x: 14 * (1 - phase * 0.7), y: shR.y + 26, z: shR.z - 2 };
+        wrR = { x: -4 * phase + 12 * (1 - phase), y: shR.y + 54, z: shR.z - 6 * phase };
+
+        elL = { x: -28 - 10 * phase, y: shL.y + 18 * (1 - phase * 0.4), z: shL.z - 8 * phase };
+        wrL = { x: -34 - 18 * phase, y: shL.y + 34 * (1 - phase * 0.5), z: shL.z - 16 * phase };
+
+        // Perna direita sobe esticada para trás em contrapeso ("Avião")
+        hipR = { x: 10, y: 6, z: -4 * phase };
+        knR = { x: 10, y: 6 + 36 * cosH, z: -36 * sinH };
+        anR = { x: 10, y: 6 + 70 * cosH, z: -70 * sinH };
+        ftR = { x: 10, y: 6 + 76 * cosH, z: -76 * sinH };
+
       } else if (poseIdx === 1) {
-        armAngleL = 2.4;
-        squatDrop = 6 * pulse;
+        // 2. FLEXÃO PIKE NO CHÃO (Pike Push-up em V Invertido)
+        const drop = phase * 26;
+        phaseText = phase > 0.5 ? '⬇ Descendo Topo da Cabeça (Ombros)' : '⬆ Empurrando em V Invertido';
+
+        // Pés apoiados no chão atrás, mãos apoiadas no chão à frente, quadril no alto!
+        anL = { x: -12, y: 72, z: -56 };
+        anR = { x: 12, y: 72, z: -56 };
+        ftL = { x: -12, y: 78, z: -46 };
+        ftR = { x: 12, y: 78, z: -46 };
+
+        pelvis = { x: 0, y: -12 + drop * 0.35, z: -12 };
+        hipL = { x: -11, y: pelvis.y + 2, z: pelvis.z - 2 };
+        hipR = { x: 11, y: pelvis.y + 2, z: pelvis.z - 2 };
+
+        knL = { x: -12, y: (hipL.y + anL.y) * 0.5, z: (hipL.z + anL.z) * 0.5 };
+        knR = { x: 12, y: (hipR.y + anR.y) * 0.5, z: (hipR.z + anR.z) * 0.5 };
+
+        shL = { x: -22, y: 24 + drop, z: 26 + drop * 0.25 };
+        shR = { x: 22, y: 24 + drop, z: 26 + drop * 0.25 };
+        waist = {
+          x: 0,
+          y: pelvis.y * 0.62 + shL.y * 0.38,
+          z: pelvis.z * 0.62 + shL.z * 0.38
+        };
+        chest = {
+          x: 0,
+          y: pelvis.y * 0.28 + shL.y * 0.72,
+          z: pelvis.z * 0.28 + shL.z * 0.72
+        };
+        neck = { x: 0, y: shL.y + 8, z: shL.z + 7 };
+        head = { x: 0, y: shL.y + 20, z: shL.z + 14 };
+
+        // Mãos firmes no chão à frente e cotovelos dobrando na descida
+        wrL = { x: -23, y: 76, z: 46 };
+        wrR = { x: 23, y: 76, z: 46 };
+        elL = { x: -28 - phase * 5, y: (shL.y + wrL.y) * 0.52, z: 36 - phase * 8 };
+        elR = { x: 28 + phase * 5, y: (shR.y + wrR.y) * 0.52, z: 36 - phase * 8 };
+
       } else if (poseIdx === 2) {
-        squatDrop = 16 * lift;
-        armAngleL = 0.85;
+        // 3. AGACHAMENTO LUTADOR EM GUARDA (Deep Squat 90°)
+        const sq = phase;
+        const dropY = sq * 36;
+        phaseText = sq > 0.5 ? '⬇ Agachamento Profundo 90° (Coxas & Glúteo)' : '⬆ Subida Explosiva + Guarda Alta';
+
+        anL = { x: -17, y: 76, z: 0 };
+        anR = { x: 17, y: 76, z: 0 };
+        ftL = { x: -19, y: 78, z: 14 };
+        ftR = { x: 19, y: 78, z: 14 };
+
+        pelvis = { x: 0, y: 4 + dropY, z: -2 - sq * 20 };
+        hipL = { x: -12, y: pelvis.y + 2, z: pelvis.z };
+        hipR = { x: 12, y: pelvis.y + 2, z: pelvis.z };
+
+        knL = { x: -21, y: 42 + sq * 5, z: 4 + sq * 20 };
+        knR = { x: 21, y: 42 + sq * 5, z: 4 + sq * 20 };
+
+        waist = { x: 0, y: pelvis.y - 21, z: pelvis.z + sq * 8 };
+        chest = { x: 0, y: pelvis.y - 43, z: pelvis.z + sq * 16 };
+        shL = { x: -23, y: pelvis.y - 51, z: pelvis.z + sq * 18 };
+        shR = { x: 23, y: pelvis.y - 51, z: pelvis.z + sq * 18 };
+        neck = { x: 0, y: shL.y - 8, z: shL.z + 2 };
+        head = { x: 0, y: shL.y - 24, z: shL.z + 5 };
+
+        // Braços em guarda alta de boxeador
+        elL = { x: -22, y: shL.y + 26, z: shL.z + 16 };
+        elR = { x: 22, y: shR.y + 26, z: shR.z + 16 };
+        wrL = { x: -9, y: head.y + 8, z: head.z + 18 };
+        wrR = { x: 9, y: head.y + 8, z: head.z + 18 };
+
       } else if (poseIdx === 3) {
-        squatDrop = 4 * pulse;
+        // 4. FLEXÃO EXPLOSIVA NO SOLO (Horizontal Plank Push-up + Impulso)
+        const down = phase;
+        shockwave = down < 0.25 ? (1 - down / 0.25) : 0;
+        phaseText = down > 0.55 ? '⬇ Descendo Peito ao Chão (Controle)' : '💥 Subida Explosiva (Peitoral & Tríceps)!';
+
+        // Pés no chão atrás, corpo em prancha reta horizontal, mãos no chão à frente
+        anL = { x: -11, y: 71, z: -64 };
+        anR = { x: 11, y: 71, z: -64 };
+        ftL = { x: -11, y: 78, z: -56 };
+        ftR = { x: 11, y: 78, z: -56 };
+
+        const shY = 26 + down * 34;
+        const pelY = 47 + down * 19;
+
+        pelvis = { x: 0, y: pelY, z: -12 };
+        hipL = { x: -11, y: pelY + 1, z: -12 };
+        hipR = { x: 11, y: pelY + 1, z: -12 };
+
+        knL = { x: -11, y: (pelY + anL.y) * 0.5, z: -38 };
+        knR = { x: 11, y: (pelY + anR.y) * 0.5, z: -38 };
+
+        waist = { x: 0, y: pelY * 0.62 + shY * 0.38, z: 3 };
+        chest = { x: 0, y: pelY * 0.28 + shY * 0.72, z: 20 };
+        shL = { x: -23, y: shY, z: 30 };
+        shR = { x: 23, y: shY, z: 30 };
+        neck = { x: 0, y: shY - 3, z: 42 };
+        head = { x: 0, y: shY - 5, z: 55 };
+
+        // Mãos apoiadas no solo (com leve impulso explosivo no topo)
+        const handLift = shockwave * 5;
+        wrL = { x: -24, y: 76 - handLift, z: 34 };
+        wrR = { x: 24, y: 76 - handLift, z: 34 };
+        elL = { x: -31 - down * 6, y: (shY + wrL.y) * 0.52, z: 22 };
+        elR = { x: 31 + down * 6, y: (shY + wrR.y) * 0.52, z: 22 };
+
+      } else if (poseIdx === 4) {
+        // 5. VACUUM ABDOMINAL (Cintura Fina / Sucção do Transverso Abdominal)
+        vacuumFactor = phase; // 0 = normal, 1 = sucção máxima do umbigo para as costas
+        const ribLift = vacuumFactor * 5;
+        phaseText = vacuumFactor > 0.45
+          ? '🔒 SUGANDO UMBIGO P/ AS COSTAS (-35% Cintura)!'
+          : '💨 1º Solte todo o ar dos pulmões pela boca...';
+
+        pelvis = { x: 0, y: 4, z: 0 };
+        waist = { x: 0, y: -19 - ribLift * 0.4, z: -vacuumFactor * 7 };
+        chest = { x: 0, y: -44 - ribLift, z: 3 + vacuumFactor * 4 };
+        shL = { x: -25, y: -54 - ribLift, z: 0 };
+        shR = { x: 25, y: -54 - ribLift, z: 0 };
+        neck = { x: 0, y: -63 - ribLift, z: 1 };
+        head = { x: 0, y: -80 - ribLift, z: 2 };
+
+        // Mãos apoiadas na linha do quadril (pose clássica de Vacuum Abdominal)
+        elL = { x: -37, y: -28 - ribLift * 0.5, z: -2 };
+        elR = { x: 37, y: -28 - ribLift * 0.5, z: -2 };
+        wrL = { x: -19, y: -2, z: 6 };
+        wrR = { x: 19, y: -2, z: 6 };
+
+        hipL = { x: -12, y: 6, z: 0 };
+        hipR = { x: 12, y: 6, z: 0 };
+        knL = { x: -14, y: 42, z: 2 };
+        knR = { x: 14, y: 42, z: 2 };
+        anL = { x: -14, y: 76, z: 0 };
+        anR = { x: 14, y: 76, z: 0 };
+        ftL = { x: -15, y: 78, z: 12 };
+        ftR = { x: 15, y: 78, z: 12 };
       }
 
-      return [
-        { x: 0, y: -96 + squatDrop, z: torsoPitch * 22, rx: 13, ry: 16, rz: 14, group: 'head' },
-        { x: 0, y: -76 + squatDrop, z: torsoPitch * 16, rx: 8, ry: 8, rz: 8, group: 'neck' },
-        { x: -14, y: -71 + squatDrop, z: -2 + torsoPitch * 12, rx: 12, ry: 7, rz: 9, group: 'lats' },
-        { x: 14, y: -71 + squatDrop, z: -2 + torsoPitch * 12, rx: 12, ry: 7, rz: 9, group: 'lats' },
-        { x: -29, y: -63 + squatDrop, z: torsoPitch * 12, rx: 12, ry: 12, rz: 12, group: 'shoulders' },
-        { x: 29, y: -63 + squatDrop, z: torsoPitch * 12, rx: 12, ry: 12, rz: 12, group: 'shoulders' },
-        { x: -11, y: -57 + squatDrop, z: 9 + torsoPitch * 10, rx: 12, ry: 10, rz: 8, group: 'chest' },
-        { x: 11, y: -57 + squatDrop, z: 9 + torsoPitch * 10, rx: 12, ry: 10, rz: 8, group: 'chest' },
-        { x: -15, y: -50 + squatDrop, z: -8 + torsoPitch * 8, rx: 13, ry: 18, rz: 8, group: 'lats' },
-        { x: 15, y: -50 + squatDrop, z: -8 + torsoPitch * 8, rx: 13, ry: 18, rz: 8, group: 'lats' },
-        { x: 0, y: -26 + squatDrop, z: -9, rx: 12, ry: 14, rz: 7, group: 'lowerback' },
-        { x: -6, y: -41 + squatDrop, z: 10, rx: 5.5, ry: 5, rz: 5, group: 'abs' },
-        { x: 6, y: -41 + squatDrop, z: 10, rx: 5.5, ry: 5, rz: 5, group: 'abs' },
-        { x: -6, y: -30 + squatDrop, z: 10, rx: 5.5, ry: 5, rz: 5, group: 'abs' },
-        { x: 6, y: -30 + squatDrop, z: 10, rx: 5.5, ry: 5, rz: 5, group: 'abs' },
-        { x: -5.5, y: -19 + squatDrop, z: 9.5, rx: 5, ry: 5, rz: 4.5, group: 'abs' },
-        { x: 5.5, y: -19 + squatDrop, z: 9.5, rx: 5, ry: 5, rz: 4.5, group: 'abs' },
-        { x: -16, y: -31 + squatDrop, z: 3, rx: 6, ry: 14, rz: 8, group: 'obliques' },
-        { x: 16, y: -31 + squatDrop, z: 3, rx: 6, ry: 14, rz: 8, group: 'obliques' },
-        { x: -35 - Math.sin(armAngleL) * 8, y: -42 + squatDrop - Math.cos(armAngleL) * 6, z: 2, rx: 8.5, ry: 15, rz: 8.5, group: 'triceps' },
-        { x: 35 + Math.sin(armAngleL) * 8, y: -42 + squatDrop - Math.cos(armAngleL) * 6, z: 2, rx: 8.5, ry: 15, rz: 8.5, group: 'triceps' },
-        { x: -39 - Math.sin(armAngleL) * 14, y: -18 + squatDrop - Math.cos(armAngleL) * 14, z: 6, rx: 7, ry: 14, rz: 7, group: 'forearms' },
-        { x: 39 + Math.sin(armAngleL) * 14, y: -18 + squatDrop - Math.cos(armAngleL) * 14, z: 6, rx: 7, ry: 14, rz: 7, group: 'forearms' },
-        { x: -11, y: -4 + squatDrop, z: -10, rx: 11, ry: 12, rz: 10, group: 'glutes' },
-        { x: 11, y: -4 + squatDrop, z: -10 - legBackR * 12, rx: 11, ry: 12, rz: 10, group: 'glutes' },
-        { x: -13, y: 24 + squatDrop * 0.5, z: 6, rx: 12, ry: 24, rz: 11, group: 'quads' },
-        { x: 13, y: 24 + squatDrop * 0.5 - legBackR * 14, z: 6 - legBackR * 28, rx: 12, ry: 24, rz: 11, group: 'quads' },
-        { x: -13, y: 26 + squatDrop * 0.5, z: -6, rx: 10, ry: 22, rz: 9, group: 'hamstrings' },
-        { x: 13, y: 26 + squatDrop * 0.5 - legBackR * 14, z: -6 - legBackR * 30, rx: 10, ry: 22, rz: 9, group: 'hamstrings' },
-        { x: -13, y: 68, z: -2, rx: 8.5, ry: 22, rz: 8.5, group: 'calves' },
-        { x: 13, y: 68 - legBackR * 22, z: -2 - legBackR * 48, rx: 8.5, ry: 22, rz: 8.5, group: 'calves' }
-      ];
+      return {
+        pelvis, waist, chest, neck, head,
+        shL, shR, elL, elR, wrL, wrR,
+        hipL, hipR, knL, knR, anL, anR, ftL, ftR,
+        phase, phaseText, vacuumFactor, shockwave
+      };
     }
 
     function render3DStage() {
-      animTick += 0.025;
-      if (autoSpin && !isDragging3d) targetYaw += 0.009;
+      animTick += 0.024;
+      if (autoSpin && !isDragging3d) targetYaw += 0.008;
       camYaw += (targetYaw - camYaw) * 0.14;
 
-      const w = canvas3d.width;
-      const h = canvas3d.height;
+      const w = logicalW;
+      const h = logicalH;
       ctx3d.clearRect(0, 0, w, h);
 
       const cx = w / 2;
-      const cy = h / 2 + 4;
-      const unitScale = Math.min(w / 380, h / 250);
+      const cy = h / 2 + 6;
+      const unitScale = Math.min(w / 340, h / 235);
       const cosY = Math.cos(camYaw);
       const sinY = Math.sin(camYaw);
+      const fov = 380;
 
+      function project3D(pt) {
+        const rx = pt.x * cosY - pt.z * sinY;
+        const rz = pt.x * sinY + pt.z * cosY;
+        const sc = (fov / (fov - rz)) * unitScale;
+        return {
+          sx: cx + rx * sc,
+          sy: cy + pt.y * sc,
+          sc,
+          depth: rz
+        };
+      }
+
+      const poseData = computeArticulatedPose3D(currentPoseIdx, animTick);
+      const activeGroups = MORNING_POSES[currentPoseIdx].activeGroups;
+
+      // 1. GRADE DE PISO EM PERSPECTIVA 3D + ANEL VITRUVIANO + SOMBRA NO CHÃO
       ctx3d.save();
-      ctx3d.strokeStyle = isParchmentTheme ? 'rgba(58, 46, 34, 0.22)' : 'rgba(53, 208, 232, 0.22)';
+      // Anel Vitruviano Vertical de Escaneamento
+      ctx3d.strokeStyle = isParchmentTheme ? 'rgba(58, 46, 34, 0.18)' : 'rgba(53, 208, 232, 0.18)';
       ctx3d.lineWidth = 1.2;
       ctx3d.beginPath();
-      ctx3d.arc(cx, cy - 4, 102 * unitScale, 0, Math.PI * 2);
+      ctx3d.arc(cx, cy - 2, 96 * unitScale, 0, Math.PI * 2);
       ctx3d.stroke();
 
+      // Plataforma circular no chão (y = 78)
+      const floorCenter = project3D({ x: 0, y: 78, z: 0 });
       ctx3d.beginPath();
-      ctx3d.ellipse(cx, cy + 86 * unitScale, 76 * unitScale, 17 * unitScale, 0, 0, Math.PI * 2);
-      ctx3d.strokeStyle = isParchmentTheme ? 'rgba(14, 95, 164, 0.35)' : 'rgba(18, 184, 134, 0.45)';
+      ctx3d.ellipse(floorCenter.sx, floorCenter.sy, 84 * unitScale, 20 * unitScale, 0, 0, Math.PI * 2);
+      ctx3d.fillStyle = isParchmentTheme ? 'rgba(58, 46, 34, 0.06)' : 'rgba(18, 184, 134, 0.06)';
+      ctx3d.fill();
+      ctx3d.strokeStyle = isParchmentTheme ? 'rgba(14, 95, 164, 0.35)' : 'rgba(18, 184, 134, 0.42)';
+      ctx3d.lineWidth = 1.3;
       ctx3d.stroke();
+
+      // Linhas radiais da plataforma 3D
+      for (let g = -60; g <= 60; g += 30) {
+        const pA = project3D({ x: g, y: 78, z: -65 });
+        const pB = project3D({ x: g, y: 78, z: 65 });
+        ctx3d.beginPath();
+        ctx3d.moveTo(pA.sx, pA.sy);
+        ctx3d.lineTo(pB.sx, pB.sy);
+        ctx3d.strokeStyle = isParchmentTheme ? 'rgba(58,46,34,0.08)' : 'rgba(53,208,232,0.09)';
+        ctx3d.lineWidth = 1;
+        ctx3d.stroke();
+      }
+
+      // Sombra projetada no chão diretamente sob o tronco
+      const shadowPt = project3D({ x: poseData.waist.x, y: 78, z: poseData.waist.z });
+      const isFloorEx = (currentPoseIdx === 1 || currentPoseIdx === 3);
+      ctx3d.beginPath();
+      ctx3d.ellipse(
+        shadowPt.sx,
+        shadowPt.sy,
+        (isFloorEx ? 52 : 28) * unitScale,
+        (isFloorEx ? 13 : 8) * unitScale,
+        0, 0, Math.PI * 2
+      );
+      ctx3d.fillStyle = 'rgba(0, 0, 0, 0.38)';
+      ctx3d.fill();
+
+      // Ondas de choque explosivas nas mãos durante a Flexão Explosiva (Pose 3)
+      if (currentPoseIdx === 3 && poseData.shockwave > 0.05) {
+        [poseData.wrL, poseData.wrR].forEach(hand => {
+          const hp = project3D({ x: hand.x, y: 78, z: hand.z });
+          ctx3d.beginPath();
+          ctx3d.ellipse(
+            hp.sx,
+            hp.sy,
+            (10 + (1 - poseData.shockwave) * 24) * unitScale,
+            (4 + (1 - poseData.shockwave) * 8) * unitScale,
+            0, 0, Math.PI * 2
+          );
+          ctx3d.strokeStyle = `rgba(53, 208, 232, ${poseData.shockwave * 0.85})`;
+          ctx3d.lineWidth = 2;
+          ctx3d.stroke();
+        });
+      }
       ctx3d.restore();
 
-      const activeGroups = MORNING_POSES[currentPoseIdx].activeGroups;
-      const rawParts = getBodyParts3D(currentPoseIdx, animTick);
+      // 2. SISTEMA DE RENDERIZAÇÃO DE MÚSCULOS ESCULPIDOS COM ORDENAÇÃO DE PROFUNDIDADE 3D
+      const drawQueue = [];
+      const glowPulse = 0.78 + 0.22 * Math.sin(animTick * 4.2);
 
-      const projected = rawParts.map(p => {
-        const rx3d = p.x * cosY - p.z * sinY;
-        const rz3d = p.x * sinY + p.z * cosY;
-        const fov = 360;
-        const scale = (fov / (fov - rz3d)) * unitScale * 1.05;
-        return {
-          ...p,
-          sx: cx + rx3d * scale,
-          sy: cy + p.y * scale,
-          srx: Math.max(2.5, (Math.abs(p.rx * cosY) + Math.abs(p.rz * sinY)) * scale),
-          sry: Math.max(2.5, p.ry * scale),
-          depth: rz3d,
-          isActive: activeGroups.includes(p.group)
-        };
-      });
-
-      projected.sort((a, b) => a.depth - b.depth);
-
-      projected.forEach(p => {
-        ctx3d.save();
-        ctx3d.beginPath();
-        ctx3d.ellipse(p.sx, p.sy, p.srx, p.sry, 0, 0, Math.PI * 2);
-
-        const grad = ctx3d.createRadialGradient(
-          p.sx - p.srx * 0.3,
-          p.sy - p.sry * 0.3,
-          p.srx * 0.1,
-          p.sx,
-          p.sy,
-          Math.max(p.srx, p.sry)
+      function applyMuscleStyle(ctx, isActive, cxGrad, cyGrad, radius) {
+        const grad = ctx.createRadialGradient(
+          cxGrad - radius * 0.25,
+          cyGrad - radius * 0.25,
+          radius * 0.08,
+          cxGrad,
+          cyGrad,
+          Math.max(4, radius * 1.25)
         );
-
-        if (p.isActive) {
-          const glowPulse = 0.78 + 0.22 * Math.sin(animTick * 4);
-          grad.addColorStop(0, '#4FD6B0');
-          grad.addColorStop(0.55, '#12B886');
-          grad.addColorStop(1, isParchmentTheme ? '#095E45' : '#06402F');
-          ctx3d.fillStyle = grad;
-          ctx3d.shadowColor = `rgba(18, 184, 134, ${0.65 * glowPulse})`;
-          ctx3d.shadowBlur = 14;
-          ctx3d.fill();
-          ctx3d.lineWidth = 1.3;
-          ctx3d.strokeStyle = '#8CE6CC';
-          ctx3d.stroke();
+        if (isActive) {
+          grad.addColorStop(0, '#63F2C8');
+          grad.addColorStop(0.52, '#12B886');
+          grad.addColorStop(1, isParchmentTheme ? '#095E45' : '#063B2B');
+          ctx.fillStyle = grad;
+          ctx.shadowColor = `rgba(18, 184, 134, ${0.65 * glowPulse})`;
+          ctx.shadowBlur = 13;
+          ctx.strokeStyle = '#A3FCE0';
+          ctx.lineWidth = 1.35;
         } else {
           if (isParchmentTheme) {
-            grad.addColorStop(0, '#E5DAC3');
-            grad.addColorStop(0.65, '#C4B293');
+            grad.addColorStop(0, '#EBE1CC');
+            grad.addColorStop(0.65, '#C8B698');
             grad.addColorStop(1, '#8C785B');
-            ctx3d.strokeStyle = 'rgba(58, 46, 34, 0.35)';
+            ctx.strokeStyle = 'rgba(58, 46, 34, 0.42)';
           } else {
-            grad.addColorStop(0, '#343E46');
-            grad.addColorStop(0.65, '#1d2326');
-            grad.addColorStop(1, '#111517');
-            ctx3d.strokeStyle = 'rgba(107, 166, 218, 0.28)';
+            grad.addColorStop(0, '#3E4A54');
+            grad.addColorStop(0.6, '#232B30');
+            grad.addColorStop(1, '#121619');
+            ctx.strokeStyle = 'rgba(107, 166, 218, 0.36)';
           }
-          ctx3d.fillStyle = grad;
-          ctx3d.fill();
-          ctx3d.lineWidth = 1;
-          ctx3d.stroke();
+          ctx.fillStyle = grad;
+          ctx.shadowBlur = 0;
+          ctx.lineWidth = 1.05;
         }
-        ctx3d.restore();
+      }
+
+      // Desenha um segmento muscular anatômico afilado (com ventre muscular curvo + osso holográfico)
+      function enqueueLimbSegment(ptA, ptB, rStart, rBelly, rEnd, group, bellyBias = 0) {
+        const pA = project3D(ptA);
+        const pB = project3D(ptB);
+        const avgDepth = (pA.depth + pB.depth) * 0.5;
+        const isActive = activeGroups.includes(group);
+
+        drawQueue.push({
+          depth: avgDepth,
+          render: () => {
+            const dx = pB.sx - pA.sx;
+            const dy = pB.sy - pA.sy;
+            const len = Math.hypot(dx, dy) || 1;
+            const nx = -dy / len;
+            const ny = dx / len;
+
+            const sA = rStart * pA.sc;
+            const sB = rEnd * pB.sc;
+            const midSc = (pA.sc + pB.sc) * 0.5;
+            const sBelly = rBelly * midSc;
+            const mx = (pA.sx + pB.sx) * 0.5 + nx * bellyBias * midSc;
+            const my = (pA.sy + pB.sy) * 0.5 + ny * bellyBias * midSc;
+
+            ctx3d.save();
+            ctx3d.beginPath();
+            ctx3d.moveTo(pA.sx + nx * sA, pA.sy + ny * sA);
+            ctx3d.quadraticCurveTo(mx + nx * sBelly * 1.15, my + ny * sBelly * 1.15, pB.sx + nx * sB, pB.sy + ny * sB);
+            ctx3d.arc(pB.sx, pB.sy, sB, Math.atan2(ny, nx), Math.atan2(-ny, -nx), false);
+            ctx3d.quadraticCurveTo(mx - nx * sBelly * 1.05, my - ny * sBelly * 1.05, pA.sx - nx * sA, pA.sy - ny * sA);
+            ctx3d.arc(pA.sx, pA.sy, sA, Math.atan2(-ny, -nx), Math.atan2(ny, nx), false);
+            ctx3d.closePath();
+
+            applyMuscleStyle(ctx3d, isActive, mx, my, Math.max(len * 0.45, sBelly));
+            ctx3d.fill();
+            ctx3d.stroke();
+
+            // Linha interna de fibra muscular / eixo biomecânico
+            ctx3d.beginPath();
+            ctx3d.moveTo(pA.sx, pA.sy);
+            ctx3d.lineTo(pB.sx, pB.sy);
+            ctx3d.strokeStyle = isActive
+              ? 'rgba(255, 255, 255, 0.45)'
+              : (isParchmentTheme ? 'rgba(14, 95, 164, 0.25)' : 'rgba(53, 208, 232, 0.28)');
+            ctx3d.lineWidth = 1.1;
+            ctx3d.stroke();
+
+            // Articulações luminosas nas extremidades
+            [pA, pB].forEach(jt => {
+              ctx3d.beginPath();
+              ctx3d.arc(jt.sx, jt.sy, 2.4 * jt.sc, 0, Math.PI * 2);
+              ctx3d.fillStyle = isActive ? '#A3FCE0' : '#35D0E8';
+              ctx3d.fill();
+            });
+            ctx3d.restore();
+          }
+        });
+      }
+
+      // Desenha o Tronco Esculpido em V (Dorsal + Cintura + Peitoral + Abdômen 6-Pack)
+      function enqueueSculptedTorso() {
+        const { pelvis, waist, chest, shL, shR, hipL, hipR, vacuumFactor } = poseData;
+        const pPel = project3D(pelvis);
+        const pWai = project3D(waist);
+        const pChe = project3D(chest);
+        const pShL = project3D(shL);
+        const pShR = project3D(shR);
+        const pHipL = project3D(hipL);
+        const pHipR = project3D(hipR);
+
+        // Largura da cintura afina até 36% durante o Vacuum Abdominal!
+        const waistHalfWidth = 14.5 * (1 - vacuumFactor * 0.36);
+        const wL = project3D({ x: -waistHalfWidth, y: waist.y, z: waist.z });
+        const wR = project3D({ x: waistHalfWidth, y: waist.y, z: waist.z });
+        const latL = project3D({ x: -21, y: (chest.y + waist.y) * 0.5, z: chest.z - 2 });
+        const latR = project3D({ x: 21, y: (chest.y + waist.y) * 0.5, z: chest.z - 2 });
+
+        const torsoActive = activeGroups.some(g => ['lats', 'lowerback', 'obliques'].includes(g));
+
+        // 1) Malha base do tronco em V (V-Taper)
+        drawQueue.push({
+          depth: (pPel.depth + pChe.depth) * 0.5 - 2,
+          render: () => {
+            ctx3d.save();
+            ctx3d.beginPath();
+            ctx3d.moveTo(pShL.sx, pShL.sy);
+            ctx3d.quadraticCurveTo(latL.sx, latL.sy, wL.sx, wL.sy);
+            ctx3d.quadraticCurveTo(pHipL.sx, pHipL.sy, pPel.sx, pPel.sy + 6 * pPel.sc);
+            ctx3d.quadraticCurveTo(pHipR.sx, pHipR.sy, wR.sx, wR.sy);
+            ctx3d.quadraticCurveTo(latR.sx, latR.sy, pShR.sx, pShR.sy);
+            ctx3d.closePath();
+
+            applyMuscleStyle(ctx3d, torsoActive, pWai.sx, pWai.sy, 42 * pWai.sc);
+            ctx3d.fill();
+            ctx3d.stroke();
+
+            // Se estiver no exercício 5 (Vacuum Abdominal), desenha a linha tracejada da cintura original + setas de sucção!
+            if (currentPoseIdx === 4) {
+              const origWL = project3D({ x: -16.5, y: waist.y, z: 0 });
+              const origWR = project3D({ x: 16.5, y: waist.y, z: 0 });
+              ctx3d.setLineDash([3, 3]);
+              ctx3d.strokeStyle = 'rgba(255, 107, 53, 0.75)';
+              ctx3d.lineWidth = 1.4;
+              ctx3d.beginPath();
+              ctx3d.moveTo(pShL.sx, pShL.sy);
+              ctx3d.quadraticCurveTo(origWL.sx, origWL.sy, pHipL.sx, pHipL.sy);
+              ctx3d.moveTo(pShR.sx, pShR.sy);
+              ctx3d.quadraticCurveTo(origWR.sx, origWR.sy, pHipR.sx, pHipR.sy);
+              ctx3d.stroke();
+              ctx3d.setLineDash([]);
+
+              // Setas verdes luminosas apontando para dentro na cintura
+              if (vacuumFactor > 0.2) {
+                ctx3d.fillStyle = '#4FD6B0';
+                ctx3d.font = '800 13px sans-serif';
+                ctx3d.fillText('→', origWL.sx - 16, wL.sy + 4);
+                ctx3d.fillText('←', origWR.sx + 4, wR.sy + 4);
+              }
+            }
+            ctx3d.restore();
+          }
+        });
+
+        // 2) Placas Peitorais Esculpidas (Frente do Tórax)
+        const chestActive = activeGroups.includes('chest');
+        [-1, 1].forEach(side => {
+          const pecCenter = {
+            x: side * 9.5,
+            y: chest.y + 2,
+            z: chest.z + 7
+          };
+          const pPec = project3D(pecCenter);
+          drawQueue.push({
+            depth: pPec.depth,
+            render: () => {
+              const rx = Math.max(4, 10.5 * Math.abs(cosY) + 4 * Math.abs(sinY)) * pPec.sc;
+              const ry = 8.5 * pPec.sc;
+              ctx3d.save();
+              ctx3d.beginPath();
+              ctx3d.roundRect(pPec.sx - rx, pPec.sy - ry, rx * 2, ry * 2, 5 * pPec.sc);
+              applyMuscleStyle(ctx3d, chestActive, pPec.sx, pPec.sy, Math.max(rx, ry));
+              ctx3d.fill();
+              ctx3d.stroke();
+              ctx3d.restore();
+            }
+          });
+        });
+
+        // 3) Gomos do Abdômen (6-Pack Rectus Abdominis & Transverso)
+        const absActive = activeGroups.includes('abs') || activeGroups.includes('obliques');
+        [0.25, 0.55, 0.82].forEach((tRow, rIdx) => {
+          [-1, 1].forEach(side => {
+            const abPt = {
+              x: side * (5.2 - rIdx * 0.4) * (1 - vacuumFactor * 0.25),
+              y: chest.y + (pelvis.y - chest.y) * tRow,
+              z: chest.z + (pelvis.z - chest.z) * tRow + 7.5 - vacuumFactor * 5.5
+            };
+            const pAb = project3D(abPt);
+            drawQueue.push({
+              depth: pAb.depth,
+              render: () => {
+                const rx = Math.max(2.5, 4.8 * Math.abs(cosY) + 2.5 * Math.abs(sinY)) * pAb.sc;
+                const ry = 4.2 * pAb.sc;
+                ctx3d.save();
+                ctx3d.beginPath();
+                ctx3d.roundRect(pAb.sx - rx, pAb.sy - ry, rx * 2, ry * 2, 3 * pAb.sc);
+                applyMuscleStyle(ctx3d, absActive, pAb.sx, pAb.sy, Math.max(rx, ry));
+                ctx3d.fill();
+                ctx3d.stroke();
+                ctx3d.restore();
+              }
+            });
+          });
+        });
+
+        // 4) Dorsal / Lombar nas Costas
+        const backPt = {
+          x: 0,
+          y: (chest.y + waist.y) * 0.5,
+          z: (chest.z + waist.z) * 0.5 - 7
+        };
+        const pBack = project3D(backPt);
+        const backActive = activeGroups.includes('lats') || activeGroups.includes('lowerback');
+        drawQueue.push({
+          depth: pBack.depth,
+          render: () => {
+            const rx = Math.max(5, 14 * Math.abs(cosY) + 5 * Math.abs(sinY)) * pBack.sc;
+            const ry = 14 * pBack.sc;
+            ctx3d.save();
+            ctx3d.beginPath();
+            ctx3d.ellipse(pBack.sx, pBack.sy, rx, ry, 0, 0, Math.PI * 2);
+            applyMuscleStyle(ctx3d, backActive, pBack.sx, pBack.sy, Math.max(rx, ry));
+            ctx3d.fill();
+            ctx3d.stroke();
+            ctx3d.restore();
+          }
+        });
+      }
+
+      // Enfileira Tronco, Cabeça, Deltoides, Braços, Glúteos e Pernas
+      enqueueSculptedTorso();
+
+      // Pescoço e Cabeça Esculpida com Visor Anatômico
+      enqueueLimbSegment(poseData.chest, poseData.neck, 7, 6.5, 6, 'neck', 0);
+      const pHead = project3D(poseData.head);
+      drawQueue.push({
+        depth: pHead.depth,
+        render: () => {
+          const rx = 11.5 * pHead.sc;
+          const ry = 14.5 * pHead.sc;
+          ctx3d.save();
+          ctx3d.beginPath();
+          ctx3d.ellipse(pHead.sx, pHead.sy, rx, ry, 0, 0, Math.PI * 2);
+          applyMuscleStyle(ctx3d, false, pHead.sx, pHead.sy, ry);
+          ctx3d.fill();
+          ctx3d.stroke();
+
+          // Visor ciano indicando a direção do rosto em 3D
+          const facePt = project3D({
+            x: poseData.head.x,
+            y: poseData.head.y - 1,
+            z: poseData.head.z + 9
+          });
+          if (facePt.depth >= pHead.depth - 2) {
+            ctx3d.beginPath();
+            ctx3d.roundRect(facePt.sx - 6 * pHead.sc, facePt.sy - 2.2 * pHead.sc, 12 * pHead.sc, 4.4 * pHead.sc, 2);
+            ctx3d.fillStyle = '#35D0E8';
+            ctx3d.shadowColor = '#35D0E8';
+            ctx3d.shadowBlur = 8;
+            ctx3d.fill();
+          }
+          ctx3d.restore();
+        }
       });
 
+      // Ombros (Deltoides 3D)
+      [poseData.shL, poseData.shR].forEach(sh => {
+        const pSh = project3D(sh);
+        const isShActive = activeGroups.includes('shoulders');
+        drawQueue.push({
+          depth: pSh.depth + 1,
+          render: () => {
+            const r = 10.5 * pSh.sc;
+            ctx3d.save();
+            ctx3d.beginPath();
+            ctx3d.arc(pSh.sx, pSh.sy, r, 0, Math.PI * 2);
+            applyMuscleStyle(ctx3d, isShActive, pSh.sx, pSh.sy, r);
+            ctx3d.fill();
+            ctx3d.stroke();
+            ctx3d.restore();
+          }
+        });
+      });
+
+      // Braços (Bíceps/Tríceps) e Antebraços
+      enqueueLimbSegment(poseData.shL, poseData.elL, 8.5, 9.5, 6.5, 'triceps', -1.8);
+      enqueueLimbSegment(poseData.shR, poseData.elR, 8.5, 9.5, 6.5, 'triceps', 1.8);
+      enqueueLimbSegment(poseData.elL, poseData.wrL, 6.5, 7.2, 4.5, 'forearms', -1);
+      enqueueLimbSegment(poseData.elR, poseData.wrR, 6.5, 7.2, 4.5, 'forearms', 1);
+
+      // Glúteos
+      [poseData.hipL, poseData.hipR].forEach(hp => {
+        const pGl = project3D({ x: hp.x, y: hp.y + 1, z: hp.z - 5 });
+        const isGlActive = activeGroups.includes('glutes');
+        drawQueue.push({
+          depth: pGl.depth,
+          render: () => {
+            const r = 11 * pGl.sc;
+            ctx3d.save();
+            ctx3d.beginPath();
+            ctx3d.arc(pGl.sx, pGl.sy, r, 0, Math.PI * 2);
+            applyMuscleStyle(ctx3d, isGlActive, pGl.sx, pGl.sy, r);
+            ctx3d.fill();
+            ctx3d.stroke();
+            ctx3d.restore();
+          }
+        });
+      });
+
+      // Coxas (Quadríceps / Posterior) e Panturrilhas + Pés
+      const thighGroup = activeGroups.includes('hamstrings') && !activeGroups.includes('quads') ? 'hamstrings' : 'quads';
+      enqueueLimbSegment(poseData.hipL, poseData.knL, 11.5, 12.8, 8, thighGroup, -1.5);
+      enqueueLimbSegment(poseData.hipR, poseData.knR, 11.5, 12.8, 8, thighGroup, 1.5);
+      enqueueLimbSegment(poseData.knL, poseData.anL, 7.8, 8.8, 5, 'calves', -1.2);
+      enqueueLimbSegment(poseData.knR, poseData.anR, 7.8, 8.8, 5, 'calves', 1.2);
+      enqueueLimbSegment(poseData.anL, poseData.ftL, 5, 5.2, 4, 'calves', 0);
+      enqueueLimbSegment(poseData.anR, poseData.ftR, 5, 5.2, 4, 'calves', 0);
+
+      // Ordena do mais distante para o mais próximo da câmera e renderiza
+      drawQueue.sort((a, b) => a.depth - b.depth);
+      drawQueue.forEach(item => item.render());
+
+      // 3. TELEMETRIA BIOMECÂNICA AO VIVO NO CANVAS
       ctx3d.save();
       const deg = Math.round(((camYaw * 180 / Math.PI) % 360 + 360) % 360);
-      ctx3d.font = '700 10.5px ui-monospace, monospace';
+      ctx3d.font = '700 10.5px ui-monospace, SFMono-Regular, Consolas, monospace';
       ctx3d.fillStyle = isParchmentTheme ? '#0E5FA4' : '#35D0E8';
-      ctx3d.fillText(`3D ORBIT: ${deg}°`, 10, h - 10);
+      ctx3d.fillText(`3D ORBIT: ${deg}° (ARRASTE P/ GIRAR)`, 10, h - 10);
+
+      // Badge da fase do movimento em tempo real
+      ctx3d.font = '700 11px Montserrat, sans-serif';
+      ctx3d.fillStyle = isParchmentTheme ? '#095E45' : '#4FD6B0';
+      ctx3d.fillText(poseData.phaseText, 10, 18);
       ctx3d.restore();
 
       requestAnimationFrame(render3DStage);
@@ -2863,8 +3414,19 @@
       document.getElementById('stageExTitle').textContent = pose.title;
       document.getElementById('stageMusclePill').textContent = pose.muscle;
       document.getElementById('stageExSub').textContent = pose.sub;
+      const coachEl = document.getElementById('stageCoachBox');
+      if (coachEl && pose.coach) coachEl.innerHTML = pose.coach;
       document.querySelectorAll('.pose-btn').forEach(b => b.classList.remove('active'));
       if (btn) btn.classList.add('active');
+
+      // Ajusta automaticamente o melhor ângulo 3D para visualizar cada exercício!
+      if (idx === 0 || idx === 1 || idx === 3) {
+        targetYaw = 1.15; // Pose 3/4 lateral mostra perfeitamente a inclinação em T, o V invertido e a Flexão no chão
+      } else if (idx === 4) {
+        targetYaw = 0.55; // Pose 3/4 frontal destaca a cintura afinando no Vacuum Abdominal
+      } else {
+        targetYaw = 0.65;
+      }
     }
 
     function toggleStageTheme() {
@@ -3050,17 +3612,21 @@
     function syncDailyTipUI() {
       const tip = DAILY_NUTRITION_TIPS_28[currentTipIndex];
       if (!tip) return;
+      const activeChallengeDay = Math.max(1, Math.min(28, completedDays.size || 1));
+      const isCurrentDayTip = (tip.day === activeChallengeDay);
 
       // Atualiza Card Resumo na Home
       document.getElementById('miniTipCat').textContent = tip.category;
-      document.getElementById('miniTipDayBadge').textContent = `DIA ${tip.day} / 28`;
+      document.getElementById('miniTipDayBadge').textContent = isCurrentDayTip
+        ? `DIA ${tip.day} DE 28 (SEU DIA ATUAL)`
+        : `DICA #${tip.day} DO CATÁLOGO (28 DIAS)`;
       document.getElementById('miniTipTitle').textContent = tip.title;
       document.getElementById('miniTipDesc').textContent = tip.highlight;
 
       // Atualiza Modal Pop-up Completo
       document.getElementById('popTipCategory').textContent = tip.category;
       document.getElementById('popTipDayTag').textContent = `DIA ${tip.day} DE 28`;
-      document.getElementById('popTipCounter').textContent = `Sugestão do Dia ${tip.day} de 28`;
+      document.getElementById('popTipCounter').textContent = `Dica ${tip.day} de 28 (1 por dia do Desafio)`;
       document.getElementById('popTipTitle').textContent = tip.title;
       document.getElementById('popTipHighlight').textContent = tip.highlight;
       document.getElementById('popTipHowTo').textContent = tip.howTo;
@@ -3322,14 +3888,14 @@
       qrBox.appendChild(img);
     }
 
-    // Define a Dica do Dia inicial baseada no dia atual do calendário (1 a 28) e abre o Pop-up!
+    // Sincroniza a Dica do Dia com o seu Dia Atual do Desafio de 28 Dias (começando no Dia 1)!
     function initDailyNutritionPopup() {
-      const todayNum = ((new Date().getDate() - 1) % 28);
-      currentTipIndex = todayNum;
+      const currentChallengeDay = Math.max(1, Math.min(28, completedDays.size || 1));
+      currentTipIndex = currentChallengeDay - 1;
       syncDailyTipUI();
       // Abre automaticamente o Pop-up da Dica Nutricional do Dia após 600ms
       setTimeout(() => {
-        openDailyTipModal(todayNum + 1);
+        openDailyTipModal(currentChallengeDay);
       }, 600);
     }
 
