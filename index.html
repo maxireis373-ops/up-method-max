@@ -110,6 +110,8 @@
     .stats-stack > *,
     .ex-grid > *,
     .week-pills > *,
+    .sub-tabs-bar > *,
+    .week-summary-grid > *,
     .kpi-grid > *,
     .cal-grid > *,
     .bottom-nav-inner > *,
@@ -290,6 +292,20 @@
       justify-content: space-between;
       gap: 10px;
       flex-wrap: wrap;
+    }
+    .topbar-row-main {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex: 1;
+      min-width: 0;
+    }
+    .topbar-quick {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
     }
 
     .brand-id {
@@ -798,10 +814,10 @@
     /* ==========================================================================
        SECTIONS & MODULE TABS
        ========================================================================== */
-    .view-section { display: none; animation: fadeIn 0.25s ease; }
+    .view-section { display: none; animation: fadeIn 0.16s ease; }
     .view-section.active { display: block; }
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
+      from { opacity: 0.85; transform: translateY(4px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
@@ -992,22 +1008,226 @@
     }
     .flip-trigger-btn:hover { background: rgba(53, 208, 232, 0.24); }
 
-    .check-btn {
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      background: rgba(20, 24, 27, 0.8);
+    /* Status & Switch Claro: Pendente vs Concluído (em todos os cards!) */
+    .flip-scene.is-done .flip-face {
+      border-color: rgba(18, 184, 134, 0.62);
+      box-shadow: 0 10px 28px rgba(18, 184, 134, 0.15), inset 0 1px 0 rgba(79, 214, 176, 0.28);
+    }
+    .flip-scene.is-done .flip-face-front {
+      background: linear-gradient(145deg, rgba(18, 184, 134, 0.14) 0%, rgba(20, 24, 27, 0.82) 100%);
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: var(--r-full);
+      white-space: nowrap;
+    }
+    .status-pill.pending {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--dim);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+    .status-pill.done {
+      background: rgba(18, 184, 134, 0.2);
+      color: var(--green-l);
+      border: 1px solid rgba(18, 184, 134, 0.55);
+    }
+
+    .card-actions-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: auto;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .card-actions-right {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-left: auto;
+    }
+
+    .done-switch {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(15, 18, 20, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: var(--r-sm);
+      padding: 2px;
+      gap: 2px;
+    }
+    .done-opt {
+      border: none;
+      background: transparent;
       color: var(--dim);
       font-family: var(--body);
-      font-size: 11px;
+      font-size: 10.5px;
       font-weight: 700;
-      padding: 6px 11px;
-      border-radius: var(--r-sm);
+      padding: 5px 9px;
+      border-radius: 4px;
       cursor: pointer;
-      transition: all 0.15s;
+      transition: all 0.15s ease;
+      white-space: nowrap;
     }
-    .ex-card.done .check-btn {
+    .done-opt:hover { color: var(--txt); }
+    .done-opt.active-pending {
+      background: rgba(255, 255, 255, 0.09);
+      color: var(--txt);
+    }
+    .done-opt.active-done {
       background: var(--green);
       color: #04221A;
-      border-color: var(--green);
+      box-shadow: 0 2px 10px rgba(18, 184, 134, 0.4);
+    }
+
+    /* Sub-abas limpas dentro de cada tela */
+    .sub-tabs-bar {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .sub-tabs-bar.cols-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    @media (max-width: 560px) {
+      .sub-tabs-bar.cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+    }
+    .sub-tab-btn {
+      background: rgba(24, 29, 30, 0.82);
+      border: 1px solid rgba(255, 255, 255, 0.11);
+      border-radius: var(--r-md);
+      padding: 10px 12px;
+      color: var(--dim);
+      font-family: var(--body);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      text-align: left;
+    }
+    .sub-tab-btn.centered {
+      justify-content: center;
+      text-align: center;
+      padding: 9px 6px;
+      font-size: 11px;
+    }
+    .sub-tab-btn:hover { color: var(--txt); border-color: var(--blue-l); }
+    .sub-tab-btn.active {
+      background: linear-gradient(135deg, rgba(53, 208, 232, 0.16), rgba(18, 184, 134, 0.12));
+      border-color: var(--cyan-dark);
+      color: var(--txt);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.38);
+    }
+    .sub-tab-count {
+      font-family: ui-monospace, monospace;
+      font-size: 10.5px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: var(--r-full);
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--dim);
+      white-space: nowrap;
+      flex: none;
+    }
+    .sub-tab-count.complete {
+      background: rgba(18, 184, 134, 0.22);
+      color: var(--green-l);
+      border: 1px solid rgba(18, 184, 134, 0.45);
+    }
+
+    /* Barra compacta de status semanal da sessão */
+    .session-status-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 10px 14px;
+      margin-bottom: 14px;
+      border-radius: var(--r-md);
+      background: rgba(24, 29, 30, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      font-size: 11.5px;
+      color: var(--dim);
+    }
+    .session-status-bar b { color: var(--txt); }
+
+    /* Resumo semanal na aba Progresso */
+    .week-summary-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin: 12px 0;
+    }
+    @media (max-width: 600px) {
+      .week-summary-grid { grid-template-columns: minmax(0, 1fr); }
+    }
+    .wsum-item {
+      background: rgba(20, 24, 27, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-radius: var(--r-md);
+      padding: 11px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      cursor: pointer;
+      transition: border-color 0.18s ease, transform 0.18s ease;
+    }
+    .wsum-item:hover { border-color: var(--cyan-dark); transform: translateY(-1px); }
+    .wsum-item.all-done {
+      border-color: rgba(18, 184, 134, 0.55);
+      background: rgba(18, 184, 134, 0.1);
+    }
+    .wsum-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--txt);
+    }
+
+    /* Toast discreto */
+    .app-toast {
+      position: fixed;
+      left: 50%;
+      bottom: calc(76px + env(safe-area-inset-bottom, 0px));
+      transform: translateX(-50%) translateY(16px);
+      background: rgba(24, 29, 30, 0.96);
+      border: 1px solid rgba(18, 184, 134, 0.55);
+      color: var(--txt);
+      padding: 9px 16px;
+      border-radius: var(--r-full);
+      font-size: 12px;
+      font-weight: 600;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      z-index: 260;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.22s ease, transform 0.22s ease;
+      max-width: calc(100vw - 24px);
+      text-align: center;
+    }
+    .app-toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
     }
 
     /* Grade 28 Dias (Com gatilho para Dica Nutricional do Dia!) */
@@ -1312,13 +1532,15 @@
       padding: 6px 8px calc(6px + env(safe-area-inset-bottom, 0px));
     }
     .bottom-nav-inner {
-      max-width: 680px;
+      max-width: 720px;
       width: 100%;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(5, minmax(0, 1fr));
       gap: 4px;
     }
+    .dieta-subview { display: none; animation: fadeIn 0.2s ease; }
+    .dieta-subview.active { display: block; }
     .bnav-btn {
       border: 1px solid transparent;
       background: transparent;
@@ -1352,20 +1574,26 @@
     }
 
     /* Ajustes finos para telas de celular (iPhone 375px–430px) */
+    @media (max-width: 680px) {
+      .topbar-inner { flex-direction: column; align-items: stretch; gap: 8px; }
+      .mode-switch { width: 100%; }
+      .mode-btn { flex: 1; justify-content: center; }
+    }
     @media (max-width: 560px) {
       .app-shell { padding: 0 12px; }
       .topbar { padding: max(8px, env(safe-area-inset-top, 8px)) 0 8px; margin-bottom: 14px; }
-      .topbar-inner { flex-direction: column; align-items: stretch; gap: 8px; }
-      .top-actions { justify-content: space-between; width: 100%; }
-      .mode-switch { width: 100%; }
-      .mode-btn { flex: 1; justify-content: center; }
+      .avatar-seal { width: 38px; height: 38px; padding: 7px; }
+      .max-wordmark-svg { height: 21px; }
+      .action-pill-btn { padding: 6px 10px; font-size: 10.5px; }
       .stage-3d-card, .glass-panel, .ex-card, .flip-face { padding: 14px; }
       .canvas-3d-wrap { height: 268px; }
       .kpi-box .val { font-size: 13px; }
       .stage-title { font-size: 18px; }
       .sec-head { font-size: 11.8px; letter-spacing: 1px; }
-      .day-tab .d-tag { font-size: 9px; letter-spacing: 0.55px; }
-      .day-tab .d-name { font-size: 13px; }
+      .sub-tab-btn { padding: 9px 10px; font-size: 11px; }
+      .bnav-btn .lbl { font-size: 9.5px; }
+      .card-actions-bar { gap: 6px; }
+      .card-actions-right { width: 100%; justify-content: space-between; margin-left: 0; }
     }
   </style>
 </head>
@@ -1378,51 +1606,51 @@
     <div class="orb orb-3"></div>
   </div>
 
-  <!-- TOPBAR: IDENTIDADE OFICIAL BRANDSYSTEM MAX v0.6 -->
+  <!-- TOPBAR CLEAN: BRANDSYSTEM MAX v0.6 -->
   <header class="topbar">
     <div class="app-shell topbar-inner">
-      <div class="brand-id">
-        <div class="avatar-seal" title="Max Reis · Símbolo Oficial X Sólido (#12B886)">
-          <svg viewBox="0 0 100 100" width="100%" height="100%" aria-hidden="true">
-            <g transform="rotate(45 50 50)">
-              <rect x="4" y="34.5" width="92" height="31" fill="#12B886" />
-              <rect x="34.5" y="4" width="31" height="92" fill="#12B886" />
-            </g>
-          </svg>
-        </div>
-
-        <div class="brand-title-wrap">
-          <div class="brand-logo-row">
-            <svg class="max-wordmark-svg" viewBox="0 0 252 76" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="maX">
-              <path d="M4 18H21.5V25.2C24.6 20.1 30.2 16.8 37.4 16.8C44.8 16.8 50.5 20.3 53.4 26.3C56.9 20.3 63.1 16.8 70.8 16.8C82.4 16.8 90 24.5 90 37.6V72H72V40.8C72 34.4 68.4 30.8 63.1 30.8C57.6 30.8 54 34.6 54 41.2V72H36V40.8C36 34.4 32.4 30.8 27.1 30.8C21.6 30.8 18 34.6 18 41.2V72H4V18Z" fill="#FFFFFF"/>
-              <path d="M126.5 16.8C134.3 16.8 140.4 20.1 143.5 25.4V18H161V72H143.5V64.6C140.4 69.9 134.3 73.2 126.5 73.2C112.4 73.2 101.8 61.6 101.8 45C101.8 28.4 112.4 16.8 126.5 16.8ZM131.6 31.2C123.8 31.2 118.4 36.8 118.4 45C118.4 53.2 123.8 58.8 131.6 58.8C139.4 58.8 144.8 53.2 144.8 45C144.8 36.8 139.4 31.2 131.6 31.2Z" fill="#FFFFFF"/>
-              <g transform="translate(206, 45) rotate(45)">
-                <rect x="-33" y="-11.2" width="66" height="22.4" fill="#12B886"/>
-                <rect x="-11.2" y="-33" width="22.4" height="66" fill="#12B886"/>
+      <div class="topbar-row-main">
+        <div class="brand-id">
+          <div class="avatar-seal" title="Max Reis · Símbolo Oficial X Sólido (#12B886)">
+            <svg viewBox="0 0 100 100" width="100%" height="100%" aria-hidden="true">
+              <g transform="rotate(45 50 50)">
+                <rect x="4" y="34.5" width="92" height="31" fill="#12B886" />
+                <rect x="34.5" y="4" width="31" height="92" fill="#12B886" />
               </g>
             </svg>
-            <span class="badge-pill">PROJETO VERÃO 3D</span>
           </div>
-          <span class="brand-sub" id="modeSubtitle">🏋️ Seg: Cardio+Core · Ter: Superiores · Qua: Inferiores</span>
+
+          <div class="brand-title-wrap">
+            <div class="brand-logo-row">
+              <svg class="max-wordmark-svg" viewBox="0 0 252 76" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="maX">
+                <path d="M4 18H21.5V25.2C24.6 20.1 30.2 16.8 37.4 16.8C44.8 16.8 50.5 20.3 53.4 26.3C56.9 20.3 63.1 16.8 70.8 16.8C82.4 16.8 90 24.5 90 37.6V72H72V40.8C72 34.4 68.4 30.8 63.1 30.8C57.6 30.8 54 34.6 54 41.2V72H36V40.8C36 34.4 32.4 30.8 27.1 30.8C21.6 30.8 18 34.6 18 41.2V72H4V18Z" fill="#FFFFFF"/>
+                <path d="M126.5 16.8C134.3 16.8 140.4 20.1 143.5 25.4V18H161V72H143.5V64.6C140.4 69.9 134.3 73.2 126.5 73.2C112.4 73.2 101.8 61.6 101.8 45C101.8 28.4 112.4 16.8 126.5 16.8ZM131.6 31.2C123.8 31.2 118.4 36.8 118.4 45C118.4 53.2 123.8 58.8 131.6 58.8C139.4 58.8 144.8 53.2 144.8 45C144.8 36.8 139.4 31.2 131.6 31.2Z" fill="#FFFFFF"/>
+                <g transform="translate(206, 45) rotate(45)">
+                  <rect x="-33" y="-11.2" width="66" height="22.4" fill="#12B886"/>
+                  <rect x="-11.2" y="-33" width="22.4" height="66" fill="#12B886"/>
+                </g>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="topbar-quick">
+          <button class="action-pill-btn tip-btn" onclick="openDailyTipModal()" title="Abrir Dica de Alimentação do Dia">
+            🍏 Dica
+          </button>
+          <button class="action-pill-btn" onclick="toggleQrModal(true)" title="Link Fixo & Instalar Ícone na Tela do Celular">
+            📲 App
+          </button>
         </div>
       </div>
 
-      <div class="top-actions">
-        <button class="action-pill-btn tip-btn" onclick="openDailyTipModal()" title="Abrir Dica de Alimentação do Dia">
-          🍏 Dica do Dia
+      <div class="mode-switch" role="group" aria-label="Alternar local de treino">
+        <button class="mode-btn active-gym" id="btnModeGym" onclick="setGlobalMode('gym')">
+          🏋️ Academia
         </button>
-        <button class="action-pill-btn" onclick="toggleQrModal(true)" title="Link Fixo & Instalar Ícone na Tela do Celular">
-          📲 Instalar App
+        <button class="mode-btn" id="btnModeHome" onclick="setGlobalMode('home')">
+          🏠 Em Casa
         </button>
-
-        <div class="mode-switch" role="group" aria-label="Alternar local de treino">
-          <button class="mode-btn active-gym" id="btnModeGym" onclick="setGlobalMode('gym')">
-            🏋️ Academia (3x)
-          </button>
-          <button class="mode-btn" id="btnModeHome" onclick="setGlobalMode('home')">
-            🏠 Faltei! Casa
-          </button>
-        </div>
       </div>
     </div>
   </header>
@@ -1431,15 +1659,15 @@
     <!-- BANNER DE COMPENSAÇÃO IMEDIATA -->
     <div class="compensation-banner" id="compBanner">
       <p>
-        ⚡ <b>Modo Compensação Calistênica Ativo:</b> Todos os cards 3D giraram para o verso com equivalentes de <b>peso corporal em&nbsp;casa</b>!
+        ⚡ <b>Modo Em Casa Ativo:</b> Os cards giraram automaticamente para a versão com <b>peso corporal</b>.
       </p>
-      <button class="btn" onclick="setGlobalMode('gym')">Voltar p/ Aparelhos</button>
+      <button class="btn" onclick="setGlobalMode('gym')">Voltar p/ Academia</button>
     </div>
 
     <!-- ======================================================================
-         ABA 1: DESAFIO 28 DIAS, SCANNER 3D INTERATIVO & ROTINA SEG/TER/QUA
+         ABA 1: MATINAL 3D (ROTINA MATINAL 15 MIN + PALCO 3D + TIMER)
          ====================================================================== -->
-    <section class="view-section active" id="view-hoje">
+    <section class="view-section active" id="view-matinal">
       <div class="hero-grid">
         <!-- PALCO 3D BIOMECÂNICO INTERATIVO v5.0 -->
         <div class="glass-card stage-3d-card tilt-3d" id="stage3dCard">
@@ -1484,69 +1712,8 @@
           </div>
         </div>
 
-        <!-- COLUNA DIREITA: PAINEL BIOMÉTRICO, DICA NUTRICIONAL DO DIA & TIMER -->
+        <!-- COLUNA DIREITA: TIMER DE SÉRIE & GUIA RÁPIDO MATINAL -->
         <div class="stats-stack">
-          <div class="glass-card glass-panel tilt-3d">
-            <div class="panel-kicker">
-              <span>PERFIL BIOMÉTRICO PERSONALIZADO</span>
-              <button class="btn" style="padding:3px 9px; font-size:10.5px; border-color:rgba(53,208,232,0.45); color:var(--cyan-dark);" onclick="openBioModal()">
-                ✎ Editar Medidas
-              </button>
-            </div>
-            <h2 style="font-size: 19px; margin-bottom: 4px;">Painel Biométrico · Max Reis</h2>
-            <p style="font-size: 11.5px; color: var(--dim);" id="bioSummarySub">
-              Toque nas medidas abaixo para configurar seu peso, altura e idade reais (salvo&nbsp;automaticamente):
-            </p>
-
-            <div class="kpi-grid">
-              <div class="kpi-box" style="cursor:pointer;" onclick="openBioModal()" title="Toque para editar Peso Atual e Meta">
-                <span class="lbl">Peso Atual → Meta</span>
-                <span class="val num" id="weightDisplay">74 → 68 kg</span>
-              </div>
-              <div class="kpi-box" style="cursor:pointer;" onclick="openBioModal()" title="Toque para editar Altura e Idade">
-                <span class="lbl">Altura · Idade</span>
-                <span class="val cyan num" id="heightAgeDisplay">169cm · 46a</span>
-              </div>
-              <div class="kpi-box" style="cursor:pointer;" onclick="openBioModal()" title="Meta diária calculada para secar barriga">
-                <span class="lbl">Meta Calórica</span>
-                <span class="val orange num" id="kcalTargetDisplay">1.905 kcal</span>
-              </div>
-            </div>
-
-            <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:6px; margin-top:8px; padding:7px 10px; background:rgba(20,24,27,0.72); border:1px solid rgba(255,255,255,0.08); border-radius:var(--r-sm); font-size:11px; color:var(--dim);">
-              <span>🥩 Prot: <b style="color:var(--green-l);" id="bioProtTarget">155g/dia</b></span>
-              <span>💧 Água: <b style="color:var(--cyan-dark);" id="bioWaterTarget">2,8 L/dia</b></span>
-              <span>📊 IMC: <b style="color:var(--txt);" id="bioImcTarget">25.9 → 23.8</b></span>
-            </div>
-
-            <div class="progress-bar-wrap">
-              <div class="progress-meta">
-                <span>Progresso 28 Dias:</span>
-                <b class="num" id="progressText">Dia 1 de 28 (4%)</b>
-              </div>
-              <div class="progress-track">
-                <div class="progress-fill" id="progressBar"></div>
-              </div>
-            </div>
-          </div>
-
-          <!-- CARD RESUMO DA DICA NUTRICIONAL DO DIA (SINCRONIZADO COM SEU DIA DO DESAFIO) -->
-          <div class="glass-card glass-panel tilt-3d" style="border-color: rgba(18, 184, 134, 0.38);">
-            <div class="panel-kicker">
-              <span style="color: var(--green-l);" id="miniTipCat">⚡ BOOSTER TERMOGÊNICO & VITAMINAS</span>
-              <span class="badge-pill green" id="miniTipDayBadge" title="Cada um dos 28 dias do desafio tem uma sugestão alimentar diferente">DIA 1 DE 28 (HOJE)</span>
-            </div>
-            <h3 style="font-size: 16px; margin-bottom: 4px;" id="miniTipTitle">Shot Matinal de Limão, Gengibre e Cúrcuma</h3>
-            <p style="font-size: 11.5px; color: var(--dim); margin-bottom: 10px;" id="miniTipDesc">
-              Ativa a termogênese logo cedo, reduz a inflamação visceral e prepara o abdômen para o Vacuum Matinal.
-            </p>
-            <div style="display:flex; gap:8px; flex-wrap:wrap;">
-              <button class="btn btn-primary" onclick="openDailyTipModal()">📖 Ver Receita Completa</button>
-              <button class="btn" onclick="nextDailyTip(1)">🎲 Ver Outra Dica (1–28)</button>
-            </div>
-          </div>
-
-          <!-- CRONÔMETRO DE EXECUÇÃO HIIT / VACUUM -->
           <div class="glass-card glass-panel tilt-3d">
             <div class="panel-kicker">
               <span>TIMER DE SÉRIE · HIIT / VACUUM</span>
@@ -1565,87 +1732,97 @@
               </div>
             </div>
           </div>
+
+          <div class="glass-card glass-panel tilt-3d" style="border-color: rgba(18, 184, 134, 0.34);">
+            <div class="panel-kicker">
+              <span style="color: var(--green-l);">☀️ ROTINA MATINAL · 15 MIN</span>
+              <span class="badge-pill green num" id="morningHeroCount">0 / 4 FEITOS</span>
+            </div>
+            <h2 style="font-size: 18px; margin-bottom: 6px;">Despertar Calistênico em Casa</h2>
+            <p style="font-size: 12px; color: var(--dim); margin-bottom: 10px;">
+              Execute os 4 movimentos abaixo ao acordar (use o boneco 3D ao lado para conferir a postura). Marque cada card como <b style="color:var(--green-l);">✓ Concluído</b> quando terminar.
+            </p>
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; font-size:11px; color:var(--dim); padding-top:8px; border-top:1px solid rgba(255,255,255,0.08);">
+              <span>🔄 Limpa automático todo <b>sábado às 06h</b></span>
+              <button class="btn" style="padding:4px 10px; font-size:11px;" onclick="switchMainTab('progresso', document.getElementById('navBtn-progresso'))">
+                📊 Ver Semana
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- CRONOGRAMA SEMANAL DO MAX -->
-      <div class="sec-head">Rotina Semanal Híbrida ·<br class="mob-br" /> Academia (Seg/Ter/Qua) +&nbsp;Manhãs</div>
-      <div class="week-pills">
-        <button class="day-tab active" onclick="selectDayTab('seg', this)">
-          <span class="d-tag">SEGUNDA · ACADEMIA</span>
-          <span class="d-name">Cardio + Core</span>
-          <span class="d-sub"><span class="nowrap-unit">Esteira + Escada</span> <span class="nowrap-unit">+ Abdômen</span></span>
-        </button>
-        <button class="day-tab" onclick="selectDayTab('ter', this)">
-          <span class="d-tag">TERÇA · ACADEMIA</span>
-          <span class="d-name">Membros Superiores</span>
-          <span class="d-sub"><span class="nowrap-unit">Peito, Costas,</span> <span class="nowrap-unit">Ombros &amp; Braços</span></span>
-        </button>
-        <button class="day-tab" onclick="selectDayTab('qua', this)">
-          <span class="d-tag">QUARTA · ACADEMIA</span>
-          <span class="d-name">Membros Inferiores</span>
-          <span class="d-sub"><span class="nowrap-unit">Quadríceps,</span> <span class="nowrap-unit">Posterior &amp; Glúteo</span></span>
-        </button>
-        <button class="day-tab" onclick="selectDayTab('manhas', this)">
-          <span class="d-tag">MANHÃS · 15&nbsp;MIN</span>
-          <span class="d-name">Despertar Calistênico</span>
-          <span class="d-sub"><span class="nowrap-unit">Os 4 exercícios</span> <span class="nowrap-unit">do vídeo em casa</span></span>
-        </button>
+      <div class="sec-head">Checklist da Manhã · Marcar Pendente / Concluído</div>
+      <div class="session-status-bar">
+        <span id="morningSessionMeta"><b>0 de 4</b> concluídos esta semana</span>
+        <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+          <span>Reset automático: <b>Sábado 06h</b></span>
+          <button class="btn" id="morningClearBtn" style="padding:4px 10px; font-size:11px; display:none;" onclick="clearSectionGroup('manhas')">
+            Desmarcar Manhãs
+          </button>
+        </div>
       </div>
-
-      <div class="ex-grid" id="dailyWorkoutContainer"></div>
-
-      <!-- MAPA 28 DIAS (CADA DIA ABRE SUA DICA NUTRICIONAL EXCLUSIVA!) -->
-      <div class="sec-head">Mapa 28 Dias · Toque no Dia p/ Marcar<br class="mob-br" /> e&nbsp;Ver a Dica Alimentar do&nbsp;Dia</div>
-      <div class="glass-card glass-panel">
-        <p style="font-size: 12px; color: var(--dim);">
-          Cada dia do Desafio 28 Dias possui uma <b>Dica Nutricional exclusiva</b> (fruta, receita de 5 min ou booster). Toque em qualquer dia abaixo para marcar concluído e abrir a sugestão daquele&nbsp;dia:
-        </p>
-        <div class="cal-grid" id="calendarGrid"></div>
-      </div>
+      <div class="ex-grid" id="morningWorkoutContainer"></div>
     </section>
 
     <!-- ======================================================================
-         ABA 2: EXERCÍCIOS FUNCIONAIS (CARDS 3D FLIP: QUEIMA & BARRIGA)
+         ABA 2: CARDIO & QUEIMA VISCERAL (SEGUNDA + CIRCUITO FUNCIONAL)
          ====================================================================== -->
-    <section class="view-section" id="view-funcionais">
-      <div class="sec-head">Página 02 · Exercícios Funcionais<br class="mob-br" /> (Cards 3D Flip: Academia&nbsp;↔&nbsp;Casa)</div>
-      <div class="glass-card glass-panel" style="margin-bottom: 16px;">
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
-          <div>
-            <span class="panel-kicker"><span>PROPÓSITO: DERRETER<br class="mob-br" /> GORDURA VISCERAL &amp;&nbsp;FLANCOS</span></span>
-            <h2 style="font-size: 20px; margin-bottom: 4px;">Circuito Metabólico &amp; Core Vacuum 3D</h2>
-            <p style="font-size: 12px; color: var(--dim); max-width: 68ch;">
-              Toque em <b style="color:var(--cyan-dark);">🔄 Virar 3D</b> em qualquer exercício abaixo para girar o card em 180° e ver a compensação calistênica em&nbsp;casa.
-            </p>
-          </div>
-          <button class="btn btn-accent" onclick="flipAllCardsInSection('functionalGrid')">
-            🔄 Girar Todos em 3D
+    <section class="view-section" id="view-cardio">
+      <div class="sec-head">Cardio, Core &amp; Queima Visceral</div>
+
+      <div class="sub-tabs-bar">
+        <button class="sub-tab-btn active" id="btnCardioSeg" onclick="renderCardioView('seg')">
+          <span>🏃 Segunda · Cardio + Core</span>
+          <span class="sub-tab-count" id="countCardioSeg">0/4</span>
+        </button>
+        <button class="sub-tab-btn" id="btnCardioFunc" onclick="renderCardioView('func')">
+          <span>🔥 Circuito Funcional Extra</span>
+          <span class="sub-tab-count" id="countCardioFunc">0/4</span>
+        </button>
+      </div>
+
+      <div class="session-status-bar">
+        <span id="cardioSessionMeta"><b>0 de 4</b> concluídos esta semana</span>
+        <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+          <button class="btn" style="padding:4px 10px; font-size:11px;" onclick="flipAllCardsInSection('cardioWorkoutGrid')">
+            🔄 Virar Cards (Casa/Acad.)
+          </button>
+          <button class="btn" id="cardioClearBtn" style="padding:4px 10px; font-size:11px; display:none;" onclick="clearActiveCardioGroup()">
+            Desmarcar Bloco
           </button>
         </div>
       </div>
 
-      <div class="ex-grid" id="functionalGrid"></div>
+      <div class="ex-grid" id="cardioWorkoutGrid"></div>
     </section>
 
     <!-- ======================================================================
-         ABA 3: RESISTÊNCIA & FORÇA (CARDS 3D FLIP: ESTRUTURA & APARÊNCIA)
+         ABA 3: FORÇA (SOMENTE EXERCÍCIOS DE FORÇA · TERÇA & QUARTA)
          ====================================================================== -->
     <section class="view-section" id="view-forca">
-      <div class="sec-head">Página 03 · Resistência &amp; Força<br class="mob-br" /> (Cards 3D Flip: Terça&nbsp;&amp;&nbsp;Quarta)</div>
-      <div class="glass-card glass-panel" style="margin-bottom: 16px;">
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
-          <div>
-            <span class="panel-kicker"><span>PROPÓSITO: BOA APARÊNCIA,<br class="mob-br" /> POSTURA &amp;&nbsp;HIPERTROFIA</span></span>
-            <h2 style="font-size: 20px; margin-bottom: 4px;">Força Híbrida: Máquinas + Calistenia Avançada</h2>
-            <p style="font-size: 12px; color: var(--dim); max-width: 68ch;">
-              Terça (Superiores) e Quarta (Inferiores) com conversão biomecânica 3D instantânea para calistenia em&nbsp;casa.
-            </p>
-          </div>
-          <div style="display:flex; gap:8px; flex-wrap:wrap;">
-            <button class="btn btn-primary" id="btnFilterUpper" onclick="renderStrengthGrid('upper')">💪 Terça: Superiores</button>
-            <button class="btn" id="btnFilterLower" onclick="renderStrengthGrid('lower')">🦵 Quarta: Inferiores</button>
-          </div>
+      <div class="sec-head">Exercícios de Força · Superiores &amp; Inferiores</div>
+
+      <div class="sub-tabs-bar">
+        <button class="sub-tab-btn active" id="btnFilterUpper" onclick="renderStrengthGrid('upper')">
+          <span>💪 Terça · Superiores</span>
+          <span class="sub-tab-count" id="countForceUpper">0/4</span>
+        </button>
+        <button class="sub-tab-btn" id="btnFilterLower" onclick="renderStrengthGrid('lower')">
+          <span>🦵 Quarta · Inferiores</span>
+          <span class="sub-tab-count" id="countForceLower">0/4</span>
+        </button>
+      </div>
+
+      <div class="session-status-bar">
+        <span id="strengthSessionMeta"><b>0 de 4</b> concluídos esta semana</span>
+        <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+          <button class="btn" style="padding:4px 10px; font-size:11px;" onclick="flipAllCardsInSection('strengthGrid')">
+            🔄 Virar Cards (Casa/Acad.)
+          </button>
+          <button class="btn" id="strengthClearBtn" style="padding:4px 10px; font-size:11px; display:none;" onclick="clearActiveStrengthGroup()">
+            Desmarcar Bloco
+          </button>
         </div>
       </div>
 
@@ -1653,124 +1830,226 @@
     </section>
 
     <!-- ======================================================================
-         ABA 4: ALIMENTAÇÃO DIVERSIFICADA DIA A DIA, RECEITAS & VITAMINAS
+         ABA 4: ALIMENTAÇÃO (CARDÁPIO, RECEITAS & VITAMINAS SEPARADOS)
          ====================================================================== -->
     <section class="view-section" id="view-dieta">
-      <div class="sec-head">Página 04 · Cardápio Diversificado<br class="mob-br" /> Dia a Dia (Segunda a&nbsp;Domingo)</div>
+      <div class="sec-head">Alimentação &amp; Nutrição Diária</div>
 
-      <!-- SELETOR DOS 7 DIAS DA SEMANA -->
-      <div class="glass-card glass-panel" style="margin-bottom: 16px;">
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom: 12px;">
-          <div>
-            <span class="panel-kicker"><span>ROTAÇÃO NUTRICIONAL DIÁRIA ·<br class="mob-br" /> 3 OPÇÕES POR REFEIÇÃO</span></span>
-            <h2 style="font-size: 20px;" id="nutriDayHeaderTitle">Segunda-feira · Cardio &amp; Lipólise Visceral</h2>
-            <p style="font-size: 12px; color: var(--dim);" id="nutriDayHeaderSub">
-              Estratégia: Baixo Índice Glicêmico + Ativação Termogênica · Meta: 1.850 kcal (165g&nbsp;Proteína)
-            </p>
+      <div class="sub-tabs-bar cols-3">
+        <button class="sub-tab-btn centered active" id="btnDieta-cardapio" onclick="switchDietaSubTab('cardapio')">
+          📅 Cardápio
+        </button>
+        <button class="sub-tab-btn centered" id="btnDieta-receitas" onclick="switchDietaSubTab('receitas')">
+          ⚡ Receitas
+        </button>
+        <button class="sub-tab-btn centered" id="btnDieta-vitaminas" onclick="switchDietaSubTab('vitaminas')">
+          💊 Vitaminas
+        </button>
+      </div>
+
+      <!-- SUB-ABA 4.1: CARDÁPIO DO DIA (SEG A DOM) -->
+      <div class="dieta-subview active" id="dietaSub-cardapio">
+        <div class="glass-card glass-panel" style="margin-bottom: 14px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom: 12px;">
+            <div>
+              <span class="panel-kicker"><span>3 OPÇÕES POR REFEIÇÃO</span></span>
+              <h2 style="font-size: 19px;" id="nutriDayHeaderTitle">Segunda-feira · Cardio &amp; Lipólise Visceral</h2>
+              <p style="font-size: 12px; color: var(--dim);" id="nutriDayHeaderSub">
+                Estratégia: Baixo Índice Glicêmico + Ativação Termogênica · Meta: 1.905 kcal (155g&nbsp;Proteína)
+              </p>
+            </div>
+            <button class="btn btn-accent" onclick="openDailyTipModal()">
+              🍏 Dica do Dia (1–28)
+            </button>
           </div>
-          <button class="btn btn-accent" onclick="openDailyTipModal()">
-            🍏 Abrir Pop-up Dica do Dia (1–28)
+
+          <div class="nutri-day-bar" id="nutriWeekBar">
+            <button class="nday-btn active" onclick="selectNutriDay('seg', this)">Seg<small>Cardio+Core</small></button>
+            <button class="nday-btn" onclick="selectNutriDay('ter', this)">Ter<small>Superiores</small></button>
+            <button class="nday-btn" onclick="selectNutriDay('qua', this)">Qua<small>Inferiores</small></button>
+            <button class="nday-btn" onclick="selectNutriDay('qui', this)">Qui<small>Low-Carb</small></button>
+            <button class="nday-btn" onclick="selectNutriDay('sex', this)">Sex<small>Detox Fit</small></button>
+            <button class="nday-btn" onclick="selectNutriDay('sab', this)">Sáb<small>Flex Limpo</small></button>
+            <button class="nday-btn" onclick="selectNutriDay('dom', this)">Dom<small>Ômega 3</small></button>
+          </div>
+
+          <div class="ex-grid" id="nutriDayHighlights" style="margin-top: 10px;"></div>
+        </div>
+
+        <div class="meal-cards-grid" id="nutriMealsContainer"></div>
+      </div>
+
+      <!-- SUB-ABA 4.2: RECEITAS RÁPIDAS & FRUTAS -->
+      <div class="dieta-subview" id="dietaSub-receitas">
+        <div class="sec-head" style="margin-top:6px;">Receitas Simples &amp; Rápidas (3 a 6 Min)</div>
+        <div class="recipes-grid" id="recipesCatalogGrid"></div>
+
+        <div class="sec-head">Frutas Estratégicas Aliadas da Definição</div>
+        <div class="fruits-grid" id="fruitsCatalogGrid"></div>
+      </div>
+
+      <!-- SUB-ABA 4.3: REGRA DO PRATO 50/30/20 & VITAMINAS -->
+      <div class="dieta-subview" id="dietaSub-vitaminas">
+        <div class="glass-card plate-card tilt-3d">
+          <div class="plate-visual">
+            <div class="plate-inner">
+              <strong class="serif" style="font-size: 19px; color: var(--txt);">50/30/20</strong>
+              <span style="font-size: 10.5px; color: var(--dim);">Regra do Prato Seca-Barriga</span>
+            </div>
+          </div>
+          <div>
+            <span class="panel-kicker"><span>PROPORÇÃO VISUAL DE CADA REFEIÇÃO</span></span>
+            <h2 style="font-size: 19px; margin-bottom: 8px;">Sem Balança, Sem Complicação</h2>
+            <div style="display: grid; gap: 8px;">
+              <div style="display:flex; align-items:center; gap:10px; font-size:12.5px;">
+                <span style="width:12px; height:12px; border-radius:3px; background:var(--green); flex:none;"></span>
+                <span class="balance"><b style="color:var(--txt);">50% Vegetais &amp; Fibras:</b> Brócolis, espinafre, rúcula, tomate e&nbsp;abobrinha.</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:10px; font-size:12.5px;">
+                <span style="width:12px; height:12px; border-radius:3px; background:var(--cyan-dark); flex:none;"></span>
+                <span class="balance"><b style="color:var(--txt);">30% Proteína Magra:</b> Frango, ovos, tilápia, patinho, whey. Meta:&nbsp;<span class="num" id="plateProtTarget" style="color:var(--cyan-dark); font-weight:700;">155g/dia</span>.</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:10px; font-size:12.5px;">
+                <span style="width:12px; height:12px; border-radius:3px; background:var(--orange); flex:none;"></span>
+                <span class="balance"><b style="color:var(--txt);">20% Carboidrato &amp; Gordura Boa:</b> Arroz integral, batata-doce, aveia, azeite e&nbsp;abacate.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card vit-table-wrap">
+          <table class="vit-tbl">
+            <thead>
+              <tr>
+                <th>Vitamina / Mineral</th>
+                <th>Função (Força &amp; Queima)</th>
+                <th>Fontes Principais</th>
+                <th>Horário Ideal</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><b>Vitamina D3 + K2</b></td>
+                <td>Testosterona endógena, força contrátil muscular e imunidade.</td>
+                <td>Sol matinal (15 min), gema de ovo, peixes gordos (salmão/sardinha).</td>
+                <td class="num"><span class="badge-pill">Almoço (c/ azeite)</span></td>
+              </tr>
+              <tr>
+                <td><b>Complexo B (B1, B6, B12)</b></td>
+                <td>Conversão direta de carboidratos e gorduras em energia limpa.</td>
+                <td>Ovos inteiros, carnes magras, aveia, folhas verdes escuras.</td>
+                <td class="num"><span class="badge-pill">Café da Manhã</span></td>
+              </tr>
+              <tr>
+                <td><b>Magnésio (Inositol/Dimalato)</b></td>
+                <td>Relaxamento muscular, síntese proteica, evita cãibras e melhora o sono.</td>
+                <td>Sementes de abóbora, espinafre, cacau 85%, abacate, castanhas.</td>
+                <td class="num"><span class="badge-pill">30 min antes dormir</span></td>
+              </tr>
+              <tr>
+                <td><b>Vitamina C + Zinco</b></td>
+                <td>Reduz o cortisol (hormônio ligado à gordura abdominal) pós-cardio.</td>
+                <td>Kiwi, acerola, limão espremido, goiaba vermelha, carne magra.</td>
+                <td class="num"><span class="badge-pill">Manhã / Pós-Treino</span></td>
+              </tr>
+              <tr>
+                <td><b>Ômega 3 (EPA/DHA) + Creatina</b></td>
+                <td>Anti-inflamatório articular + explosão de força nas séries de Terça e Quarta.</td>
+                <td>Sardinha, salmão, chia + 5g de Creatina Monohidratada todo dia.</td>
+                <td class="num"><span class="badge-pill">Pós-Treino (5g)</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         ABA 5: PROGRESSO (RESUMO SEMANAL, BIOMETRIA & MAPA 28 DIAS)
+         ====================================================================== -->
+    <section class="view-section" id="view-progresso">
+      <div class="sec-head">Resumo da Semana &amp; Progresso</div>
+
+      <!-- CARD 1: VISÃO GERAL DA SEMANA (COM RESET AUTOMÁTICO SÁBADO 06H) -->
+      <div class="glass-card glass-panel" style="margin-bottom: 16px;">
+        <div class="panel-kicker">
+          <span>STATUS DOS TREINOS DA SEMANA</span>
+          <span class="badge-pill green" id="nextResetBadge">🔄 Zera Sábado 06h</span>
+        </div>
+        <h2 style="font-size: 19px; margin-bottom: 4px;">O Que Já Foi Feito Nesta Semana</h2>
+        <p style="font-size: 12px; color: var(--dim);">
+          Suas marcações ficam salvas de segunda a sexta. Todo <b>sábado a partir das 06h</b>, os treinos limpam automaticamente para a próxima semana. Toque em qualquer bloco para abrir:
+        </p>
+
+        <div class="week-summary-grid" id="weeklySummaryGrid"></div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-top:8px; padding-top:10px; border-top:1px solid rgba(255,255,255,0.08);">
+          <span style="font-size:11.5px; color:var(--dim);" id="weeklyTotalLabel">0 de 20 exercícios concluídos na semana</span>
+          <button class="btn" style="padding:6px 12px; font-size:11px;" onclick="resetCurrentWeekProgress(true)">
+            🔄 Zerar Marcações da Semana
           </button>
         </div>
-
-        <div class="nutri-day-bar" id="nutriWeekBar">
-          <button class="nday-btn active" onclick="selectNutriDay('seg', this)">Seg<small>Cardio+Core</small></button>
-          <button class="nday-btn" onclick="selectNutriDay('ter', this)">Ter<small>Superiores</small></button>
-          <button class="nday-btn" onclick="selectNutriDay('qua', this)">Qua<small>Inferiores</small></button>
-          <button class="nday-btn" onclick="selectNutriDay('qui', this)">Qui<small>Low-Carb</small></button>
-          <button class="nday-btn" onclick="selectNutriDay('sex', this)">Sex<small>Detox Fit</small></button>
-          <button class="nday-btn" onclick="selectNutriDay('sab', this)">Sáb<small>Flex Limpo</small></button>
-          <button class="nday-btn" onclick="selectNutriDay('dom', this)">Dom<small>Ômega 3</small></button>
-        </div>
-
-        <!-- DESTAQUES DO DIA SELECIONADO: FRUTA DO DIA + RECEITA EXPRESS -->
-        <div class="ex-grid" id="nutriDayHighlights" style="margin-top: 10px;"></div>
       </div>
 
-      <!-- AS 4 REFEIÇÕES DO DIA COM OPÇÕES A / B / C -->
-      <div class="meal-cards-grid" id="nutriMealsContainer"></div>
+      <!-- CARD 2: PAINEL BIOMÉTRICO PERSONALIZADO -->
+      <div class="glass-card glass-panel tilt-3d" style="margin-bottom: 16px;">
+        <div class="panel-kicker">
+          <span>PERFIL BIOMÉTRICO PERSONALIZADO</span>
+          <button class="btn" style="padding:3px 9px; font-size:10.5px; border-color:rgba(53,208,232,0.45); color:var(--cyan-dark);" onclick="openBioModal()">
+            ✎ Editar Medidas
+          </button>
+        </div>
+        <h2 style="font-size: 19px; margin-bottom: 4px;">Painel Biométrico · Max Reis</h2>
+        <p style="font-size: 11.5px; color: var(--dim);" id="bioSummarySub">
+          Toque nas medidas abaixo para configurar seu peso, altura e idade reais (salvo&nbsp;automaticamente):
+        </p>
 
-      <!-- CATÁLOGO DE 6 RECEITAS RÁPIDAS FITNESS (ATÉ 6 MIN) -->
-      <div class="sec-head">Receitas Simples &amp; Rápidas<br class="mob-br" /> (3 a 6&nbsp;Minutos)</div>
-      <div class="recipes-grid" id="recipesCatalogGrid"></div>
-
-      <!-- GUIA DE FRUTAS FUNCIONAIS ALIADAS DA DEFINIÇÃO -->
-      <div class="sec-head">Frutas Estratégicas Aliadas<br class="mob-br" /> da Forma Física &amp;&nbsp;Saúde</div>
-      <div class="fruits-grid" id="fruitsCatalogGrid"></div>
-
-      <!-- REGRA DO PRATO 50/30/20 -->
-      <div class="sec-head">Proporção Visual do Prato<br class="mob-br" /> &amp; Vitaminas&nbsp;Essenciais</div>
-      <div class="glass-card plate-card tilt-3d">
-        <div class="plate-visual">
-          <div class="plate-inner">
-            <strong class="serif" style="font-size: 19px; color: var(--txt);">50/30/20</strong>
-            <span style="font-size: 10.5px; color: var(--dim);">Regra do Prato Seca-Barriga</span>
+        <div class="kpi-grid">
+          <div class="kpi-box" style="cursor:pointer;" onclick="openBioModal()" title="Toque para editar Peso Atual e Meta">
+            <span class="lbl">Peso Atual → Meta</span>
+            <span class="val num" id="weightDisplay">74 → 68 kg</span>
+          </div>
+          <div class="kpi-box" style="cursor:pointer;" onclick="openBioModal()" title="Toque para editar Altura e Idade">
+            <span class="lbl">Altura · Idade</span>
+            <span class="val cyan num" id="heightAgeDisplay">169cm · 46a</span>
+          </div>
+          <div class="kpi-box" style="cursor:pointer;" onclick="openBioModal()" title="Meta diária calculada para secar barriga">
+            <span class="lbl">Meta Calórica</span>
+            <span class="val orange num" id="kcalTargetDisplay">1.905 kcal</span>
           </div>
         </div>
-        <div>
-          <span class="panel-kicker"><span>FUNDAMENTAL, DIRETO<br class="mob-br" /> E SEM COMPLICAÇÃO</span></span>
-          <h2 style="font-size: 20px; margin-bottom: 8px;">A Proporção Visual de Cada Refeição</h2>
-          <div style="display: grid; gap: 8px;">
-            <div style="display:flex; align-items:center; gap:10px; font-size:12.5px;">
-              <span style="width:12px; height:12px; border-radius:3px; background:var(--green); flex:none;"></span>
-              <span class="balance"><b style="color:var(--txt);">50% Vegetais &amp; Fibras (Saciedade + Micronutrientes):</b> Brócolis, espinafre, rúcula, tomate e&nbsp;abobrinha.</span>
-            </div>
-            <div style="display:flex; align-items:center; gap:10px; font-size:12.5px;">
-              <span style="width:12px; height:12px; border-radius:3px; background:var(--cyan-dark); flex:none;"></span>
-              <span class="balance"><b style="color:var(--txt);">30% Proteína Magra (Força &amp; Estrutura Corporal):</b> Frango grelhado, ovos, tilápia, patinho, whey. Meta:&nbsp;<span class="num" style="color:var(--cyan-dark); font-weight:700;">165g/dia</span>.</span>
-            </div>
-            <div style="display:flex; align-items:center; gap:10px; font-size:12.5px;">
-              <span style="width:12px; height:12px; border-radius:3px; background:var(--orange); flex:none;"></span>
-              <span class="balance"><b style="color:var(--txt);">20% Carboidrato Inteligente &amp; Gordura Boa:</b> Arroz integral, batata-doce, aveia, azeite e&nbsp;abacate.</span>
-            </div>
-          </div>
+
+        <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:6px; margin-top:8px; padding:7px 10px; background:rgba(20,24,27,0.72); border:1px solid rgba(255,255,255,0.08); border-radius:var(--r-sm); font-size:11px; color:var(--dim);">
+          <span>🥩 Prot: <b style="color:var(--green-l);" id="bioProtTarget">155g/dia</b></span>
+          <span>💧 Água: <b style="color:var(--cyan-dark);" id="bioWaterTarget">2,8 L/dia</b></span>
+          <span>📊 IMC: <b style="color:var(--txt);" id="bioImcTarget">25.9 → 23.8</b></span>
         </div>
       </div>
 
-      <!-- TABELA DE VITAMINAS -->
-      <div class="glass-card vit-table-wrap">
-        <table class="vit-tbl">
-          <thead>
-            <tr>
-              <th>Vitamina / Mineral</th>
-              <th>Função no Projeto Verão (Força & Queima)</th>
-              <th>Fontes Naturais Principais</th>
-              <th>Horário Ideal</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><b>Vitamina D3 + K2</b></td>
-              <td>Testosterona endógena, força contrátil muscular, imunidade e densidade óssea.</td>
-              <td>Sol matinal (15 min), gema de ovo, peixes gordos (salmão/sardinha).</td>
-              <td class="num"><span class="badge-pill">Almoço (c/ azeite)</span></td>
-            </tr>
-            <tr>
-              <td><b>Complexo B (B1, B6, B12)</b></td>
-              <td>Conversão direta de carboidratos e gorduras em ATP (energia limpa p/ treino).</td>
-              <td>Ovos inteiros, carnes magras, aveia, folhas verdes escuras.</td>
-              <td class="num"><span class="badge-pill">Café da Manhã</span></td>
-            </tr>
-            <tr>
-              <td><b>Magnésio (Inositol/Dimalato)</b></td>
-              <td>Relaxamento muscular, síntese proteica, evita cãibras na escada e sono profundo.</td>
-              <td>Sementes de abóbora, espinafre, cacau 85%, abacate, castanhas.</td>
-              <td class="num"><span class="badge-pill">30 min antes dormir</span></td>
-            </tr>
-            <tr>
-              <td><b>Vitamina C + Zinco</b></td>
-              <td>Reduz o cortisol (hormônio que acumula gordura abdominal) pós-cardio intenso.</td>
-              <td>Kiwi, acerola, limão espremido, goiaba vermelha, carne bovina magra.</td>
-              <td class="num"><span class="badge-pill">Manhã / Pós-Treino</span></td>
-            </tr>
-            <tr>
-              <td><b>Ômega 3 (EPA/DHA) + Creatina</b></td>
-              <td>Anti-inflamatório articular + explosão de força nas séries de Terça e Quarta.</td>
-              <td>Sardinha, salmão, chia + 5g de Creatina Monohidratada todo dia.</td>
-              <td class="num"><span class="badge-pill">Pós-Treino (5g)</span></td>
-            </tr>
-          </tbody>
-        </table>
+      <!-- CARD 3: MAPA 28 DIAS -->
+      <div class="glass-card glass-panel">
+        <div class="panel-kicker">
+          <span>DESAFIO CONTÍNUO · 28 DIAS</span>
+          <button class="btn" style="padding:3px 9px; font-size:10.5px;" onclick="resetCalendarChallenge()">
+            Reiniciar 28 Dias
+          </button>
+        </div>
+        <h2 style="font-size: 19px; margin-bottom: 4px;">Mapa 28 Dias · Dica Nutricional Exclusiva</h2>
+        <p style="font-size: 12px; color: var(--dim); margin-bottom: 10px;">
+          Cada dia libera uma dica alimentar ou receita de 5 min. Este mapa não zera no sábado — ele acompanha seu ciclo completo de 28&nbsp;dias:
+        </p>
+
+        <div class="progress-bar-wrap" style="margin-bottom: 10px;">
+          <div class="progress-meta">
+            <span>Progresso 28 Dias:</span>
+            <b class="num" id="progressText">Dia 1 de 28 (4%)</b>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill" id="progressBar"></div>
+          </div>
+        </div>
+
+        <div class="cal-grid" id="calendarGrid"></div>
       </div>
     </section>
   </main>
@@ -1932,27 +2211,33 @@
     </div>
   </div>
 
-  <!-- NAVEGAÇÃO INFERIOR DE APP NATIVO (100% ALINHADA NO MOBILE) -->
+  <!-- NAVEGAÇÃO INFERIOR DE APP NATIVO (5 TELAS LIMPAS) -->
   <nav class="bottom-nav" aria-label="Navegação Principal do App">
     <div class="bottom-nav-inner">
-      <button class="bnav-btn active" id="navBtn-hoje" onclick="switchMainTab('hoje', this)">
-        <span class="ico">🌐</span>
-        <span class="lbl">1. Palco 3D</span>
+      <button class="bnav-btn active" id="navBtn-matinal" onclick="switchMainTab('matinal', this)">
+        <span class="ico">☀️</span>
+        <span class="lbl">Matinal</span>
       </button>
-      <button class="bnav-btn" id="navBtn-funcionais" onclick="switchMainTab('funcionais', this)">
+      <button class="bnav-btn" id="navBtn-cardio" onclick="switchMainTab('cardio', this)">
         <span class="ico">🔥</span>
-        <span class="lbl">2. Funcionais</span>
+        <span class="lbl">Cardio</span>
       </button>
       <button class="bnav-btn" id="navBtn-forca" onclick="switchMainTab('forca', this)">
         <span class="ico">💪</span>
-        <span class="lbl">3. Força 3D</span>
+        <span class="lbl">Força</span>
       </button>
       <button class="bnav-btn" id="navBtn-dieta" onclick="switchMainTab('dieta', this)">
         <span class="ico">🥗</span>
-        <span class="lbl">4. Nutrição</span>
+        <span class="lbl">Dieta</span>
+      </button>
+      <button class="bnav-btn" id="navBtn-progresso" onclick="switchMainTab('progresso', this)">
+        <span class="ico">📊</span>
+        <span class="lbl">Progresso</span>
       </button>
     </div>
   </nav>
+
+  <div class="app-toast" id="appToast" role="status" aria-live="polite"></div>
 
   <script>
     // ==========================================================================
@@ -2499,21 +2784,177 @@
     ];
 
     // ==========================================================================
-    // 3. DADOS DE TREINO: ACADEMIA (SEG/TER/QUA) + COMPENSAÇÃO CALISTÊNICA
+    // 3. DADOS DE TREINO, ESTADO SEMANAL & RESET AUTOMÁTICO (SÁBADO ÀS 06H)
     // ==========================================================================
     let globalMode = 'gym';
-    let currentDayKey = 'seg';
+    let currentCardioFilter = 'seg';
     let currentStrengthFilter = 'upper';
     let currentNutriDayKey = 'seg';
     let currentTipIndex = 0;
-    let completedExercises = new Set(JSON.parse(localStorage.getItem('max_done_ex') || '[]'));
-    let completedDays = new Set(JSON.parse(localStorage.getItem('max_done_days_v5') || '[1]'));
+
+    const WEEK_STATE_KEY = 'max_week_state_v1';
+    const LEGACY_DONE_KEY = 'max_done_ex';
+    const DAYS_STATE_KEY = 'max_done_days_v5';
+
+    let currentCycleKey = '';
+    let completedExercises = new Set();
+    let completedDays = new Set([1]);
+    let flippedCardIds = new Set();
+
+    function safeJsonParse(raw, fallback) {
+      try {
+        return raw ? JSON.parse(raw) : fallback;
+      } catch (e) {
+        return fallback;
+      }
+    }
+
+    // Ciclo semanal vira sempre no Sábado às 06:00 (horário local)
+    function getSaturdayCycleKey(now = new Date()) {
+      const day = now.getDay(); // 0=Dom, 1=Seg, 2=Ter, 3=Qua, 4=Qui, 5=Sex, 6=Sáb
+      let daysSinceSat = (day + 1) % 7;
+      if (day === 6 && now.getHours() < 6) {
+        daysSinceSat = 7;
+      }
+      const sat = new Date(now.getFullYear(), now.getMonth(), now.getDate() - daysSinceSat);
+      const y = sat.getFullYear();
+      const m = String(sat.getMonth() + 1).padStart(2, '0');
+      const d = String(sat.getDate()).padStart(2, '0');
+      return `${y}-${m}-${d}`;
+    }
+
+    function getNextSaturdayResetLabel(now = new Date()) {
+      const day = now.getDay();
+      let daysUntilSat = (6 - day + 7) % 7;
+      if (day === 6 && now.getHours() >= 6) daysUntilSat = 7;
+      const nextSat = new Date(now.getFullYear(), now.getMonth(), now.getDate() + daysUntilSat);
+      const dd = String(nextSat.getDate()).padStart(2, '0');
+      const mm = String(nextSat.getMonth() + 1).padStart(2, '0');
+      return `Sáb ${dd}/${mm} às 06h`;
+    }
+
+    // Espelho resiliente em IndexedDB (backup automático além do localStorage)
+    function idbMirrorPut(key, value) {
+      try {
+        if (!('indexedDB' in window)) return;
+        const req = indexedDB.open('maxFitDB', 1);
+        req.onupgradeneeded = () => {
+          if (!req.result.objectStoreNames.contains('kv')) req.result.createObjectStore('kv');
+        };
+        req.onsuccess = () => {
+          try {
+            const tx = req.result.transaction('kv', 'readwrite');
+            tx.objectStore('kv').put(value, key);
+          } catch (e) {}
+        };
+      } catch (e) {}
+    }
+
+    function idbMirrorGet(key, callback) {
+      try {
+        if (!('indexedDB' in window)) return;
+        const req = indexedDB.open('maxFitDB', 1);
+        req.onupgradeneeded = () => {
+          if (!req.result.objectStoreNames.contains('kv')) req.result.createObjectStore('kv');
+        };
+        req.onsuccess = () => {
+          try {
+            const tx = req.result.transaction('kv', 'readonly');
+            const g = tx.objectStore('kv').get(key);
+            g.onsuccess = () => callback(g.result);
+          } catch (e) {}
+        };
+      } catch (e) {}
+    }
 
     function saveProgressStorage() {
+      const cycleKey = currentCycleKey || getSaturdayCycleKey();
+      const weekPayload = {
+        cycleKey,
+        doneIds: [...completedExercises],
+        updatedAt: Date.now()
+      };
+      const daysPayload = [...completedDays];
       try {
-        localStorage.setItem('max_done_ex', JSON.stringify([...completedExercises]));
-        localStorage.setItem('max_done_days_v5', JSON.stringify([...completedDays]));
+        localStorage.setItem(WEEK_STATE_KEY, JSON.stringify(weekPayload));
+        localStorage.setItem(LEGACY_DONE_KEY, JSON.stringify(weekPayload.doneIds));
+        localStorage.setItem(DAYS_STATE_KEY, JSON.stringify(daysPayload));
       } catch (e) {}
+      idbMirrorPut(WEEK_STATE_KEY, weekPayload);
+      idbMirrorPut(DAYS_STATE_KEY, daysPayload);
+    }
+
+    function loadInitialProgressState() {
+      currentCycleKey = getSaturdayCycleKey();
+      let weekState = null;
+      let rawDays = null;
+      try {
+        weekState = safeJsonParse(localStorage.getItem(WEEK_STATE_KEY), null);
+        rawDays = safeJsonParse(localStorage.getItem(DAYS_STATE_KEY), null);
+      } catch (e) {}
+
+      if (!weekState) {
+        let legacyIds = null;
+        try {
+          legacyIds = safeJsonParse(localStorage.getItem(LEGACY_DONE_KEY), null);
+        } catch (e) {}
+        weekState = {
+          cycleKey: currentCycleKey,
+          doneIds: Array.isArray(legacyIds) ? legacyIds : [],
+          updatedAt: Date.now()
+        };
+      }
+
+      if (weekState.cycleKey && weekState.cycleKey !== currentCycleKey) {
+        completedExercises = new Set();
+        saveProgressStorage();
+      } else {
+        completedExercises = new Set(Array.isArray(weekState.doneIds) ? weekState.doneIds : []);
+        saveProgressStorage();
+      }
+
+      if (Array.isArray(rawDays) && rawDays.length > 0) {
+        completedDays = new Set(rawDays);
+      } else {
+        completedDays = new Set([1]);
+      }
+
+      // Se o localStorage estiver vazio (ex.: Safari limpou), tenta restaurar do IndexedDB
+      if (completedExercises.size === 0) {
+        idbMirrorGet(WEEK_STATE_KEY, (idbWeek) => {
+          if (idbWeek && idbWeek.cycleKey === getSaturdayCycleKey() && Array.isArray(idbWeek.doneIds) && idbWeek.doneIds.length > 0) {
+            completedExercises = new Set(idbWeek.doneIds);
+            saveProgressStorage();
+            refreshAllWorkoutViews();
+          }
+        });
+      }
+      if (!rawDays) {
+        idbMirrorGet(DAYS_STATE_KEY, (idbDays) => {
+          if (Array.isArray(idbDays) && idbDays.length > 0) {
+            completedDays = new Set(idbDays);
+            saveProgressStorage();
+            renderCalendar();
+          }
+        });
+      }
+    }
+
+    function checkWeeklyAutoReset() {
+      const latestCycle = getSaturdayCycleKey();
+      if (currentCycleKey && latestCycle !== currentCycleKey) {
+        const hadItems = completedExercises.size > 0;
+        currentCycleKey = latestCycle;
+        completedExercises.clear();
+        saveProgressStorage();
+        refreshAllWorkoutViews();
+        if (hadItems) {
+          showToast('🔄 Novo ciclo de sábado! Treinos da semana limpos.');
+        }
+      } else {
+        const badge = document.getElementById('nextResetBadge');
+        if (badge) badge.textContent = `🔄 Zera ${getNextSaturdayResetLabel()}`;
+      }
     }
 
     const MORNING_POSES = [
@@ -3569,8 +4010,20 @@
       return words.join(' ');
     }
 
+    let toastTimeout = null;
+    function showToast(msg) {
+      const el = document.getElementById('appToast');
+      if (!el) return;
+      el.textContent = msg;
+      el.classList.add('show');
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => el.classList.remove('show'), 2400);
+    }
+
     function initGlassTiltCards() {
       document.querySelectorAll('.glass-card').forEach(card => {
+        if (card.dataset.tiltBound === '1') return;
+        card.dataset.tiltBound = '1';
         card.addEventListener('pointermove', e => {
           const rect = card.getBoundingClientRect();
           const x = e.clientX - rect.left;
@@ -3592,79 +4045,123 @@
       });
     }
 
-    function renderDailyWorkout() {
-      const container = document.getElementById('dailyWorkoutContainer');
-      const list = WEEKLY_DATA[currentDayKey] || [];
-      const isHome = globalMode === 'home';
+    function renderDoneSwitchHTML(id, isDone) {
+      return `
+        <div class="done-switch" role="group" aria-label="Status do exercício">
+          <button type="button" class="done-opt ${!isDone ? 'active-pending' : ''}" onclick="setExerciseDone('${id}', false)">
+            ○ Pendente
+          </button>
+          <button type="button" class="done-opt ${isDone ? 'active-done' : ''}" onclick="setExerciseDone('${id}', true)">
+            ✓ Concluído
+          </button>
+        </div>
+      `;
+    }
 
-      container.innerHTML = list.map(item => {
-        const isDone = completedExercises.has(item.id);
-        const title = noOrphan(isHome ? item.homeTitle : item.gymTitle);
-        const badge = isHome ? item.homeBadge : item.gymBadge;
-        const desc = noOrphan(isHome ? item.homeDesc : item.gymDesc);
-        const metric = isHome ? item.homeMetric : item.gymMetric;
+    function countDoneInList(list) {
+      return list.reduce((acc, item) => acc + (completedExercises.has(item.id) ? 1 : 0), 0);
+    }
 
-        return `
-          <article class="glass-card ex-card ${isDone ? 'done' : ''}">
-            <div class="ex-top">
-              <span class="ex-badge ${isHome ? 'home' : ''}">${badge}</span>
-              <span style="font-size:11px; color:var(--dim);">
-                ${isHome ? '🏠 Peso Corporal' : '🏋️ Aparelhos'}
-              </span>
-            </div>
-            <h3 class="ex-title">${title}</h3>
-            <p class="ex-desc">${desc}</p>
-            <div class="ex-metrics">
-              <span class="metric-chip num">${metric}</span>
-              <button class="check-btn" onclick="toggleExerciseDone('${item.id}')">
-                ${isDone ? '✓ Concluído' : 'Marcar Feito'}
-              </button>
-            </div>
-          </article>
-        `;
-      }).join('');
+    function updateTabCountPill(elId, doneCount, totalCount) {
+      const el = document.getElementById(elId);
+      if (!el) return;
+      el.textContent = doneCount === totalCount && totalCount > 0 ? `✓ ${doneCount}/${totalCount}` : `${doneCount}/${totalCount}`;
+      el.classList.toggle('complete', doneCount === totalCount && totalCount > 0);
+    }
+
+    function renderMorningChecklist() {
+      const list = WEEKLY_DATA.manhas || [];
+      const container = document.getElementById('morningWorkoutContainer');
+      const doneCount = countDoneInList(list);
+
+      if (container) {
+        container.innerHTML = list.map(item => {
+          const isDone = completedExercises.has(item.id);
+          return `
+            <article class="glass-card ex-card ${isDone ? 'done' : ''}">
+              <div class="ex-top">
+                <span class="ex-badge home">${item.homeBadge}</span>
+                <span class="status-pill ${isDone ? 'done' : 'pending'}">
+                  ${isDone ? '✓ Concluído' : '○ Pendente'}
+                </span>
+              </div>
+              <h3 class="ex-title">${noOrphan(item.homeTitle)}</h3>
+              <p class="ex-desc">${noOrphan(item.homeDesc)}</p>
+              <div class="card-actions-bar">
+                <span class="metric-chip num">${item.homeMetric}</span>
+                ${renderDoneSwitchHTML(item.id, isDone)}
+              </div>
+            </article>
+          `;
+        }).join('');
+      }
+
+      const heroCount = document.getElementById('morningHeroCount');
+      if (heroCount) heroCount.textContent = `${doneCount} / ${list.length} FEITOS`;
+
+      const meta = document.getElementById('morningSessionMeta');
+      if (meta) meta.innerHTML = `<b>${doneCount} de ${list.length}</b> concluídos esta semana`;
+
+      const clearBtn = document.getElementById('morningClearBtn');
+      if (clearBtn) clearBtn.style.display = doneCount > 0 ? 'inline-flex' : 'none';
+
       initGlassTiltCards();
     }
 
-    function createFlipCardHTML(item, isStrength) {
-      const isFlipped = globalMode === 'home';
-      const gymBadge = isStrength ? item.gymBadge : '🏋️ ACADEMIA · UTILITÁRIOS';
+    function createFlipCardHTML(item, badgeFallback) {
+      const isDone = completedExercises.has(item.id);
+      const sceneId = `flip-${item.id}`;
+      const isFlipped = globalMode === 'home' ? !flippedCardIds.has(sceneId) : flippedCardIds.has(sceneId);
+      const gymBadge = item.gymBadge || badgeFallback || '🏋️ ACADEMIA';
       const kcalOrTag = item.kcal ? `<span class="ex-badge burn num">🔥 ${item.kcal}</span>` : '';
+      const statusPill = `<span class="status-pill ${isDone ? 'done' : 'pending'}">${isDone ? '✓ Concluído' : '○ Pendente'}</span>`;
 
       return `
-        <div class="flip-scene ${isFlipped ? 'is-flipped' : ''}" id="flip-${item.id}">
+        <div class="flip-scene ${isFlipped ? 'is-flipped' : ''} ${isDone ? 'is-done' : ''}" id="${sceneId}">
           <div class="flip-card-inner">
             <div class="flip-face flip-face-front">
               <div>
                 <div class="ex-top" style="margin-bottom:8px;">
-                  <span class="ex-badge">${gymBadge}</span>
-                  ${kcalOrTag}
+                  <div style="display:flex; gap:6px; flex-wrap:wrap; align-items:center;">
+                    <span class="ex-badge">${gymBadge}</span>
+                    ${kcalOrTag}
+                  </div>
+                  ${statusPill}
                 </div>
                 <h3 class="ex-title" style="margin-bottom:6px;">${noOrphan(item.gymTitle)}</h3>
                 <p class="ex-desc">${noOrphan(item.gymDesc)}</p>
               </div>
-              <div class="ex-metrics">
+              <div class="card-actions-bar">
                 <span class="metric-chip num">${item.gymMetric}</span>
-                <button class="flip-trigger-btn" onclick="toggleSingleFlip('flip-${item.id}')">
-                  🔄 Virar 3D (Casa)
-                </button>
+                <div class="card-actions-right">
+                  <button type="button" class="flip-trigger-btn" onclick="toggleSingleFlip('${sceneId}')">
+                    🔄 Em Casa
+                  </button>
+                  ${renderDoneSwitchHTML(item.id, isDone)}
+                </div>
               </div>
             </div>
 
             <div class="flip-face flip-face-back">
               <div>
                 <div class="ex-top" style="margin-bottom:8px;">
-                  <span class="ex-badge home">🏠 COMPENSAÇÃO EM CASA</span>
-                  ${kcalOrTag}
+                  <div style="display:flex; gap:6px; flex-wrap:wrap; align-items:center;">
+                    <span class="ex-badge home">🏠 EM CASA</span>
+                    ${kcalOrTag}
+                  </div>
+                  ${statusPill}
                 </div>
                 <h3 class="ex-title" style="margin-bottom:6px;">${noOrphan(item.homeTitle)}</h3>
                 <p class="ex-desc">${noOrphan(item.homeDesc)}</p>
               </div>
-              <div class="ex-metrics">
+              <div class="card-actions-bar">
                 <span class="metric-chip num">${item.homeMetric}</span>
-                <button class="flip-trigger-btn" onclick="toggleSingleFlip('flip-${item.id}')">
-                  🔄 Virar 3D (Academia)
-                </button>
+                <div class="card-actions-right">
+                  <button type="button" class="flip-trigger-btn" onclick="toggleSingleFlip('${sceneId}')">
+                    🏋️ Academia
+                  </button>
+                  ${renderDoneSwitchHTML(item.id, isDone)}
+                </div>
               </div>
             </div>
           </div>
@@ -3672,67 +4169,199 @@
       `;
     }
 
-    function renderFunctionalGrid() {
-      const grid = document.getElementById('functionalGrid');
-      grid.innerHTML = FUNCTIONAL_DATA.map(item => createFlipCardHTML(item, false)).join('');
+    function renderCardioView(filterKey) {
+      if (filterKey) currentCardioFilter = filterKey;
+      const segList = WEEKLY_DATA.seg || [];
+      const funcList = FUNCTIONAL_DATA || [];
+
+      document.getElementById('btnCardioSeg').classList.toggle('active', currentCardioFilter === 'seg');
+      document.getElementById('btnCardioFunc').classList.toggle('active', currentCardioFilter === 'func');
+
+      updateTabCountPill('countCardioSeg', countDoneInList(segList), segList.length);
+      updateTabCountPill('countCardioFunc', countDoneInList(funcList), funcList.length);
+
+      const activeList = currentCardioFilter === 'func' ? funcList : segList;
+      const doneCount = countDoneInList(activeList);
+
+      document.getElementById('cardioWorkoutGrid').innerHTML = activeList
+        .map(item => createFlipCardHTML(item, '🏋️ CARDIO & CORE'))
+        .join('');
+
+      document.getElementById('cardioSessionMeta').innerHTML =
+        `<b>${doneCount} de ${activeList.length}</b> concluídos esta semana · Zera sábado 06h`;
+      document.getElementById('cardioClearBtn').style.display = doneCount > 0 ? 'inline-flex' : 'none';
     }
 
     function renderStrengthGrid(filterKey) {
       if (filterKey) currentStrengthFilter = filterKey;
-      document.getElementById('btnFilterUpper').className = currentStrengthFilter === 'upper' ? 'btn btn-primary' : 'btn';
-      document.getElementById('btnFilterLower').className = currentStrengthFilter === 'lower' ? 'btn btn-primary' : 'btn';
+      const upperList = STRENGTH_DATA.upper || [];
+      const lowerList = STRENGTH_DATA.lower || [];
 
-      const list = STRENGTH_DATA[currentStrengthFilter] || [];
-      const grid = document.getElementById('strengthGrid');
-      grid.innerHTML = list.map(item => createFlipCardHTML(item, true)).join('');
+      document.getElementById('btnFilterUpper').classList.toggle('active', currentStrengthFilter === 'upper');
+      document.getElementById('btnFilterLower').classList.toggle('active', currentStrengthFilter === 'lower');
+
+      updateTabCountPill('countForceUpper', countDoneInList(upperList), upperList.length);
+      updateTabCountPill('countForceLower', countDoneInList(lowerList), lowerList.length);
+
+      const activeList = STRENGTH_DATA[currentStrengthFilter] || [];
+      const doneCount = countDoneInList(activeList);
+
+      document.getElementById('strengthGrid').innerHTML = activeList
+        .map(item => createFlipCardHTML(item, '💪 FORÇA'))
+        .join('');
+
+      document.getElementById('strengthSessionMeta').innerHTML =
+        `<b>${doneCount} de ${activeList.length}</b> concluídos esta semana · Zera sábado 06h`;
+      document.getElementById('strengthClearBtn').style.display = doneCount > 0 ? 'inline-flex' : 'none';
+    }
+
+    function renderWeeklySummary() {
+      const blocks = [
+        { key: 'manhas', label: '☀️ Manhãs · 15 min', list: WEEKLY_DATA.manhas, tab: 'matinal' },
+        { key: 'seg', label: '🏃 Segunda · Cardio + Core', list: WEEKLY_DATA.seg, tab: 'cardio', sub: 'seg' },
+        { key: 'func', label: '🔥 Circuito Funcional', list: FUNCTIONAL_DATA, tab: 'cardio', sub: 'func' },
+        { key: 'ter', label: '💪 Terça · Força Superiores', list: STRENGTH_DATA.upper, tab: 'forca', sub: 'upper' },
+        { key: 'qua', label: '🦵 Quarta · Força Inferiores', list: STRENGTH_DATA.lower, tab: 'forca', sub: 'lower' }
+      ];
+
+      let totalDone = 0;
+      let totalAll = 0;
+
+      const grid = document.getElementById('weeklySummaryGrid');
+      if (grid) {
+        grid.innerHTML = blocks.map(b => {
+          const d = countDoneInList(b.list);
+          const t = b.list.length;
+          totalDone += d;
+          totalAll += t;
+          const pct = t > 0 ? Math.round((d / t) * 100) : 0;
+          const allDone = d === t && t > 0;
+          return `
+            <div class="wsum-item ${allDone ? 'all-done' : ''}" onclick="jumpToWorkoutBlock('${b.tab}', '${b.sub || ''}')">
+              <div class="wsum-top">
+                <span>${b.label}</span>
+                <span class="sub-tab-count ${allDone ? 'complete' : ''}">${allDone ? `✓ ${d}/${t}` : `${d}/${t}`}</span>
+              </div>
+              <div class="progress-track" style="height:7px;">
+                <div class="progress-fill" style="width:${Math.max(d > 0 ? 10 : 0, pct)}%;"></div>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      const totalLabel = document.getElementById('weeklyTotalLabel');
+      if (totalLabel) totalLabel.textContent = `${totalDone} de ${totalAll} exercícios concluídos na semana`;
+
+      const badge = document.getElementById('nextResetBadge');
+      if (badge) badge.textContent = `🔄 Zera ${getNextSaturdayResetLabel()}`;
+    }
+
+    function jumpToWorkoutBlock(tabId, subKey) {
+      if (tabId === 'cardio' && subKey) renderCardioView(subKey);
+      if (tabId === 'forca' && subKey) renderStrengthGrid(subKey);
+      switchMainTab(tabId, document.getElementById('navBtn-' + tabId));
+    }
+
+    function refreshAllWorkoutViews() {
+      renderMorningChecklist();
+      renderCardioView();
+      renderStrengthGrid();
+      renderWeeklySummary();
     }
 
     function toggleSingleFlip(sceneId) {
+      if (flippedCardIds.has(sceneId)) flippedCardIds.delete(sceneId);
+      else flippedCardIds.add(sceneId);
       const el = document.getElementById(sceneId);
       if (el) el.classList.toggle('is-flipped');
     }
 
     function flipAllCardsInSection(containerId) {
       const scenes = document.querySelectorAll(`#${containerId} .flip-scene`);
-      scenes.forEach(s => s.classList.toggle('is-flipped'));
+      scenes.forEach(s => {
+        if (flippedCardIds.has(s.id)) flippedCardIds.delete(s.id);
+        else flippedCardIds.add(s.id);
+        s.classList.toggle('is-flipped');
+      });
     }
 
     function setGlobalMode(mode) {
       globalMode = mode;
+      flippedCardIds.clear();
       const btnGym = document.getElementById('btnModeGym');
       const btnHome = document.getElementById('btnModeHome');
       const banner = document.getElementById('compBanner');
-      const sub = document.getElementById('modeSubtitle');
 
       if (mode === 'home') {
         btnGym.className = 'mode-btn';
         btnHome.className = 'mode-btn active-home';
         banner.classList.add('show');
-        sub.textContent = '🏠 Modo Compensação em Casa Ativo (Cards 3D Virados)';
       } else {
         btnGym.className = 'mode-btn active-gym';
         btnHome.className = 'mode-btn';
         banner.classList.remove('show');
-        sub.textContent = '🏋️ Seg: Cardio+Core · Ter: Superiores · Qua: Inferiores';
       }
 
-      renderDailyWorkout();
-      renderFunctionalGrid();
+      renderCardioView();
       renderStrengthGrid();
     }
 
-    function selectDayTab(dayKey, btn) {
-      currentDayKey = dayKey;
-      document.querySelectorAll('.day-tab').forEach(b => b.classList.remove('active'));
-      if (btn) btn.classList.add('active');
-      renderDailyWorkout();
+    function setExerciseDone(id, done) {
+      const wasDone = completedExercises.has(id);
+      if (done) completedExercises.add(id);
+      else completedExercises.delete(id);
+
+      saveProgressStorage();
+      refreshAllWorkoutViews();
+
+      if (done && !wasDone) showToast('✓ Marcado como concluído!');
+      else if (!done && wasDone) showToast('○ Marcado como pendente');
     }
 
-    function toggleExerciseDone(id) {
-      if (completedExercises.has(id)) completedExercises.delete(id);
-      else completedExercises.add(id);
+    function clearSectionGroup(groupKey) {
+      const list = groupKey === 'func' ? FUNCTIONAL_DATA : (WEEKLY_DATA[groupKey] || []);
+      list.forEach(item => completedExercises.delete(item.id));
       saveProgressStorage();
-      renderDailyWorkout();
+      refreshAllWorkoutViews();
+      showToast('○ Marcações deste bloco limpas');
+    }
+
+    function clearActiveCardioGroup() {
+      clearSectionGroup(currentCardioFilter === 'func' ? 'func' : 'seg');
+    }
+
+    function clearActiveStrengthGroup() {
+      clearSectionGroup(currentStrengthFilter === 'lower' ? 'qua' : 'ter');
+    }
+
+    function resetCurrentWeekProgress(askConfirm) {
+      if (askConfirm && completedExercises.size > 0) {
+        if (!confirm('Deseja desmarcar todos os treinos desta semana para começar do zero?')) return;
+      }
+      completedExercises.clear();
+      currentCycleKey = getSaturdayCycleKey();
+      saveProgressStorage();
+      refreshAllWorkoutViews();
+      showToast('🔄 Semana zerada! Todos os treinos estão pendentes.');
+    }
+
+    function resetCalendarChallenge() {
+      if (!confirm('Deseja reiniciar o Mapa de 28 Dias para o Dia 1?')) return;
+      completedDays = new Set([1]);
+      saveProgressStorage();
+      renderCalendar();
+      initDailyNutritionPopup();
+      showToast('📅 Desafio de 28 dias reiniciado no Dia 1.');
+    }
+
+    function switchDietaSubTab(subKey) {
+      ['cardapio', 'receitas', 'vitaminas'].forEach(k => {
+        const btn = document.getElementById('btnDieta-' + k);
+        const view = document.getElementById('dietaSub-' + k);
+        if (btn) btn.classList.toggle('active', k === subKey);
+        if (view) view.classList.toggle('active', k === subKey);
+      });
     }
 
     // ==========================================================================
@@ -3744,15 +4373,15 @@
       const activeChallengeDay = Math.max(1, Math.min(28, completedDays.size || 1));
       const isCurrentDayTip = (tip.day === activeChallengeDay);
 
-      // Atualiza Card Resumo na Home
-      document.getElementById('miniTipCat').textContent = tip.category;
-      document.getElementById('miniTipDayBadge').textContent = isCurrentDayTip
-        ? `DIA ${tip.day} DE 28 (SEU DIA ATUAL)`
-        : `DICA #${tip.day} DO CATÁLOGO (28 DIAS)`;
-      document.getElementById('miniTipTitle').textContent = noOrphan(tip.title);
-      document.getElementById('miniTipDesc').textContent = noOrphan(tip.highlight);
+      if (document.getElementById('miniTipCat')) {
+        document.getElementById('miniTipCat').textContent = tip.category;
+        document.getElementById('miniTipDayBadge').textContent = isCurrentDayTip
+          ? `DIA ${tip.day} DE 28 (SEU DIA ATUAL)`
+          : `DICA #${tip.day} DO CATÁLOGO (28 DIAS)`;
+        document.getElementById('miniTipTitle').textContent = noOrphan(tip.title);
+        document.getElementById('miniTipDesc').textContent = noOrphan(tip.highlight);
+      }
 
-      // Atualiza Modal Pop-up Completo
       document.getElementById('popTipCategory').textContent = tip.category;
       document.getElementById('popTipDayTag').textContent = `DIA ${tip.day} DE 28`;
       document.getElementById('popTipCounter').textContent = `Dica ${tip.day} / 28`;
@@ -3782,8 +4411,8 @@
 
     function goToNutritionTabFromModal() {
       closeDailyTipModal();
-      const btn = document.getElementById('navBtn-dieta');
-      switchMainTab('dieta', btn);
+      switchDietaSubTab('cardapio');
+      switchMainTab('dieta', document.getElementById('navBtn-dieta'));
     }
 
     function selectNutriDay(dayKey, btnEl) {
@@ -3800,7 +4429,6 @@
       document.getElementById('nutriDayHeaderTitle').textContent = noOrphan(`${plan.dayName} · ${plan.trainingFocus}`);
       document.getElementById('nutriDayHeaderSub').textContent = noOrphan(`Estratégia: ${plan.strategy}`);
 
-      // Destaques do dia: Fruta Funcional + Receita Express
       document.getElementById('nutriDayHighlights').innerHTML = `
         <div class="glass-card ex-card" style="border-color: rgba(18, 184, 134, 0.35);">
           <div class="ex-top">
@@ -3818,7 +4446,6 @@
         </div>
       `;
 
-      // As 4 Refeições com Opções A, B e C
       document.getElementById('nutriMealsContainer').innerHTML = plan.meals.map((meal, idx) => `
         <article class="glass-card ex-card">
           <div class="ex-top">
@@ -3877,6 +4504,7 @@
     // ==========================================================================
     function renderCalendar() {
       const grid = document.getElementById('calendarGrid');
+      if (!grid) return;
       let html = '';
       for (let d = 1; d <= 28; d++) {
         const done = completedDays.has(d);
@@ -3891,8 +4519,10 @@
       grid.innerHTML = html;
       const count = completedDays.size;
       const pct = Math.round((count / 28) * 100);
-      document.getElementById('progressText').textContent = `${count} de 28 dias (${pct}%)`;
-      document.getElementById('progressBar').style.width = `${Math.max(4, pct)}%`;
+      const pt = document.getElementById('progressText');
+      const pb = document.getElementById('progressBar');
+      if (pt) pt.textContent = `${count} de 28 dias (${pct}%)`;
+      if (pb) pb.style.width = `${Math.max(4, pct)}%`;
     }
 
     function handleCalendarDayClick(d) {
@@ -3914,13 +4544,24 @@
     };
 
     function loadBioProfile() {
+      let loaded = false;
       try {
         const saved = localStorage.getItem('max_bio_v6');
         if (saved) {
           const parsed = JSON.parse(saved);
           bioProfile = { ...bioProfile, ...parsed };
+          loaded = true;
         }
       } catch (e) {}
+      if (!loaded) {
+        idbMirrorGet('max_bio_v6', (idbBio) => {
+          if (idbBio && typeof idbBio === 'object') {
+            bioProfile = { ...bioProfile, ...idbBio };
+            try { localStorage.setItem('max_bio_v6', JSON.stringify(bioProfile)); } catch (e) {}
+            syncBioUI();
+          }
+        });
+      }
       syncBioUI();
     }
 
@@ -3945,6 +4586,7 @@
       const pEl = document.getElementById('bioProtTarget');
       const waEl = document.getElementById('bioWaterTarget');
       const iEl = document.getElementById('bioImcTarget');
+      const plateProtEl = document.getElementById('plateProtTarget');
 
       if (wEl) wEl.textContent = `${w} → ${gw} kg`;
       if (haEl) haEl.textContent = `${h}cm · ${a}a`;
@@ -3952,6 +4594,7 @@
       if (pEl) pEl.textContent = `${targetProt}g/dia`;
       if (waEl) waEl.textContent = `${targetWater} L/dia`;
       if (iEl) iEl.textContent = `${imc} → ${goalImc}`;
+      if (plateProtEl) plateProtEl.textContent = `${targetProt}g/dia`;
     }
 
     function openBioModal() {
@@ -3981,9 +4624,11 @@
         localStorage.setItem('max_bio_v6', JSON.stringify(bioProfile));
         localStorage.setItem('max_weight', String(bioProfile.weight));
       } catch (e) {}
+      idbMirrorPut('max_bio_v6', bioProfile);
 
       syncBioUI();
       closeBioModal();
+      showToast('✅ Medidas atualizadas!');
     }
 
     // ==========================================================================
@@ -4032,12 +4677,14 @@
     }
 
     function switchMainTab(tabId, btnEl) {
+      checkWeeklyAutoReset();
       document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
-      document.getElementById('view-' + tabId).classList.add('active');
+      const targetView = document.getElementById('view-' + tabId);
+      if (targetView) targetView.classList.add('active');
       document.querySelectorAll('.bnav-btn').forEach(b => b.classList.remove('active'));
       if (btnEl) btnEl.classList.add('active');
       window.scrollTo({ top: 0, behavior: 'smooth' });
-      if (tabId === 'hoje') setTimeout(resizeCanvas3D, 50);
+      if (tabId === 'matinal') setTimeout(resizeCanvas3D, 50);
     }
 
     let deferredPwaPrompt = null;
@@ -4070,7 +4717,7 @@
     function copyLanUrl() {
       const url = document.getElementById('lanUrlText').textContent;
       navigator.clipboard?.writeText(url);
-      alert('Link copiado: ' + url);
+      showToast('🔗 Link copiado!');
     }
 
     function initQrCode() {
@@ -4090,19 +4737,23 @@
       qrBox.appendChild(img);
     }
 
-    // Sincroniza a Dica do Dia com o seu Dia Atual do Desafio de 28 Dias (sem bloquear a Home 3D ao abrir)
     function initDailyNutritionPopup() {
       const currentChallengeDay = Math.max(1, Math.min(28, completedDays.size || 1));
       currentTipIndex = currentChallengeDay - 1;
       syncDailyTipUI();
     }
 
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) checkWeeklyAutoReset();
+    });
+    window.addEventListener('focus', checkWeeklyAutoReset);
+    setInterval(checkWeeklyAutoReset, 60000);
+
     // Inicialização Geral
+    loadInitialProgressState();
     loadBioProfile();
     resizeCanvas3D();
-    renderDailyWorkout();
-    renderFunctionalGrid();
-    renderStrengthGrid('upper');
+    refreshAllWorkoutViews();
     renderNutritionDayPlan();
     renderRecipesAndFruitsCatalog();
     renderCalendar();
