@@ -8,10 +8,15 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="maX Fit" />
   <meta name="mobile-web-app-capable" content="yes" />
-  <link rel="manifest" href="manifest.json" />
-  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
-  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
-  <link rel="icon" type="image/png" sizes="64x64" href="favicon.png" />
+  <meta property="og:title" content="maX · Método Verão 3D" />
+  <meta property="og:description" content="Calistenia Matinal, Academia Híbrida &amp; Nutrição Diária 28 Dias." />
+  <meta property="og:image" content="https://maxireis373-ops.github.io/up-method-max/icon-512.png?v=9" />
+  <meta property="og:url" content="https://maxireis373-ops.github.io/up-method-max/" />
+  <meta property="og:type" content="website" />
+  <link rel="manifest" href="manifest.json?v=9" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=9" />
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=9" />
+  <link rel="icon" type="image/png" sizes="64x64" href="favicon.png?v=9" />
   <title>maX · Método Verão 3D (Calistenia, Academia & Nutrição Diária)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -144,7 +149,32 @@
       letter-spacing: -0.4px;
     }
     p, li, .pretty { text-wrap: pretty; }
+    .balance,
+    .sec-head,
+    .panel-kicker,
+    .stage-pill,
+    .stage-sub,
+    .day-tab .d-tag,
+    .day-tab .d-name,
+    .day-tab .d-sub,
+    .ex-title,
+    .ex-desc,
+    .glass-panel p,
+    .compensation-banner p,
+    .modal-box h3,
+    .modal-box p,
+    .tip-highlight-box,
+    .metric-chip,
+    .mopt-btn {
+      text-wrap: balance;
+    }
+    .stage-coach-box,
+    .tip-howto-box,
+    table.vit-tbl td {
+      text-wrap: pretty;
+    }
     .num { white-space: nowrap; font-variant-numeric: tabular-nums; }
+    .nowrap-unit { white-space: nowrap; }
 
     /* ==========================================================================
        SISTEMA DE CARDS DE VIDRO (GLASSMORPHISM) + TILT 3D INTERATIVO
@@ -466,9 +496,10 @@
       margin-bottom: 6px;
     }
     .stage-pill {
-      font-size: 10px;
+      font-size: 9.5px;
       font-weight: 700;
-      letter-spacing: 0.8px;
+      letter-spacing: 0.6px;
+      line-height: 1.35;
       text-transform: uppercase;
       padding: 4px 9px;
       border-radius: var(--r-sm);
@@ -669,7 +700,7 @@
       background: rgba(20, 24, 27, 0.65);
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: var(--r-md);
-      padding: 9px 8px;
+      padding: 9px 7px;
       min-width: 0;
     }
     .kpi-box .lbl {
@@ -681,7 +712,7 @@
       white-space: nowrap;
     }
     .kpi-box .val {
-      font-size: 14px;
+      font-size: 12.5px;
       font-weight: 700;
       color: var(--txt);
       margin-top: 2px;
@@ -775,6 +806,11 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
+    .mob-br { display: none; }
+    @media (max-width: 680px) {
+      .mob-br { display: inline; }
+    }
+
     .sec-head {
       display: flex;
       align-items: center;
@@ -782,7 +818,8 @@
       font-family: var(--display);
       font-size: 13px;
       font-weight: 600;
-      letter-spacing: 1.6px;
+      letter-spacing: 1.4px;
+      line-height: 1.4;
       text-transform: uppercase;
       color: var(--blue-l);
       margin: 22px 0 14px;
@@ -791,7 +828,12 @@
       content: "";
       height: 1px;
       flex: 1;
+      min-width: 0;
       background: linear-gradient(90deg, rgba(107, 166, 218, 0.35), transparent);
+    }
+    @media (max-width: 680px) {
+      .sec-head { display: block; }
+      .sec-head::after { display: none; }
     }
 
     /* ==========================================================================
@@ -817,6 +859,10 @@
       transition: all 0.2s ease;
       color: var(--txt);
       font-family: var(--body);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
     }
     .day-tab:hover { border-color: var(--blue-l); transform: translateY(-2px); }
     .day-tab.active {
@@ -827,7 +873,8 @@
     .day-tab .d-tag {
       font-size: 9.5px;
       font-weight: 700;
-      letter-spacing: 0.8px;
+      letter-spacing: 0.7px;
+      line-height: 1.3;
       text-transform: uppercase;
       color: var(--cyan-dark);
       display: block;
@@ -836,13 +883,15 @@
       font-family: var(--display);
       font-size: 14.5px;
       font-weight: 600;
-      margin-top: 2px;
+      line-height: 1.25;
+      margin-top: 3px;
       display: block;
     }
     .day-tab .d-sub {
       font-size: 10.5px;
       color: var(--dim);
-      margin-top: 2px;
+      line-height: 1.4;
+      margin-top: 3px;
       display: block;
     }
 
@@ -901,10 +950,12 @@
       font-family: var(--display);
       font-size: 16.5px;
       font-weight: 600;
+      line-height: 1.3;
       color: var(--txt);
     }
     .ex-desc {
       font-size: 12px;
+      line-height: 1.5;
       color: var(--dim);
     }
     .ex-metrics {
@@ -1313,6 +1364,9 @@
       .canvas-3d-wrap { height: 268px; }
       .kpi-box .val { font-size: 13px; }
       .stage-title { font-size: 18px; }
+      .sec-head { font-size: 11.8px; letter-spacing: 1px; }
+      .day-tab .d-tag { font-size: 9px; letter-spacing: 0.55px; }
+      .day-tab .d-name { font-size: 13.5px; }
     }
   </style>
 </head>
@@ -1378,7 +1432,7 @@
     <!-- BANNER DE COMPENSAÇÃO IMEDIATA -->
     <div class="compensation-banner" id="compBanner">
       <p>
-        ⚡ <b>Modo Compensação Calistênica Ativo:</b> Todos os cards 3D giraram para o verso com equivalentes de <b>peso corporal em casa</b>!
+        ⚡ <b>Modo Compensação Calistênica Ativo:</b> Todos os cards 3D giraram para o verso com equivalentes de <b>peso corporal em&nbsp;casa</b>!
       </p>
       <button class="btn" onclick="setGlobalMode('gym')">Voltar p/ Aparelhos</button>
     </div>
@@ -1392,14 +1446,14 @@
         <div class="glass-card stage-3d-card tilt-3d" id="stage3dCard">
           <div>
             <div class="stage-header">
-              <span class="stage-pill" id="stageMusclePill">ATIVAÇÃO 3D · GLÚTEOS, POSTERIOR & CORE</span>
+              <span class="stage-pill" id="stageMusclePill">ATIVAÇÃO 3D · GLÚTEOS, POSTERIOR&nbsp;&amp;&nbsp;LOMBAR</span>
               <button class="theme-toggle-btn" onclick="toggleStageTheme()" id="themeBtn">
                 📜 Tema Vitruviano
               </button>
             </div>
-            <h2 class="stage-title" id="stageExTitle">1. Terra Unilateral (Equilíbrio em T)</h2>
+            <h2 class="stage-title" id="stageExTitle">1. Terra Unilateral (Equilíbrio em&nbsp;T)</h2>
             <p class="stage-sub" id="stageExSub">
-              Equilíbrio em 1 perna inclinando o tronco à frente e estendendo a outra perna atrás
+              Equilíbrio em 1 perna inclinando o tronco à frente e subindo a perna de trás em&nbsp;"T"
             </p>
           </div>
 
@@ -1421,12 +1475,12 @@
               <button class="pose-btn" onclick="selectMorningPose(1, this)">2. Flexão Pike (V)</button>
               <button class="pose-btn" onclick="selectMorningPose(2, this)">3. Agach. Guarda</button>
               <button class="pose-btn" onclick="selectMorningPose(3, this)">4. Flexão no Solo</button>
-              <button class="pose-btn span-full-mobile" onclick="selectMorningPose(4, this)">5. Vacuum Abdominal (Cintura)</button>
+              <button class="pose-btn span-full-mobile" onclick="selectMorningPose(4, this)">5. Vacuum Abdominal</button>
             </div>
 
             <!-- Guia Passo a Passo do Exercício Selecionado -->
             <div class="stage-coach-box" id="stageCoachBox">
-              <b>📋 Como executar (3x 12 cada perna):</b> Fique em pé apoiado na perna esquerda, incline o tronco à frente mantendo a coluna reta enquanto a perna direita sobe esticada atrás (formando um "T"). Toque a mão direita no pé esquerdo e volte contraindo glúteo e posterior.
+              <b>📋 Como executar (3x 12 cada perna):</b> Fique em pé apoiado na perna esquerda, incline o tronco à frente mantendo a coluna reta enquanto a perna direita sobe esticada atrás (formando um "T"). Toque a mão direita no pé esquerdo e volte contraindo glúteo e&nbsp;posterior.
             </div>
           </div>
         </div>
@@ -1442,17 +1496,17 @@
             </div>
             <h2 style="font-size: 19px; margin-bottom: 4px;">Painel Biométrico · Max Reis</h2>
             <p style="font-size: 11.5px; color: var(--dim);" id="bioSummarySub">
-              Toque nas medidas abaixo para configurar seu peso, altura e idade reais (salvo automaticamente):
+              Toque nas medidas abaixo para configurar seu peso, altura e idade reais (salvo&nbsp;automaticamente):
             </p>
 
             <div class="kpi-grid">
               <div class="kpi-box" style="cursor:pointer;" onclick="openBioModal()" title="Toque para editar Peso Atual e Meta">
                 <span class="lbl">Peso Atual → Meta</span>
-                <span class="val num" id="weightDisplay">74 → 68 kg ✎</span>
+                <span class="val num" id="weightDisplay">74 → 68 kg</span>
               </div>
               <div class="kpi-box" style="cursor:pointer;" onclick="openBioModal()" title="Toque para editar Altura e Idade">
                 <span class="lbl">Altura · Idade</span>
-                <span class="val cyan num" id="heightAgeDisplay">169cm · 46a ✎</span>
+                <span class="val cyan num" id="heightAgeDisplay">169cm · 46a</span>
               </div>
               <div class="kpi-box" style="cursor:pointer;" onclick="openBioModal()" title="Meta diária calculada para secar barriga">
                 <span class="lbl">Meta Calórica</span>
@@ -1516,37 +1570,37 @@
       </div>
 
       <!-- CRONOGRAMA SEMANAL DO MAX -->
-      <div class="sec-head">Rotina Semanal Híbrida · Academia (Seg/Ter/Qua) + Manhãs</div>
+      <div class="sec-head">Rotina Semanal Híbrida ·<br class="mob-br" /> Academia (Seg/Ter/Qua) +&nbsp;Manhãs</div>
       <div class="week-pills">
         <button class="day-tab active" onclick="selectDayTab('seg', this)">
           <span class="d-tag">SEGUNDA · ACADEMIA</span>
           <span class="d-name">Cardio + Core</span>
-          <span class="d-sub">Esteira + Escada + Abdômen</span>
+          <span class="d-sub">Esteira + Escada +&nbsp;Abdômen</span>
         </button>
         <button class="day-tab" onclick="selectDayTab('ter', this)">
           <span class="d-tag">TERÇA · ACADEMIA</span>
           <span class="d-name">Membros Superiores</span>
-          <span class="d-sub">Peito, Costas, Ombros & Braços</span>
+          <span class="d-sub">Peito, Costas, <span class="nowrap-unit">Ombros &amp; Braços</span></span>
         </button>
         <button class="day-tab" onclick="selectDayTab('qua', this)">
           <span class="d-tag">QUARTA · ACADEMIA</span>
           <span class="d-name">Membros Inferiores</span>
-          <span class="d-sub">Quadríceps, Posterior & Glúteo</span>
+          <span class="d-sub">Quadríceps, <span class="nowrap-unit">Posterior &amp; Glúteo</span></span>
         </button>
         <button class="day-tab" onclick="selectDayTab('manhas', this)">
-          <span class="d-tag">TODAS AS MANHÃS · 15 MIN</span>
+          <span class="d-tag">MANHÃS · 15&nbsp;MIN</span>
           <span class="d-name">Despertar Calistênico</span>
-          <span class="d-sub">Os 4 exercícios do vídeo em casa</span>
+          <span class="d-sub">Os 4 exercícios <span class="nowrap-unit">do vídeo em casa</span></span>
         </button>
       </div>
 
       <div class="ex-grid" id="dailyWorkoutContainer"></div>
 
       <!-- MAPA 28 DIAS (CADA DIA ABRE SUA DICA NUTRICIONAL EXCLUSIVA!) -->
-      <div class="sec-head">Mapa 28 Dias · Toque no Dia p/ Marcar e Ver a Dica Alimentar do Dia</div>
+      <div class="sec-head">Mapa 28 Dias · Toque no Dia p/ Marcar<br class="mob-br" /> e&nbsp;Ver a Dica Alimentar do&nbsp;Dia</div>
       <div class="glass-card glass-panel">
         <p style="font-size: 12px; color: var(--dim);">
-          Cada dia do Desafio 28 Dias possui uma <b>Dica Nutricional exclusiva</b> (fruta, receita de 5 min ou booster). Toque em qualquer dia abaixo para marcar concluído e abrir a sugestão daquele dia:
+          Cada dia do Desafio 28 Dias possui uma <b>Dica Nutricional exclusiva</b> (fruta, receita de 5 min ou booster). Toque em qualquer dia abaixo para marcar concluído e abrir a sugestão daquele&nbsp;dia:
         </p>
         <div class="cal-grid" id="calendarGrid"></div>
       </div>
@@ -1556,14 +1610,14 @@
          ABA 2: EXERCÍCIOS FUNCIONAIS (CARDS 3D FLIP: QUEIMA & BARRIGA)
          ====================================================================== -->
     <section class="view-section" id="view-funcionais">
-      <div class="sec-head">Página 02 · Exercícios Funcionais (Cards 3D Flip: Academia ↔ Casa)</div>
+      <div class="sec-head">Página 02 · Exercícios Funcionais<br class="mob-br" /> (Cards 3D Flip: Academia&nbsp;↔&nbsp;Casa)</div>
       <div class="glass-card glass-panel" style="margin-bottom: 16px;">
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
           <div>
-            <span class="panel-kicker">PROPÓSITO: DERRETER GORDURA VISCERAL & FLANCOS</span>
-            <h2 style="font-size: 20px; margin-bottom: 4px;">Circuito Metabólico & Core Vacuum 3D</h2>
+            <span class="panel-kicker"><span>PROPÓSITO: DERRETER<br class="mob-br" /> GORDURA VISCERAL &amp;&nbsp;FLANCOS</span></span>
+            <h2 style="font-size: 20px; margin-bottom: 4px;">Circuito Metabólico &amp; Core Vacuum 3D</h2>
             <p style="font-size: 12px; color: var(--dim); max-width: 68ch;">
-              Toque em <b style="color:var(--cyan-dark);">🔄 Virar 3D</b> em qualquer exercício abaixo para girar o card em 180° e ver a compensação calistênica em casa.
+              Toque em <b style="color:var(--cyan-dark);">🔄 Virar 3D</b> em qualquer exercício abaixo para girar o card em 180° e ver a compensação calistênica em&nbsp;casa.
             </p>
           </div>
           <button class="btn btn-accent" onclick="flipAllCardsInSection('functionalGrid')">
@@ -1579,14 +1633,14 @@
          ABA 3: RESISTÊNCIA & FORÇA (CARDS 3D FLIP: ESTRUTURA & APARÊNCIA)
          ====================================================================== -->
     <section class="view-section" id="view-forca">
-      <div class="sec-head">Página 03 · Resistência & Força (Cards 3D Flip: Terça & Quarta)</div>
+      <div class="sec-head">Página 03 · Resistência &amp; Força<br class="mob-br" /> (Cards 3D Flip: Terça&nbsp;&amp;&nbsp;Quarta)</div>
       <div class="glass-card glass-panel" style="margin-bottom: 16px;">
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
           <div>
-            <span class="panel-kicker">PROPÓSITO: BOA APARÊNCIA, POSTURA & HIPERTROFIA</span>
+            <span class="panel-kicker"><span>PROPÓSITO: BOA APARÊNCIA,<br class="mob-br" /> POSTURA &amp;&nbsp;HIPERTROFIA</span></span>
             <h2 style="font-size: 20px; margin-bottom: 4px;">Força Híbrida: Máquinas + Calistenia Avançada</h2>
             <p style="font-size: 12px; color: var(--dim); max-width: 68ch;">
-              Terça (Superiores) e Quarta (Inferiores) com conversão biomecânica 3D instantânea para calistenia em casa.
+              Terça (Superiores) e Quarta (Inferiores) com conversão biomecânica 3D instantânea para calistenia em&nbsp;casa.
             </p>
           </div>
           <div style="display:flex; gap:8px; flex-wrap:wrap;">
@@ -1603,16 +1657,16 @@
          ABA 4: ALIMENTAÇÃO DIVERSIFICADA DIA A DIA, RECEITAS & VITAMINAS
          ====================================================================== -->
     <section class="view-section" id="view-dieta">
-      <div class="sec-head">Página 04 · Cardápio Diversificado Dia a Dia (Segunda a Domingo)</div>
+      <div class="sec-head">Página 04 · Cardápio Diversificado<br class="mob-br" /> Dia a Dia (Segunda a&nbsp;Domingo)</div>
 
       <!-- SELETOR DOS 7 DIAS DA SEMANA -->
       <div class="glass-card glass-panel" style="margin-bottom: 16px;">
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom: 12px;">
           <div>
-            <span class="panel-kicker">ROTAÇÃO NUTRICIONAL DIÁRIA · 3 OPÇÕES POR REFEIÇÃO</span>
-            <h2 style="font-size: 20px;" id="nutriDayHeaderTitle">Segunda-feira · Cardio & Lipólise Visceral</h2>
+            <span class="panel-kicker"><span>ROTAÇÃO NUTRICIONAL DIÁRIA ·<br class="mob-br" /> 3 OPÇÕES POR REFEIÇÃO</span></span>
+            <h2 style="font-size: 20px;" id="nutriDayHeaderTitle">Segunda-feira · Cardio &amp; Lipólise Visceral</h2>
             <p style="font-size: 12px; color: var(--dim);" id="nutriDayHeaderSub">
-              Estratégia: Baixo Índice Glicêmico + Ativação Termogênica · Meta: 1.850 kcal (165g Proteína)
+              Estratégia: Baixo Índice Glicêmico + Ativação Termogênica · Meta: 1.850 kcal (165g&nbsp;Proteína)
             </p>
           </div>
           <button class="btn btn-accent" onclick="openDailyTipModal()">
@@ -1625,9 +1679,9 @@
           <button class="nday-btn" onclick="selectNutriDay('ter', this)">Ter<small>Superiores</small></button>
           <button class="nday-btn" onclick="selectNutriDay('qua', this)">Qua<small>Inferiores</small></button>
           <button class="nday-btn" onclick="selectNutriDay('qui', this)">Qui<small>Low-Carb</small></button>
-          <button class="nday-btn" onclick="selectNutriDay('sex', this)">Sex<small>Detox/Funcional</small></button>
-          <button class="nday-btn" onclick="selectNutriDay('sab', this)">Sáb<small>Flexível Limpo</small></button>
-          <button class="nday-btn" onclick="selectNutriDay('dom', this)">Dom<small>Ômega 3 & Sono</small></button>
+          <button class="nday-btn" onclick="selectNutriDay('sex', this)">Sex<small>Detox Fit</small></button>
+          <button class="nday-btn" onclick="selectNutriDay('sab', this)">Sáb<small>Flex Limpo</small></button>
+          <button class="nday-btn" onclick="selectNutriDay('dom', this)">Dom<small>Ômega 3</small></button>
         </div>
 
         <!-- DESTAQUES DO DIA SELECIONADO: FRUTA DO DIA + RECEITA EXPRESS -->
@@ -1638,15 +1692,15 @@
       <div class="meal-cards-grid" id="nutriMealsContainer"></div>
 
       <!-- CATÁLOGO DE 6 RECEITAS RÁPIDAS FITNESS (ATÉ 6 MIN) -->
-      <div class="sec-head">Receitas Simples & Rápidas (3 a 6 Minutos)</div>
+      <div class="sec-head">Receitas Simples &amp; Rápidas<br class="mob-br" /> (3 a 6&nbsp;Minutos)</div>
       <div class="recipes-grid" id="recipesCatalogGrid"></div>
 
       <!-- GUIA DE FRUTAS FUNCIONAIS ALIADAS DA DEFINIÇÃO -->
-      <div class="sec-head">Frutas Estratégicas Aliadas da Forma Física & Saúde</div>
+      <div class="sec-head">Frutas Estratégicas Aliadas<br class="mob-br" /> da Forma Física &amp;&nbsp;Saúde</div>
       <div class="fruits-grid" id="fruitsCatalogGrid"></div>
 
       <!-- REGRA DO PRATO 50/30/20 -->
-      <div class="sec-head">Proporção Visual do Prato & Vitaminas Essenciais</div>
+      <div class="sec-head">Proporção Visual do Prato<br class="mob-br" /> &amp; Vitaminas&nbsp;Essenciais</div>
       <div class="glass-card plate-card tilt-3d">
         <div class="plate-visual">
           <div class="plate-inner">
@@ -1655,20 +1709,20 @@
           </div>
         </div>
         <div>
-          <span class="panel-kicker">FUNDAMENTAL, DIRETO E SEM COMPLICAÇÃO</span>
+          <span class="panel-kicker"><span>FUNDAMENTAL, DIRETO<br class="mob-br" /> E SEM COMPLICAÇÃO</span></span>
           <h2 style="font-size: 20px; margin-bottom: 8px;">A Proporção Visual de Cada Refeição</h2>
           <div style="display: grid; gap: 8px;">
             <div style="display:flex; align-items:center; gap:10px; font-size:12.5px;">
               <span style="width:12px; height:12px; border-radius:3px; background:var(--green); flex:none;"></span>
-              <span><b style="color:var(--txt);">50% Vegetais & Fibras (Saciedade + Micronutrientes):</b> Brócolis, espinafre, rúcula, tomate, abobrinha.</span>
+              <span class="balance"><b style="color:var(--txt);">50% Vegetais &amp; Fibras (Saciedade + Micronutrientes):</b> Brócolis, espinafre, rúcula, tomate e&nbsp;abobrinha.</span>
             </div>
             <div style="display:flex; align-items:center; gap:10px; font-size:12.5px;">
               <span style="width:12px; height:12px; border-radius:3px; background:var(--cyan-dark); flex:none;"></span>
-              <span><b style="color:var(--txt);">30% Proteína Magra (Força & Estrutura Corporal):</b> Frango grelhado, ovos, tilápia, patinho, whey. Meta: <span class="num" style="color:var(--cyan-dark); font-weight:700;">165g/dia</span>.</span>
+              <span class="balance"><b style="color:var(--txt);">30% Proteína Magra (Força &amp; Estrutura Corporal):</b> Frango grelhado, ovos, tilápia, patinho, whey. Meta:&nbsp;<span class="num" style="color:var(--cyan-dark); font-weight:700;">165g/dia</span>.</span>
             </div>
             <div style="display:flex; align-items:center; gap:10px; font-size:12.5px;">
               <span style="width:12px; height:12px; border-radius:3px; background:var(--orange); flex:none;"></span>
-              <span><b style="color:var(--txt);">20% Carboidrato Inteligente & Gordura Boa:</b> Arroz integral, batata-doce, aveia, azeite, abacate.</span>
+              <span class="balance"><b style="color:var(--txt);">20% Carboidrato Inteligente &amp; Gordura Boa:</b> Arroz integral, batata-doce, aveia, azeite e&nbsp;abacate.</span>
             </div>
           </div>
         </div>
@@ -1751,8 +1805,8 @@
       </div>
 
       <div class="tip-howto-box">
-        <strong style="color: var(--txt); display:block; font-size:11.5px; margin-bottom:4px;">
-          👨‍🍳 Como preparar / acrescentar hoje (Passo a Passo):
+        <strong style="color: var(--txt); display:block; font-size:11.5px; margin-bottom:4px; text-wrap: balance;">
+          👨‍🍳 Como preparar / acrescentar hoje (Passo&nbsp;a&nbsp;Passo):
         </strong>
         <span id="popTipHowTo"></span>
       </div>
@@ -1760,11 +1814,11 @@
       <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px; margin-bottom: 14px;">
         <div class="kpi-box">
           <span class="lbl">Vitaminas & Ativos</span>
-          <span style="font-size:11.5px; font-weight:600; color:var(--cyan-dark); display:block; margin-top:2px;" id="popTipNutrients"></span>
+          <span style="font-size:11.5px; font-weight:600; color:var(--cyan-dark); display:block; margin-top:2px; text-wrap:balance;" id="popTipNutrients"></span>
         </div>
         <div class="kpi-box">
           <span class="lbl">Melhor Horário</span>
-          <span style="font-size:11.5px; font-weight:600; color:var(--green-l); display:block; margin-top:2px;" id="popTipBestTime"></span>
+          <span style="font-size:11.5px; font-weight:600; color:var(--green-l); display:block; margin-top:2px; text-wrap:balance;" id="popTipBestTime"></span>
         </div>
       </div>
 
@@ -1786,15 +1840,15 @@
         <span style="color:var(--green-l);">☁️ NUVEM 24/7 (SEM PC)</span>
         <span class="badge-pill green">PWA OFFLINE</span>
       </div>
-      <h3 style="font-size: 19px; margin-bottom: 6px;">Link Fixo & Ícone na Tela do Celular</h3>
+      <h3 style="font-size: 19px; margin-bottom: 6px;">Link Fixo &amp; Ícone na Tela do Celular</h3>
       <p style="font-size: 12px; color: var(--dim); margin-bottom: 12px;">
-        Acesse de qualquer lugar (4G/5G ou Wi-Fi na academia) mesmo com o PC desligado e salve o ícone oficial <b style="color:var(--txt);">maX Fit</b> na tela de início do seu celular:
+        Acesse de qualquer lugar (4G/5G ou Wi-Fi na academia) mesmo com o PC desligado e salve o ícone oficial <b style="color:var(--txt);">maX Fit</b> na tela de início do seu&nbsp;celular:
       </p>
 
       <!-- Prévia Visual do Ícone na Área de Trabalho do Celular -->
       <div style="display:inline-flex; align-items:center; gap:12px; background:rgba(20,24,27,0.88); border:1px solid rgba(107,166,218,0.35); border-radius:14px; padding:10px 16px; margin-bottom:10px;">
-        <div style="width:52px; height:52px; border-radius:13px; background:#14181B; border:2px solid #6BA6DA; box-shadow:0 0 16px rgba(53,208,232,0.35); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
-          <svg viewBox="0 0 100 100" width="32" height="32" aria-hidden="true">
+        <div style="width:52px; height:52px; border-radius:13px; background:#14181B; border:1px solid rgba(255,255,255,0.12); box-shadow:0 6px 18px rgba(0,0,0,0.45), 0 0 18px rgba(18,184,134,0.22); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <svg viewBox="0 0 100 100" width="40" height="40" aria-hidden="true">
             <g transform="rotate(45 50 50)">
               <rect x="4" y="34.5" width="92" height="31" fill="#12B886" />
               <rect x="34.5" y="4" width="31" height="92" fill="#12B886" />
@@ -1846,7 +1900,7 @@
       </div>
       <h3 style="font-size: 19px; margin-bottom: 4px;">Personalizar Peso, Altura e Idade</h3>
       <p style="font-size: 12px; color: var(--dim); margin-bottom: 14px;">
-        Seus dados ficam gravados permanentemente no seu celular e recalculam sua meta diária de calorias, proteínas, água e IMC:
+        Seus dados ficam gravados permanentemente no seu celular e recalculam sua meta diária de calorias, proteínas, água e&nbsp;IMC:
       </p>
 
       <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:14px;">
@@ -2466,38 +2520,38 @@
     const MORNING_POSES = [
       {
         title: '1. Terra Unilateral (Equilíbrio em T)',
-        muscle: 'ATIVAÇÃO 3D · GLÚTEOS, POSTERIOR & LOMBAR',
-        sub: 'Equilíbrio em 1 perna inclinando o tronco à frente e subindo a perna de trás em "T"',
+        muscle: 'ATIVAÇÃO 3D · GLÚTEOS, POSTERIOR\u00A0&\u00A0LOMBAR',
+        sub: 'Equilíbrio em 1 perna inclinando o tronco à frente e subindo a perna de trás em\u00A0"T"',
         activeGroups: ['glutes', 'hamstrings', 'lowerback', 'abs', 'calves'],
-        coach: '<b>📋 Como executar (3x 12 cada perna):</b> Apoiado na perna esquerda (joelho levemente destravado), incline o tronco reto à frente enquanto a perna direita sobe esticada atrás formando um <b>"T" (Avião)</b>. Leve a mão direita em direção ao pé esquerdo e suba contraindo o glúteo.'
+        coach: '<b>📋 Como executar (3x 12 cada perna):</b> Apoiado na perna esquerda (joelho levemente destravado), incline o tronco reto à frente enquanto a perna direita sobe esticada atrás formando um <b>"T" (Avião)</b>. Leve a mão direita em direção ao pé esquerdo e suba contraindo o\u00A0glúteo.'
       },
       {
         title: '2. Flexão Pike no Chão (Ombros em V)',
-        muscle: 'ATIVAÇÃO 3D · DELTOIDES (OMBROS), TRAPÉZIO & TRÍCEPS',
-        sub: 'Mãos e pés no chão com quadril elevado em V invertido descendo o topo da cabeça',
+        muscle: 'ATIVAÇÃO 3D · OMBROS, TRAPÉZIO\u00A0&\u00A0TRÍCEPS',
+        sub: 'Mãos e pés no chão com quadril elevado em V invertido descendo o topo da\u00A0cabeça',
         activeGroups: ['shoulders', 'triceps', 'lats', 'chest'],
-        coach: '<b>📋 Como executar (3x 10–12 reps):</b> Apoie mãos e pés no chão e levante o quadril bem alto formando um <b>"V invertido"</b>. Dobre os cotovelos levando o topo da cabeça em direção ao chão (entre as mãos) e empurre forte de volta. Constrói ombros largos em casa!'
+        coach: '<b>📋 Como executar (3x 10–12 reps):</b> Apoie mãos e pés no chão e levante o quadril bem alto formando um <b>"V invertido"</b>. Dobre os cotovelos levando o topo da cabeça em direção ao chão (entre as mãos) e empurre forte de volta. Constrói ombros largos em\u00A0casa!'
       },
       {
         title: '3. Agachamento Lutador em Guarda',
-        muscle: 'ATIVAÇÃO 3D · QUADRÍCEPS (COXAS), GLÚTEOS & CORE',
-        sub: 'Agachamento profundo até 90° mantendo punhos fechados em guarda alta',
+        muscle: 'ATIVAÇÃO 3D · QUADRÍCEPS, GLÚTEOS\u00A0&\u00A0CORE',
+        sub: 'Agachamento profundo até 90° mantendo punhos fechados em guarda\u00A0alta',
         activeGroups: ['quads', 'glutes', 'abs', 'calves'],
-        coach: '<b>📋 Como executar (3x 20 reps):</b> Pés na largura dos ombros e mãos em guarda alta no queixo. Jogue o quadril para trás e desça até as coxas ficarem paralelas ao chão (90°), mantendo o peito aberto e o abdômen travado. Suba empurrando o chão com o calcanhar.'
+        coach: '<b>📋 Como executar (3x 20 reps):</b> Pés na largura dos ombros e mãos em guarda alta no queixo. Jogue o quadril para trás e desça até as coxas ficarem paralelas ao chão (90°), mantendo o peito aberto e o abdômen travado. Suba empurrando o chão com o\u00A0calcanhar.'
       },
       {
         title: '4. Flexão Explosiva no Solo (Peitoral)',
-        muscle: 'ATIVAÇÃO 3D · PEITORAL MAIOR, TRÍCEPS & OMBRO ANTERIOR',
-        sub: 'Corpo em prancha reta no chão: desce controlado e sobe empurrando com explosão',
+        muscle: 'ATIVAÇÃO 3D · PEITORAL, TRÍCEPS\u00A0&\u00A0OMBROS',
+        sub: 'Corpo em prancha reta no chão: desce controlado e sobe empurrando com\u00A0explosão',
         activeGroups: ['chest', 'triceps', 'shoulders', 'abs'],
-        coach: '<b>📋 O que é e como fazer (3x 12–15 reps):</b> Em prancha reta no chão, desça o peito em 2 segundos até quase tocar o piso e <b>empurre o chão com velocidade e força máxima</b> na subida. Recruta as fibras rápidas do peitoral, ombros e tríceps.'
+        coach: '<b>📋 O que é e como fazer (3x 12–15 reps):</b> Em prancha reta no chão, desça o peito em 2 segundos até quase tocar o piso e <b>empurre o chão com velocidade e força máxima</b> na subida. Recruta as fibras rápidas do peitoral, ombros e\u00A0tríceps.'
       },
       {
         title: '5. Vacuum Abdominal (Cintura Fina / Barriga Negativa)',
-        muscle: 'ATIVAÇÃO 3D · TRANSVERSO ABDOMINAL & LINHA DE CINTURA',
-        sub: 'Técnica para chapar barriga estufada: solte todo o ar e sugue o umbigo p/ as costas',
+        muscle: 'ATIVAÇÃO 3D · TRANSVERSO\u00A0&\u00A0CINTURA FINA',
+        sub: 'Técnica para chapar barriga estufada: solte todo o ar e sugue o umbigo p/ as\u00A0costas',
         activeGroups: ['abs', 'obliques'],
-        coach: '<b>📋 O que é o Vacuum Abdominal (5x 20 segundos):</b> É a técnica clássica para <b>afinar a cintura e chapar o estômago dilatado</b>. Em pé com as mãos apoiadas no quadril: <b>1)</b> Solte 100% do ar dos pulmões pela boca; <b>2)</b> Sem respirar, <b>sugue o umbigo o máximo possível para dentro e para cima</b> (como se quisesse colar o umbigo nas costas); <b>3)</b> Segure contraído por 15 a 20 segundos.'
+        coach: '<b>📋 O que é o Vacuum Abdominal (5x 20 segundos):</b> É a técnica clássica para <b>afinar a cintura e chapar o estômago dilatado</b>. Em pé com as mãos apoiadas no quadril: <b>1)</b> Solte 100% do ar dos pulmões pela boca; <b>2)</b> Sem respirar, <b>sugue o umbigo o máximo possível para dentro e para cima</b> (como se quisesse colar o umbigo nas costas); <b>3)</b> Segure contraído por 15 a 20\u00A0segundos.'
       }
     ];
 
@@ -3462,9 +3516,9 @@
     function selectMorningPose(idx, btn) {
       currentPoseIdx = idx;
       const pose = MORNING_POSES[idx];
-      document.getElementById('stageExTitle').textContent = pose.title;
+      document.getElementById('stageExTitle').textContent = noOrphan(pose.title);
       document.getElementById('stageMusclePill').textContent = pose.muscle;
-      document.getElementById('stageExSub').textContent = pose.sub;
+      document.getElementById('stageExSub').textContent = noOrphan(pose.sub);
       const coachEl = document.getElementById('stageCoachBox');
       if (coachEl && pose.coach) coachEl.innerHTML = pose.coach;
       document.querySelectorAll('.pose-btn').forEach(b => b.classList.remove('active'));
@@ -3491,6 +3545,31 @@
     // ==========================================================================
     // 5. EFEITO TILT 3D + RENDERIZAÇÃO DE TREINOS E CARDS 3D FLIP
     // ==========================================================================
+    const ORPHAN_CONNECTORS = new Set([
+      'e', '&', '+', 'a', 'o', 'as', 'os', 'de', 'da', 'do', 'das', 'dos',
+      'em', 'no', 'na', 'nos', 'nas', 'ao', 'aos', 'à', 'às', 'com', 'c/',
+      'p/', 'para', 'sem', 'ou', 'por', 'até', 'um', 'uma'
+    ]);
+
+    function noOrphan(text) {
+      if (!text || typeof text !== 'string') return text;
+      const trimmed = text.trim();
+      const words = trimmed.split(/\s+/);
+      if (words.length < 4) return trimmed;
+      const last = words[words.length - 1];
+      const prev = words[words.length - 2];
+      if ((prev + ' ' + last).length > 24) return trimmed;
+      if (words.length >= 5 && ORPHAN_CONNECTORS.has(prev.toLowerCase())) {
+        const prev2 = words[words.length - 3];
+        if ((prev2 + ' ' + prev + ' ' + last).length <= 26) {
+          words.splice(words.length - 3, 3, `${prev2}\u00A0${prev}\u00A0${last}`);
+          return words.join(' ');
+        }
+      }
+      words.splice(words.length - 2, 2, `${prev}\u00A0${last}`);
+      return words.join(' ');
+    }
+
     function initGlassTiltCards() {
       document.querySelectorAll('.glass-card').forEach(card => {
         card.addEventListener('pointermove', e => {
@@ -3521,9 +3600,9 @@
 
       container.innerHTML = list.map(item => {
         const isDone = completedExercises.has(item.id);
-        const title = isHome ? item.homeTitle : item.gymTitle;
+        const title = noOrphan(isHome ? item.homeTitle : item.gymTitle);
         const badge = isHome ? item.homeBadge : item.gymBadge;
-        const desc = isHome ? item.homeDesc : item.gymDesc;
+        const desc = noOrphan(isHome ? item.homeDesc : item.gymDesc);
         const metric = isHome ? item.homeMetric : item.gymMetric;
 
         return `
@@ -3562,8 +3641,8 @@
                   <span class="ex-badge">${gymBadge}</span>
                   ${kcalOrTag}
                 </div>
-                <h3 class="ex-title" style="margin-bottom:6px;">${item.gymTitle}</h3>
-                <p class="ex-desc">${item.gymDesc}</p>
+                <h3 class="ex-title" style="margin-bottom:6px;">${noOrphan(item.gymTitle)}</h3>
+                <p class="ex-desc">${noOrphan(item.gymDesc)}</p>
               </div>
               <div class="ex-metrics">
                 <span class="metric-chip num">${item.gymMetric}</span>
@@ -3579,8 +3658,8 @@
                   <span class="ex-badge home">🏠 COMPENSAÇÃO EM CASA</span>
                   ${kcalOrTag}
                 </div>
-                <h3 class="ex-title" style="margin-bottom:6px;">${item.homeTitle}</h3>
-                <p class="ex-desc">${item.homeDesc}</p>
+                <h3 class="ex-title" style="margin-bottom:6px;">${noOrphan(item.homeTitle)}</h3>
+                <p class="ex-desc">${noOrphan(item.homeDesc)}</p>
               </div>
               <div class="ex-metrics">
                 <span class="metric-chip num">${item.homeMetric}</span>
@@ -3671,18 +3750,18 @@
       document.getElementById('miniTipDayBadge').textContent = isCurrentDayTip
         ? `DIA ${tip.day} DE 28 (SEU DIA ATUAL)`
         : `DICA #${tip.day} DO CATÁLOGO (28 DIAS)`;
-      document.getElementById('miniTipTitle').textContent = tip.title;
-      document.getElementById('miniTipDesc').textContent = tip.highlight;
+      document.getElementById('miniTipTitle').textContent = noOrphan(tip.title);
+      document.getElementById('miniTipDesc').textContent = noOrphan(tip.highlight);
 
       // Atualiza Modal Pop-up Completo
       document.getElementById('popTipCategory').textContent = tip.category;
       document.getElementById('popTipDayTag').textContent = `DIA ${tip.day} DE 28`;
-      document.getElementById('popTipCounter').textContent = `Dica ${tip.day} de 28 (1 por dia do Desafio)`;
-      document.getElementById('popTipTitle').textContent = tip.title;
-      document.getElementById('popTipHighlight').textContent = tip.highlight;
-      document.getElementById('popTipHowTo').textContent = tip.howTo;
-      document.getElementById('popTipNutrients').textContent = tip.nutrients;
-      document.getElementById('popTipBestTime').textContent = tip.bestTime;
+      document.getElementById('popTipCounter').textContent = `Dica ${tip.day} / 28`;
+      document.getElementById('popTipTitle').textContent = noOrphan(tip.title);
+      document.getElementById('popTipHighlight').textContent = noOrphan(tip.highlight);
+      document.getElementById('popTipHowTo').textContent = noOrphan(tip.howTo);
+      document.getElementById('popTipNutrients').textContent = noOrphan(tip.nutrients);
+      document.getElementById('popTipBestTime').textContent = noOrphan(tip.bestTime);
     }
 
     function nextDailyTip(delta) {
@@ -3719,8 +3798,8 @@
       const plan = WEEKLY_MEAL_PLAN[currentNutriDayKey];
       if (!plan) return;
 
-      document.getElementById('nutriDayHeaderTitle').textContent = `${plan.dayName} · ${plan.trainingFocus}`;
-      document.getElementById('nutriDayHeaderSub').textContent = `Estratégia: ${plan.strategy}`;
+      document.getElementById('nutriDayHeaderTitle').textContent = noOrphan(`${plan.dayName} · ${plan.trainingFocus}`);
+      document.getElementById('nutriDayHeaderSub').textContent = noOrphan(`Estratégia: ${plan.strategy}`);
 
       // Destaques do dia: Fruta Funcional + Receita Express
       document.getElementById('nutriDayHighlights').innerHTML = `
@@ -3728,15 +3807,15 @@
           <div class="ex-top">
             <span class="ex-badge home">FRUTA FUNCIONAL DE ${plan.dayName.toUpperCase()}</span>
           </div>
-          <h3 class="ex-title" style="font-size:15.5px;">${plan.fruit.name}</h3>
-          <p class="ex-desc">${plan.fruit.desc}</p>
+          <h3 class="ex-title" style="font-size:15.5px;">${noOrphan(plan.fruit.name)}</h3>
+          <p class="ex-desc">${noOrphan(plan.fruit.desc)}</p>
         </div>
         <div class="glass-card ex-card" style="border-color: rgba(53, 208, 232, 0.35);">
           <div class="ex-top">
             <span class="ex-badge">RECEITA / BOOSTER EXPRESS DO DIA</span>
           </div>
-          <h3 class="ex-title" style="font-size:15.5px;">${plan.express.name}</h3>
-          <p class="ex-desc">${plan.express.desc}</p>
+          <h3 class="ex-title" style="font-size:15.5px;">${noOrphan(plan.express.name)}</h3>
+          <p class="ex-desc">${noOrphan(plan.express.desc)}</p>
         </div>
       `;
 
@@ -3744,16 +3823,16 @@
       document.getElementById('nutriMealsContainer').innerHTML = plan.meals.map((meal, idx) => `
         <article class="glass-card ex-card">
           <div class="ex-top">
-            <h3 class="ex-title" style="font-size:16px;">${meal.title}</h3>
+            <h3 class="ex-title" style="font-size:16px;">${noOrphan(meal.title)}</h3>
             <span class="badge-pill">3 Variações</span>
           </div>
           <div class="meal-opt-tabs">
-            <button class="mopt-btn active" onclick="switchMealOption(${idx}, 'A', this)">Opção A (Prática)</button>
-            <button class="mopt-btn" onclick="switchMealOption(${idx}, 'B', this)">Opção B (Variada)</button>
-            <button class="mopt-btn" onclick="switchMealOption(${idx}, 'C', this)">Opção C (Troca)</button>
+            <button class="mopt-btn active" onclick="switchMealOption(${idx}, 'A', this)">Opção A · Prática</button>
+            <button class="mopt-btn" onclick="switchMealOption(${idx}, 'B', this)">Opção B · Variada</button>
+            <button class="mopt-btn" onclick="switchMealOption(${idx}, 'C', this)">Opção C · Troca</button>
           </div>
           <p class="ex-desc" id="mealDesc-${idx}" style="color:var(--txt); font-size:12.5px; line-height:1.55;">
-            ${meal.A}
+            ${noOrphan(meal.A)}
           </p>
         </article>
       `).join('');
@@ -3765,7 +3844,7 @@
       const parent = btnEl.parentElement;
       parent.querySelectorAll('.mopt-btn').forEach(b => b.classList.remove('active'));
       btnEl.classList.add('active');
-      document.getElementById(`mealDesc-${mealIdx}`).textContent = plan.meals[mealIdx][optKey];
+      document.getElementById(`mealDesc-${mealIdx}`).textContent = noOrphan(plan.meals[mealIdx][optKey]);
     }
 
     function renderRecipesAndFruitsCatalog() {
@@ -3775,8 +3854,8 @@
             <span class="ex-badge home">${r.tag}</span>
             <span class="ex-badge burn num">${r.macros}</span>
           </div>
-          <h3 class="ex-title" style="font-size:15.5px;">${r.title}</h3>
-          <p class="ex-desc">${r.desc}</p>
+          <h3 class="ex-title" style="font-size:15.5px;">${noOrphan(r.title)}</h3>
+          <p class="ex-desc">${noOrphan(r.desc)}</p>
         </article>
       `).join('');
 
@@ -3785,10 +3864,10 @@
           <div class="ex-top">
             <span class="ex-badge">${f.active}</span>
           </div>
-          <h3 class="ex-title" style="font-size:16px;">${f.name}</h3>
-          <p class="ex-desc">${f.benefit}</p>
+          <h3 class="ex-title" style="font-size:16px;">${noOrphan(f.name)}</h3>
+          <p class="ex-desc">${noOrphan(f.benefit)}</p>
           <div class="ex-metrics">
-            <span class="metric-chip">${f.portion}</span>
+            <span class="metric-chip">${noOrphan(f.portion)}</span>
           </div>
         </article>
       `).join('');
@@ -3868,8 +3947,8 @@
       const waEl = document.getElementById('bioWaterTarget');
       const iEl = document.getElementById('bioImcTarget');
 
-      if (wEl) wEl.textContent = `${w} → ${gw} kg ✎`;
-      if (haEl) haEl.textContent = `${h}cm · ${a}a ✎`;
+      if (wEl) wEl.textContent = `${w} → ${gw} kg`;
+      if (haEl) haEl.textContent = `${h}cm · ${a}a`;
       if (kEl) kEl.textContent = `${targetKcal.toLocaleString('pt-BR')} kcal`;
       if (pEl) pEl.textContent = `${targetProt}g/dia`;
       if (waEl) waEl.textContent = `${targetWater} L/dia`;
@@ -4012,15 +4091,11 @@
       qrBox.appendChild(img);
     }
 
-    // Sincroniza a Dica do Dia com o seu Dia Atual do Desafio de 28 Dias (começando no Dia 1)!
+    // Sincroniza a Dica do Dia com o seu Dia Atual do Desafio de 28 Dias (sem bloquear a Home 3D ao abrir)
     function initDailyNutritionPopup() {
       const currentChallengeDay = Math.max(1, Math.min(28, completedDays.size || 1));
       currentTipIndex = currentChallengeDay - 1;
       syncDailyTipUI();
-      // Abre automaticamente o Pop-up da Dica Nutricional do Dia após 600ms
-      setTimeout(() => {
-        openDailyTipModal(currentChallengeDay);
-      }, 600);
     }
 
     // Inicialização Geral

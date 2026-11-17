@@ -1,12 +1,14 @@
-const CACHE_NAME = 'max-verao-3d-v7';
+const CACHE_NAME = 'max-verao-3d-v9';
 const ASSETS = [
   './',
   './index.html',
-  './manifest.json',
-  './apple-touch-icon.png',
-  './icon-192.png',
-  './icon-512.png',
-  './favicon.png'
+  './manifest.json?v=9',
+  './apple-touch-icon.png?v=9',
+  './icon-192.png?v=9',
+  './icon-512.png?v=9',
+  './icon-maskable-192.png?v=9',
+  './icon-maskable-512.png?v=9',
+  './favicon.png?v=9'
 ];
 
 self.addEventListener('install', (event) => {
